@@ -1,0 +1,186 @@
+/*
+ *Esta hoja de estilos controla la apariencia y funcionalidad basica del efecto
+ *de menu ocultable sobre la interfaz, a modo de aplicación inteligente de teléfono
+ *celular
+ */
+ 
+    .Contenedor 
+        {
+            position: relative; /*Respecto al cuerpo*/
+            height: inherit; /*Altura respecto al contenedor padre*/
+            width: 100%; /*Anchura respecto al contenedor padre*/
+            left: 0; /*Separación del margen izquierdo respecto al padre*/
+        	/*overflow: scroll;*/
+            /*
+             * Conjunto de efectos de transición.
+             */
+            -webkit-transition:  left 0.4s ease-in-out;
+            -moz-transition:  left 0.4s ease-in-out;
+            -ms-transition:  left 0.4s ease-in-out;
+            -o-transition:  left 0.4s ease-in-out;
+            transition:  left 0.4s ease-in-out;
+            }
+
+    .Contenedor.abrir-MenuLateral
+        {
+            left: 240px; /*Separación del margen izquierdo respecto al contenedor*/
+            }
+ 
+	.Area-Deslizar
+        {
+            /*
+             * Este contenedor es el area sobre la cual el usuario utilizara la opción
+             * de gesto de arrastre en dispositivos moviles.
+             */
+            position: absolute; /*Respecto al cuerpo*/
+            width: 50px; /*Anchura respecto al contenedor padre*/
+            height: inherit; /*Altura respecto al contenedor padre*/
+            left: 0; /*Separación del margen izquierdo respecto al padre*/
+            top: 0; /*Separación del margen superior respecto al padre*/
+            background: #f3f3f3; /*Color de fondo del area de arrastre*/
+            z-index: 0; /*Orden respecto a la profundidad sobre los otros elementos*/
+            }
+            
+	#informacion
+        {
+            width:inherit;
+            height:20px;
+            background: #000000; /*Color de fondo*/
+            color:#FFFFFF; /*Color de texto*/
+            text-align:center; /*Alineación del texto*/   
+            }
+            
+    #menuLateral 
+        {
+            background: #2290c9; /*Color de fondo del contenedor de menu*/
+            position: absolute; /*Posicion respecto al cuerpo*/
+            width: 240px; /*Anchura respecto al cuerpo*/
+            height: inherit; /*Altura respecto al cuerpo*/
+            left: -240px; /*Separación respecto al margen izquierdo, un valor negativo indica que no estara visible*/
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            }
+
+	#menuLateral ul
+        {
+            margin: 0;/*Margen en los cuatro cuadrantes para el elemento unsorted list (UL)*/
+            padding: 0; /*Espaciado en los cuatro cuadrantes*/
+            list-style: none; /*Se elimina la viñeta de enumerado*/
+            }
+		
+	#menuLateral ul li
+        {
+            margin: 0; /*Margen en los cuatro cuadrantes para el elemento list item (LI)*/
+            }
+		
+	#menuLateral ul li a
+        {
+            padding: 15px 20px; /*Espaciado de etiqueta de item*/
+            font-size: 16px; /*Tamaño de texto de item*/
+            font-weight: 100; /*Proporción de texto*/
+            color: white; /*Color de texto*/		
+            text-decoration: none; /*Elementos de decoración del texto*/
+            display: block; /*Mostrar en bloque*/
+            border-bottom: 1px solid #196c96; /*Borde inferior [Grosor, Estilo, Color]*/
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+		
+	.contexto_menu:hover
+        {		
+            background: #196c96;/*Color de fondo cuando el cursor esta sobre el objeto*/
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+	
+	.contexto_submenu
+        {
+		  background: #374ee8; /*Color de fondo a aplicar sobre elemento secundario de menu*/
+		  }
+		
+	.contexto_submenu:hover
+        {
+            background: #5bb7e3; /*Color de fondo a aplicar*/
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+							
+	.Contenedor-Principal
+        {
+            position: relative; /*Posición respecto al cuerpo*/
+            width: 100%; /*Anchura respecto al cuerpo*/
+            height: inherit; /*Altura respecto al cuerpo*/
+            padding: 10px; /*Espaciado del contenedor*/
+            background: #D3D4DC; /*Color de fondo del contenedor principal*/
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            }
+		
+	.Contenedor-Principal .content
+        {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            padding-left: 60px;
+            width: 100%;
+            height:inherit;
+            }
+		
+	.Contenedor-Principal .content h1
+        {
+            font-weight: 100;
+            }
+		
+	.Contenedor-Principal .content p
+        {
+            width: 100%;
+            line-height: 120%;
+            }
+		
+	/*
+	 * Este segmento de codigo controla la apariencia del boton para el despliegue
+	 * de la barra de menu.
+	 */	
+	.Contenedor-Principal #menuLateral-toggle
+        {
+            background: #2290c9;
+            border-radius: 10px;
+            display: block;
+            position: relative;
+            padding: 10px 7px;
+            float: left;
+            }
+		
+	.Contenedor-Principal #menuLateral-toggle .bar
+        {
+            display: block;
+            width: 18px;
+            margin-bottom: 3px;
+            height: 2px;
+            background-color: #c5e6fe;
+            border-radius: 1px;   
+            }
+		
+	.Contenedor-Principal #menuLateral-toggle .bar:last-child
+        {
+            margin-bottom: 0;   
+            }
+            
+	div.infousuario
+        {
+            background: #2290c9; /*Color de fondo*/
+  		    position: absolute;        
+            }
+    
+    .tdInfoUsuario
+        {
+            color: white; /*Color de texto*/
+            }		

@@ -1,0 +1,254 @@
+/*Hoja de estilos aplicable para la interfaz de ingreso al sistema.
+/*Esta da el efecto de transparencia al div flotante sobre el area
+/*de trabajo.*/
+@CHARSET "ISO-8859-1";
+@import '../../shared/mixins',
+        '../../shared/reset',
+        '../../shared/about-light';
+
+    body 
+        {
+            height: 1600px; /*Altura maxima disponible de la ventana del navegador*/
+            margin: 0; /*Margenes aplicables a los cuatro cuadrantes*/
+            /*overflow:hidden;*/            
+            font: 13px/20px;
+            font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif, arial, helvetica;
+            color: #404040;
+            font-weight: 100; /*Proporción del texto*/
+            background: #D3D4DC; /*Color de fondo del cuerpo*/                                                   				
+			}
+            
+    .cnt
+        {
+            width:450px;
+			background-color:#DDAADD;
+            margin:0px;
+            padding:15px;
+            font-weight:bold
+            }
+				
+    .login_div
+        {
+            position:absolute; /*Posición del contenedor respecto al cuerpo*/
+			top:0px; /*Posición al margen superior respecto al cuerpo*/
+			left:0px; /*Posición al margen izquierdo respecto al cuerpo*/
+			padding:65px; /*Espaciado al contorno del contenedor*/            
+			width:100%; /*Anchura respecto al cuerpo*/
+			height:1600px; /*Altura respecto al cuerpo*/            
+            background-color:#004080; /*Color de fondo para el contenedor de login*/
+			background-image: url("../img/fondo.png"); /*Imagen de fondo para el contenedor de login*/
+			background-size: 1260px 920px; /*Tamaño para la imagen de fondo del contenedor de login*/
+			background-repeat: no-repeat; /*Condicional para repetición del fondo*/
+			color:#000033; /*Color de texto del contenedor*/
+			text-align:center; /*Alineación del texto en el contenedor*/
+			font-family: 'Arial',Helvetica Neue,Helvetica,sans-serif;/*Estilos de texto en el contenedor*/
+			font-size:25px; /*Tamaño de texto*/
+			font-weight:bold; /*Estilo del texto*/
+			filter:alpha(opacity=80);
+			-moz-opacity:.80;opacity:.80;				
+			}
+            
+    .Cabecera-Login 
+        {
+            margin: -20px -20px 21px;
+    		line-height: 80px;
+    		font-size: 15px;
+    		font-weight: bold;
+    		color: #555;
+    		text-align: center;
+    		text-shadow: 0 1px white;
+ 			background-image: url("../img/logo.png");
+ 			background-repeat: no-repeat;
+ 			background-size: contain;
+ 			background-position: center;
+    		background-color: #86acf2;
+    		border-bottom: 1px solid #cfcfcf;
+    		border-radius: 3px 3px 0 0;
+    		@include linear-gradient(top, whiteffd, #eef2f5);
+    		@include box-shadow(0 1px #f5f5f5);
+  			}
+  						  								
+    .contenedor_login
+        {
+            margin: 80px auto;
+  			width: 640px;
+			}
+				
+    .etiquetas
+        {  					
+            font-size: 15px;  					
+      		color: #00001F;
+      		cursor: pointer;
+    		}					
+				
+    .login
+        {
+            position: relative;
+			margin: 0 auto;
+			margin-left:+350px;
+			margin-top:+100px;
+			padding: 20px 20px 20px;
+			width: 400px;
+			height:400px;				
+			background: #296fef;
+			border-radius: 13px;
+			@include box-shadow(0 0 200px rgba(white, .5), 0 1px 2px rgba(black, .3));
+			&:before {
+                        content: '';
+    					position: absolute;
+    					top: -8px; right: -8px; bottom: -8px; left: -8px;
+    					z-index: -1;
+    					background: rgba(black, .08);
+    					border-radius: 4px;
+  						}
+  						
+            p { margin: 20px 0 0; }				
+			p:first-child { margin-top: 0; }
+			input[type=text], input[type=password] { width: 278px; }
+            p.submit { text-align: right; }								
+			}								  														
+
+    .Ayuda-Login
+        {
+            margin: 20px 0;
+  			font-size: 11px;
+  			color: white;
+  			text-align: center;
+  			text-shadow: 0 1px #2a85a1;
+            a {
+    			color: #cce7fa;
+    			text-decoration: none;
+    			&:hover { text-decoration: underline; }
+  				}
+            }
+
+    :-moz-placeholder 
+        {
+            color: #c9c9c9 !important;
+  			font-size: 13px;
+			}
+
+    ::-webkit-input-placeholder
+        {
+            color: #ccc;
+  			font-size: 13px;
+			}				
+
+    input
+        {
+            font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
+  			font-size: 14px;
+			}
+
+    input[type=text], input[type=password], select 
+        {
+            margin: 5px;
+  			padding: 0 10px;
+  			/*width: 200px;*//*SOLO HABILITAR EN CASO NECESARIO*/
+  			height: 34px;
+  			color: #404040;
+  			background: white;
+  			border: 1px solid;
+  			border-color: #c4c4c4 #d1d1d1 #d4d4d4;
+  			border-radius: 2px;
+  			outline: 5px solid #eff4f7;
+  			-moz-outline-radius: 3px; // Can we get this on WebKit please?
+  			@include box-shadow(inset 0 1px 3px rgba(black, .12));
+			&:focus {
+                        border-color: #7dc9e2;
+    					outline-color: #dceefc;
+    					outline-offset: 0; // WebKit sets this to -1 by default
+  						}
+            }
+
+    option
+        {
+            margin: 5px;
+  			padding: 0 10px;
+  			/*width: 200px;*/
+  			height: 34px;
+  			color: #404040;
+  			background: white;
+  			border: 1px solid;
+  			border-color: #c4c4c4 #d1d1d1 #d4d4d4;
+  			border-radius: 2px;
+  			outline: 5px solid #eff4f7;
+  			-moz-outline-radius: 3px; // Can we get this on WebKit please?
+  			@include box-shadow(inset 0 1px 3px rgba(black, .12));
+            &:focus {
+                        border-color: #7dc9e2;
+    					outline-color: #dceefc;
+    					outline-offset: 0; // WebKit sets this to -1 by default
+  						}
+            }
+								
+    input[type=submit]
+        {
+            padding: 0 18px;
+  			height: 29px;
+  			font-size: 12px;
+  			font-weight: bold;
+  			color: #527881;
+  			text-shadow: 0 1px #e3f1f1;
+			background: #cde5ef;
+			border: 1px solid;
+			border-color: #b4ccce #b3c0c8 #9eb9c2;
+			border-radius: 16px;
+			outline: 0;
+			@include box-sizing(content-box); // Firefox sets this to border-box by default
+			@include linear-gradient(top, #edf5f8, #cde5ef);
+			@include box-shadow(inset 0 1px white, 0 1px 2px rgba(black, .15));
+            &:active {
+                        background: #cde5ef;
+    					border-color: #9eb9c2 #b3c0c8 #b4ccce;
+    					@include box-shadow(inset 0 0 3px rgba(black, .2));
+  						}
+            }
+				
+    .button-blue
+        {
+            padding: 7px 18px;
+  			height: auto;
+  			font-size: 12px;
+  			font-weight: bold;
+    		background: #1651be;						
+    		background: -webkit-gradient(linear, left top, left bottom, from(#10157F), to(#2432A2) );
+    		background: -moz-linear-gradient(-10deg, #2D6BC9, #2D47C9);
+			border-radius: 25px;
+    		filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#81a8cb', endColorstr='#4477a1');
+			}
+
+    .button-blue:hover
+        {
+  			padding: 7px 18px;
+  			height: auto;
+  			font-size: 12px;
+  			font-weight: bold;			
+    		background: #81a8cb;
+    		background: -webkit-gradient(linear, left top, left bottom, from(#4477a1), to(#81a8cb) );
+    		background: -moz-linear-gradient(-10deg, #4477a1, #81a8cb);
+			border-radius: 25px;
+		    filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#4477a1', endColorstr='#81a8cb');			    			
+            }
+
+    .button-blue:active
+        {
+            padding: 7px 18px;
+  			height: auto;
+  			font-size: 12px;
+  			font-weight: bold;
+    		background: #4477a1;
+			border-radius: 25px;    							
+			}
+								
+    .lt-ie9
+        {
+            input[type=text], input[type=password] { line-height: 34px; }
+			}	
+    
+    #escritorio
+        {
+            background-image: url("../img/logo_fondo.png"); /*Imagen de fondo para el contenedor de login*/
+            background-size: 64px 64px; /*Tamaño para la imagen de fondo del contenedor de login*/
+            background-repeat: repeat; /*Condicional para repetición del fondo*/            
+            }					
