@@ -28,13 +28,5 @@
     /*
      * Para ejecucion en sitio quite las acotaciones de comentario.
      */
-     
-    /*
-    $servername='5uDhpJ+andTo2OPd4eLWpKDS4tw=';
-    $dbname='1aTUo6WaoaejqaDU39jF4eHi3OPe4Q==';
-    $username='1aTUo6WaoaejqaA=';
-    $password='1OXW3t7Qpqmm';
-    $SitioWeb="http://peycom.byethost5.com/index.php";
-    */
         
 ?>
