@@ -11,6 +11,7 @@
  */
 
     header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
+    session_start();
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
@@ -47,17 +48,72 @@
             }
                         
     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-
-    if($condicionales=="")
+    
+    if($_SESSION['idEmpleado']!=0)
         {
-            //Cargar la cadena de consulta por default.            
-            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
-            }  
-    else 
+            /*
+             * En el caso que el usuario que inicio sesion, sea un empleado registrado,
+             * las consultas sobre programas solo podran desplegar aquellos programas
+             * en los que el usuario aparezca como responsable o auxiliar.
+             */
+            if($_SESSION['nivel'] == 'Administrador')
+                {
+                    /*
+                     * En caso que el usuario sea un administrador asociado a un empleado registrado
+                     * en el sistema.
+                     */
+                    if($condicionales=="")
+                    {
+                        //Cargar la cadena de consulta por default.
+                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                    }
+                    else
+                    {
+                        //En caso de contar con el criterio de filtrado.
+                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                    }                    
+                    }
+            else
+                {
+                    /*
+                     * En el caso de tratarse de un usuario sin perfil de administrador.
+                     */
+                    if($condicionales=="")
+                        {
+                            //Cargar la cadena de consulta por default.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND (idResponsable=".$_SESSION['idEmpleado']." OR idSubalterno=".$_SESSION['idEmpleado'].") ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            }
+                    else
+                        {
+                            //En caso de contar con el criterio de filtrado.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " AND (idResponsable=".$_SESSION['idEmpleado']." OR idSubalterno=".$_SESSION['idEmpleado'].") ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            }                    
+                    }            
+            }
+    else
         {
-            //En caso de contar con el criterio de filtrado.
-            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
-            }  
+            /*
+             * Considerando que el usuario no sea un empleado registrado, se establece la carga
+             * convencional de los programas. Tomando anticipado que se trata de un administrador.
+             */
+            if($_SESSION['nivel'] == 'Administrador')
+                {            
+                    if($condicionales=="")
+                        {
+                            //Cargar la cadena de consulta por default.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            }
+                    else
+                        {
+                            //En caso de contar con el criterio de filtrado.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            }
+                    }
+            else
+                {
+                    $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=-1 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                    }                                
+            }              
     
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
         
@@ -89,4 +145,3 @@
 
     constructor($dataset,$sufijo); //Llamada a la funcion principal de la pagina.
 ?>
-
