@@ -119,11 +119,31 @@
                              * se habilitan las opciones correspondientes al manejo en productivo de la
                              * planeacion y el consumo de gasolina.
                              */
-                            $operProduccion = '
-                                                <ul class="navegador">
-                                                    <li class="contexto_menu"><a href="#" class="desplegable" title="Operaciones"><img src="./img/operaciones.png" width="35" height="35"/>Operaciones</a>
-                                                        <ul class="subnavegador">
-                                                            <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'\',\'escritorio\');"><img src="./img/vehconsumo.png" width="35" height="35"/>Consumo de Combustible</a></li>
+                            if($nivel == 'Operador')
+                                {
+                                    /*
+                                     * Solo para el caso que el usuario sea operador, se permite la visualización
+                                     * de la opción de carga y edición de programas.
+                                     */
+                                    $operProduccion = '
+                                                        <ul class="navegador">
+                                                        <li class="contexto_menu"><a href="#" class="desplegable" title="Operaciones"><img src="./img/operaciones.png" width="35" height="35"/>Operaciones</a>
+                                                            <ul class="subnavegador">
+                                                            <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img src="./img/programas.png" width="35" height="35"/>Programas</a></li>';                                    
+                                    }
+                            else
+                                {
+                                    /*
+                                     * En caso contrario, solo se carga el perfil general.
+                                     */
+                                    $operProduccion = '
+                                                        <ul class="navegador">
+                                                        <li class="contexto_menu"><a href="#" class="desplegable" title="Operaciones"><img src="./img/operaciones.png" width="35" height="35"/>Operaciones</a>
+                                                            <ul class="subnavegador">';
+                                    }
+                                    
+
+                                    $operProduccion.= '     <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'\',\'escritorio\');"><img src="./img/vehconsumo.png" width="35" height="35"/>Consumo de Combustible</a></li>
                                                             <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'\',\'escritorio\');"><img src="./img/planeacion.png" width="35" height="35"/>Planeacion Estrategica</a></li>
                                                         </ul>
                                                     </li>
@@ -140,16 +160,33 @@
                              * En caso que el usuario cuente con permisos de Lector o en su defecto sea un administrador del
                              * sistema.
                              */
-                            $lectorMenu = '
-                                            <ul class="navegador">
-                                                <li class="contexto_menu"><a href="#" onclick="cargar(\'./php/frontend/utilidades/graficos.php\',\'\',\'escritorio\');"><img src="./img/graficas.png" width="35" height="35"/>Graficas</a></li>
-                                            </ul>
-                                            ';
+                            if($nivel=='Lector')
+                                {
+                                    /*
+                                     * Solo para el caso que el usuario sea lector, se permite la visualización
+                                     * de la opción de consulta de programacion.
+                                     */
+                                    $lectorMenu = '
+                                                    <ul class="navegador">
+                                                    <li class="contexto_menu"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'\',\'escritorio\');"><img src="./img/planeacion.png" width="35" height="35"/>Planeacion Estrategica</a></li>';                                                                        
+                                    }
+                            else
+                                {
+                                    /*
+                                     * En caso contrario, solo se carga el perfil general.
+                                     */
+                                    $lectorMenu = '
+                                                    <ul class="navegador">
+                                                    ';                                                                        
+                                    }                                    
+
+                            $lectorMenu.= '         <li class="contexto_menu"><a href="#" onclick="cargar(\'./php/frontend/utilidades/graficos.php\',\'\',\'escritorio\');"><img src="./img/graficas.png" width="35" height="35"/>Graficas</a></li>
+                                                    </ul>';
                             
                             $menuBody = $menuBody.$lectorMenu;
                             
-                            }
-                            
+                            }                            
+                                   
                      $menu = '
                                     <ul class="navegador">
                                         <li class="contexto_menu"><a href="#" onclick=""><img src="./img/enviar.png" width="35" height="35"/>Contacto</a></li>
@@ -159,7 +196,7 @@
                                     <div id= "infousuario" class="infousuario">
                                         <table>
                                             <tr><td id= "tdUsuario" class= "tdInfoUsuario">Usuario: '.$usuario.'</td></tr>
-                                            <tr><td id= "tdNivel" class= "tdInfoUsuario">Nivel: '.$nivel.'</td></tr>
+                                            <tr><td id= "tdNivel" class= "tdInfoUsuario">Nivel: '.$nivel.'</td></tr>                                            
                                         </table>
                                     </div>
                                 </div>                                
@@ -312,7 +349,25 @@
                             session_start(); //Se inicia la sesi�n del usuario en el sistema.
                             //Almacenamos el nombre de usuario en una variable de sesi�n usuario.
                             $_SESSION['usuario'] = $usuario;
-                            $_SESSION['nivel'] = $row['Nivel'];                            
+                            $_SESSION['nivel'] = $row['Nivel'];
+                            /*
+                             * Se obtiene la referencia de empleado, en caso que la cuenta de usuario
+                             * este asociada a un empleado registrado en sistema. Con la finalidad de
+                             * controlar la visualización y edición de programas.
+                             */ 
+                            $consulta= 'SELECT *FROM ((opEmpleados INNER JOIN catColonias ON catColonias.idColonia = opEmpleados.idColonia) INNER JOIN relUsrEmp ON relUsrEmp.idEmpleado = opEmpleados.idEmpleado) LEFT JOIN catUsuarios ON catUsuarios.idUsuario = relUsrEmp.idUsuario WHERE catUsuarios.idUsuario='.$row['idUsuario'];
+                            $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+                            $row = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $_SESSION['idEmpleado'] = 0; //Valor por default, sera cero mientras que no se localice referencias de empleado.
+                            
+                            if($row)
+                                {
+                                    /*
+                                     * En el caso que el usuario que ingreso al sistema, sea un empleado registrado,
+                                     * se captura su id para la gestión de edición de programas.
+                                     */
+                                    $_SESSION['idEmpleado'] = $row['idEmpleado']; //Se obtiene el id del empleado.
+                                    }                                                       
                             }
                     else
                         {
