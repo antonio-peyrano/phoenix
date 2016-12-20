@@ -110,6 +110,20 @@
                             
                             $menuBody = $menuBody.$adminPlan;
                             
+                            $adminFODA = '
+                                            <ul class="navegador">
+                                                <li class="contexto_menu"><a href="#" class="desplegable" title="F.O.D.A."><img src="./img/foda.gif" width="35" height="35"/>F.O.D.A</a>
+                                                    <ul class="subnavegador">
+                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/cedulas/busCedulas.php\',\'\',\'escritorio\');"><img src="./img/cedula.png" width="35" height="35"/>Cedulas</a></li>
+                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'escritorio\');"><img src="./img/factores.png" width="35" height="35"/>Factores</a></li>                                
+                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'escritorio\');"><img src="./img/escala.png" width="35" height="35"/>Escalas</a></li>
+                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'escritorio\');"><img src="./img/evaluacion.png" width="35" height="35"/>Evaluaciones</a></li>                                
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            ';
+                            
+                            $menuBody = $menuBody.$adminFODA; 
                             }
                             
                      if(($nivel == 'Operador')||($nivel == 'Administrador'))
@@ -246,7 +260,11 @@
                                 <script type="text/javascript" src="./js/consulplan/jsconsulplan.js"></script>
                                 <script type="text/javascript" src="./js/gasconsumo/jsgasconsumo.js"></script>
                                 <script type="text/javascript" src="./js/graficas/jsgraficas.js"></script>
-                                <script type="text/javascript" src="./js/fichas/jsfichas.js"></script>                                               
+                                <script type="text/javascript" src="./js/fichas/jsfichas.js"></script>
+                                <script type="text/javascript" src="./js/foda/cedulas/jscedulas.js"></script>
+                                <script type="text/javascript" src="./js/foda/factores/jsfactores.js"></script>
+                                <script type="text/javascript" src="./js/foda/escalas/jsescalas.js"></script>
+                                <script type="text/javascript" src="./js/foda/evaluaciones/jsevaluaciones.js"></script>                                               
                                 ';
                     return $head;                   
                     }
