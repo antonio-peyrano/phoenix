@@ -159,6 +159,7 @@
 
                                     $operProduccion.= '     <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'\',\'escritorio\');"><img src="./img/vehconsumo.png" width="35" height="35"/>Consumo de Combustible</a></li>
                                                             <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'\',\'escritorio\');"><img src="./img/planeacion.png" width="35" height="35"/>Planeacion Estrategica</a></li>
+                                                            <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/usrevafoda/opUsrFODA.php\',\'\',\'escritorio\');"><img src="./img/foda.gif" width="35" height="35"/>Evaluacion FODA</a></li>
                                                         </ul>
                                                     </li>
                                                 </ul>                                
@@ -264,7 +265,8 @@
                                 <script type="text/javascript" src="./js/foda/cedulas/jscedulas.js"></script>
                                 <script type="text/javascript" src="./js/foda/factores/jsfactores.js"></script>
                                 <script type="text/javascript" src="./js/foda/escalas/jsescalas.js"></script>
-                                <script type="text/javascript" src="./js/foda/evaluaciones/jsevaluaciones.js"></script>                                               
+                                <script type="text/javascript" src="./js/foda/evaluaciones/jsevaluaciones.js"></script>
+                                <script type="text/javascript" src="./js/usrevafoda/jsusrevafoda.js"></script>                                               
                                 ';
                     return $head;                   
                     }

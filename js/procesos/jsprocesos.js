@@ -94,7 +94,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,10) == "pro_buscar")
     		{
     			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
-    			cargar('./php/frontend/procesos/catProcesos.php','?nomproceso='+document.getElementById('nomproceso').value.toString(),'busRes');
+    			cargar('./php/frontend/procesos/catProcesos.php','?nomproceso='+document.getElementById('nomproceso').value.toString()+'&nomidentidad='+document.getElementById('nomidentidad').value.toString(),'busRes');
     			}
     });                 
 });
