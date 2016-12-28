@@ -173,10 +173,10 @@
             //$mail->SMTPSecure = "ssl";
             $mail->Host = "smtp.gmail.com"; //servidor smtp
             $mail->Port = 587; //puerto smtp de gmail
-            $mail->Username = 'soporte.peyrano@gmail.com';
-            $mail->Password = 'abadiaroja';
+            $mail->Username = 'tucorreo@domain.com';
+            $mail->Password = 'tu clave';
             $mail->FromName = 'Soporte de Phoenix';
-            $mail->From = 'antonio.peyrano@gmail.com';//email de remitente desde donde se env�a el correo.
+            $mail->From = 'tucorreo@domain.com';//email de remitente desde donde se env�a el correo.
             $mail->AddAddress($correoElectronico, $Usuario);//destinatario que va a recibir el correo
             //$mail->AddCC('x', 'Sxd');//env�a una copia del correo a la direcci�n especificada
             $mail->Subject = 'Recuperar contrase�a';
