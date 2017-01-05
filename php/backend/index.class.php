@@ -36,7 +36,27 @@
                             $this->validar_usuario();                            
                             }                    
                     }
-            
+
+            public function headItem($class, $onClick, $imgURL, $caption)
+                {
+                    /*
+                     * Esta funcion genera la linea HTML que corresponde a un elemento de la lista de
+                     * menu en pantalla.
+                     */
+                    $item='<li class="'.$class.'"><a href="#" class="desplegable" onclick="'.$onClick.'"><img src="'.$imgURL.'" width="35" height="35">'.$caption.'</a>';
+                    return $item;
+                    }
+
+            public function bodyItem($class, $onClick, $imgURL, $caption)
+                {
+                    /*
+                     * Esta funcion genera la linea HTML que corresponde a un elemento de la lista de
+                     * menu en pantalla.
+                     */
+                     $item='<li class="'.$class.'"><a href="#" onclick="'.$onClick.'"><img src="'.$imgURL.'" width="35" height="35">'.$caption.'</a></li>';
+                     return $item;
+                    }
+                                        
             private function drawMenu()
                 {
                     /*
@@ -66,24 +86,25 @@
                              * se habilitan las opciones de configuracion del sistema, a nivel de catalogos
                              * generales.
                              */
+                            
                             $adminConfig = '
-                                            <ul class="navegador">
-                                                <li class="contexto_menu"><a href="#" class="desplegable" title="Configuracion"><img src="./img/config.png" width="35" height="35"/>Parametros Generales</a>
-                                                    <ul class="subnavegador">
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/configuracion/busConfiguraciones.php\',\'\',\'escritorio\');"><img src="./img/configsys.png" width="35" height="35"/>Conf. Sistema</a></li>                         
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'escritorio\');"><img src="./img/unidades.png" width="35" height="35"/>Unidades</a></li>                                
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/colonias/busColonias.php\',\'\',\'escritorio\');"><img src="./img/colonias.png" width="35" height="35"/>Colonias</a></li>                                    
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/usuarios/busUsuarios.php\',\'\',\'escritorio\');"><img src="./img/usuarios.png" width="35" height="35"/>Usuarios</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/usraltas/busSolAltUsr.php\',\'\',\'escritorio\');"><img src="./img/usraltas.png" width="35" height="35"/>Solicitudes de Usuario</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/empleados/busEmpleados.php\',\'\',\'escritorio\');"><img src="./img/empleados.png" width="35" height="35"/>Empleados</a></li>        
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'escritorio\');"><img src="./img/clientes.png" width="35" height="35"/>Clientes</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/entidades/busEntidades.php\',\'\',\'escritorio\');"><img src="./img/entidades.png" width="35" height="35"/>Entidades</a></li>                                
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'escritorio\');"><img src="./img/vehiculos.png" width="35" height="35"/>Vehiculos</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/procesos/busProcesos.php\',\'\',\'escritorio\');"><img src="./img/procesos.png" width="35" height="35"/>Procesos</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'escritorio\');"><img src="./img/indicadores.png" width="35" height="35"/>Indicadores</a></li>        
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/puestos/busPuestos.php\',\'\',\'escritorio\');"><img src="./img/puestos.png" width="35" height="35"/>Puestos</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'escritorio\');"><img src="./img/gasolina.png" width="35" height="35"/>Gasolina</a></li>
-                                                    </ul>
+                                            <ul class="navegador">'.
+                                                $this->headItem("contexto_menu", "", "./img/config.png", "Parametros Generales").
+                                                    '<ul class="subnavegador">'
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/configuracion/busConfiguraciones.php','','escritorio');", "./img/configsys.png", "Conf. Sistema")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/unidades/busUnidades.php','','escritorio');", "./img/unidades.png", "Unidades")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/colonias/busColonias.php','','escritorio');", "./img/colonias.png", "Colonias")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/usuarios/busUsuarios.php','','escritorio');", "./img/usuarios.png", "Usuarios")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/usraltas/busSolAltUsr.php','','escritorio');", "./img/usraltas.png", "Solicitudes de Usuario")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/empleados/busEmpleados.php','','escritorio');", "./img/empleados.png", "Empleados")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/clientes/busClientes.php','','escritorio');", "./img/clientes.png", "Clientes")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/entidades/busEntidades.php','','escritorio');", "./img/entidades.png", "Entidades")                                                                                                                
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/vehiculos/busVehiculos.php','','escritorio');", "./img/vehiculos.png", "Vehiculos")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/procesos/busProcesos.php','','escritorio');", "./img/procesos.png", "Procesos")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/indicadores/busIndicadores.php','','escritorio');", "./img/indicadores.png", "Indicadores")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/puestos/busPuestos.php','','escritorio');", "./img/puestos.png", "Puestos")                                                        
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/gasolina/busGasolina.php','','escritorio');", "./img/gasolina.png", "Gasolina").
+                                                    '</ul>
                                                 </li>
                                             </ul>
                                             ';
@@ -95,15 +116,15 @@
                              * se habilitan las opciones de configuracion del sistema a nivel de planeacion.
                              */
                             $adminPlan = '
-                                            <ul class="navegador">
-                                                <li class="contexto_menu"><a href="#" class="desplegable" title="Planeacion"><img src="./img/paramplan.png" width="35" height="35"/>Parametros de Planeacion</a>
-                                                    <ul class="subnavegador">
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/fichas/busFichaProceso.php\',\'\',\'escritorio\');"><img src="./img/sgc.png" width="35" height="35"/>Fichas de Proceso</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'escritorio\');"><img src="./img/objest.png" width="35" height="35"/>Obj. Estrategico</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/objope/busObjOpe.php\',\'\',\'escritorio\');"><img src="./img/objope.png" width="35" height="35"/>Obj. Operativo</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/estope/busEstOpe.php\',\'\',\'escritorio\');"><img src="./img/estope.png" width="35" height="35"/>Est. Operativa</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img src="./img/programas.png" width="35" height="35"/>Programas</a></li>                                                  
-                                                    </ul>
+                                            <ul class="navegador">'.
+                                                $this->headItem("contexto_menu", "", "./img/paramplan.png", "Parametros de Planeacion").                                                
+                                                    '<ul class="subnavegador">'
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/fichas/busFichaProceso.php','','escritorio');", "./img/sgc.png", "Fichas de Proceso")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/objest/busObjEst.php','','escritorio');", "./img/objest.png", "Obj. Estrategico")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/objope/busObjOpe.php','','escritorio');", "./img/objope.png", "Obj. Operativo")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/estope/busEstOpe.php','','escritorio');", "./img/estope.png", "Est. Operativa")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/programa/busPrograma.php','','escritorio');", "./img/programas.png", "Programas").                                                  
+                                                    '</ul>
                                                 </li>    
                                             </ul>                                
                                             ';
@@ -111,14 +132,14 @@
                             $menuBody = $menuBody.$adminPlan;
                             
                             $adminFODA = '
-                                            <ul class="navegador">
-                                                <li class="contexto_menu"><a href="#" class="desplegable" title="F.O.D.A."><img src="./img/foda.gif" width="35" height="35"/>F.O.D.A</a>
-                                                    <ul class="subnavegador">
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/cedulas/busCedulas.php\',\'\',\'escritorio\');"><img src="./img/cedula.png" width="35" height="35"/>Cedulas</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'escritorio\');"><img src="./img/factores.png" width="35" height="35"/>Factores</a></li>                                
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'escritorio\');"><img src="./img/escala.png" width="35" height="35"/>Escalas</a></li>
-                                                        <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'escritorio\');"><img src="./img/evaluacion.png" width="35" height="35"/>Evaluaciones</a></li>                                
-                                                    </ul>
+                                            <ul class="navegador">'.
+                                                $this->headItem("contexto_menu", "", "./img/foda.gif", "F.O.D.A.").
+                                                    '<ul class="subnavegador">'
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/cedulas/busCedulas.php','','escritorio');", "./img/cedula.png", "Cedulas")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/factores/busFactores.php','','escritorio');", "./img/factores.png", "Factores")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/escalas/busEscalas.php','','escritorio');", "./img/escala.png", "Escalas")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/evaluaciones/busEvaluaciones.php','','escritorio');", "./img/evaluacion.png", "Evaluaciones").                                
+                                                    '</ul>
                                                 </li>
                                             </ul>
                                             ';
@@ -140,10 +161,10 @@
                                      * de la opción de carga y edición de programas.
                                      */
                                     $operProduccion = '
-                                                        <ul class="navegador">
-                                                        <li class="contexto_menu"><a href="#" class="desplegable" title="Operaciones"><img src="./img/operaciones.png" width="35" height="35"/>Operaciones</a>
-                                                            <ul class="subnavegador">
-                                                            <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img src="./img/programas.png" width="35" height="35"/>Programas</a></li>';                                    
+                                                        <ul class="navegador">'.
+                                                            $this->headItem("contexto_menu", "", "./img/operaciones.png", "Operaciones").
+                                                                '<ul class="subnavegador">'
+                                                                    .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/programa/busPrograma.php','','escritorio');", "./img/programas.png", "Programas");                                    
                                     }
                             else
                                 {
@@ -151,16 +172,16 @@
                                      * En caso contrario, solo se carga el perfil general.
                                      */
                                     $operProduccion = '
-                                                        <ul class="navegador">
-                                                        <li class="contexto_menu"><a href="#" class="desplegable" title="Operaciones"><img src="./img/operaciones.png" width="35" height="35"/>Operaciones</a>
-                                                            <ul class="subnavegador">';
+                                                        <ul class="navegador">'.
+                                                            $this->headItem("contexto_menu", "", "./img/operaciones.png", "Operaciones").
+                                                                '<ul class="subnavegador">';
                                     }
                                     
 
-                                    $operProduccion.= '     <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'\',\'escritorio\');"><img src="./img/vehconsumo.png" width="35" height="35"/>Consumo de Combustible</a></li>
-                                                            <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'\',\'escritorio\');"><img src="./img/planeacion.png" width="35" height="35"/>Planeacion Estrategica</a></li>
-                                                            <li class="contexto_submenu"><a href="#" onclick="cargar(\'./php/frontend/foda/usrevafoda/opUsrFODA.php\',\'\',\'escritorio\');"><img src="./img/foda.gif" width="35" height="35"/>Evaluacion FODA</a></li>
-                                                        </ul>
+                                    $operProduccion.=   $this->bodyItem("contexto_submenu", "cargar('./php/frontend/gasconsumo/opGasConsumo.php','','escritorio');", "./img/vehconsumo.png", "Consumo de Combustibles")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/consulplan/conObjEst.php','','escritorio');", "./img/planeacion.png", "Planeacion Estrategica")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/usrevafoda/opUsrFODA.php','','escritorio');", "./img/foda.gif", "Evaluacion FODA").
+                                                        '</ul>
                                                     </li>
                                                 </ul>                                
                                                 ';
@@ -182,8 +203,8 @@
                                      * de la opción de consulta de programacion.
                                      */
                                     $lectorMenu = '
-                                                    <ul class="navegador">
-                                                    <li class="contexto_menu"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'\',\'escritorio\');"><img src="./img/planeacion.png" width="35" height="35"/>Planeacion Estrategica</a></li>';                                                                        
+                                                    <ul class="navegador">'.
+                                                    $this->bodyItem("contexto_menu", "cargar('./php/frontend/consulplan/conObjEst.php','','escritorio');", "./img/planeacion.png", "Planeacion Estrategica");
                                     }
                             else
                                 {
@@ -195,8 +216,8 @@
                                                     ';                                                                        
                                     }                                    
 
-                            $lectorMenu.= '         <li class="contexto_menu"><a href="#" onclick="cargar(\'./php/frontend/utilidades/graficos.php\',\'\',\'escritorio\');"><img src="./img/graficas.png" width="35" height="35"/>Graficas</a></li>
-                                                    </ul>';
+                            $lectorMenu.=           $this->bodyItem("contexto_menu", "cargar('./php/frontend/utilidades/graficos.php','','escritorio');", "./img/graficas.png", "Graficas").
+                                                    '</ul>';
                             
                             $menuBody = $menuBody.$lectorMenu;
                             
