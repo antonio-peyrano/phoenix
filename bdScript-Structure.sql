@@ -1,6 +1,6 @@
 /*
 Created		02/11/2015
-Modified		25/12/2016
+Modified		28/01/2017
 Project		
 Model		
 Company		
@@ -712,15 +712,18 @@ Create table opCedulas (
 	idEntidad Int NOT NULL,
 	Folio Varchar(50) NOT NULL,
 	Fecha Varchar(50) NOT NULL,
+	Horizonte Float(4,2) NOT NULL,
 	Status Int NOT NULL DEFAULT 0,
  Index idxCedula (idCedula),
  Primary Key (idCedula)) ENGINE = MyISAM;
 
 Create table opResParFoda (
 	idResParFoda Int NOT NULL AUTO_INCREMENT,
-	idEvaluacion Int NOT NULL,
 	idFactor Int NOT NULL,
 	idEscala Int NOT NULL,
+	idEvaluacion Int NOT NULL,
 	Status Int NOT NULL DEFAULT 0,
  Index idxResParFoda (idResParFoda),
  Primary Key (idResParFoda)) ENGINE = MyISAM;
+
+

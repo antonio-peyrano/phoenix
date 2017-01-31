@@ -21,7 +21,7 @@
     
     $cntrlVar = 0;
     
-    if(isset($_GET['id'])&&isset($_GET['folio'])&&isset($_GET['identfoda'])&&isset($_GET['fecha'])&&isset($_GET['status']))
+    if(isset($_GET['id'])&&isset($_GET['folio'])&&isset($_GET['identfoda'])&&isset($_GET['fecha'])&&isset($_GET['horizonte'])&&isset($_GET['status']))
         {
             /*
              * En caso de no ocurrir un error con el paso de variables por
@@ -31,6 +31,7 @@
             $idEntidad = $_GET['identfoda'];
             $Folio = $_GET['folio'];
             $Fecha = $_GET['fecha'];
+            $Horizonte = $_GET['horizonte'];
             $Status = $_GET['status'];
             $cntrlVar=1; //Valor de control (1=Asignacion correcta /0=Asignacion incorrecta)                    
             }
@@ -48,14 +49,14 @@
                     /*
                      * En caso que la acción ejecutada sea una edición.
                      */
-                    $consulta = 'UPDATE opCedulas SET Folio=\''.$Folio.'\', Fecha=\''.$Fecha.'\', idEntidad=\''.$idEntidad.'\', Status=\''.$Status.'\' WHERE idCedula='.$idCedula; //Se establece el modelo de consulta de datos.
+                    $consulta = 'UPDATE opCedulas SET Folio=\''.$Folio.'\', Fecha=\''.$Fecha.'\', idEntidad=\''.$idEntidad.'\', horizonte=\''.$Horizonte.'\', Status=\''.$Status.'\' WHERE idCedula='.$idCedula; //Se establece el modelo de consulta de datos.
                     }
             else
                 {
                     /*
                      * En caso que la acción ejecutada sea una creación.
                      */
-                    $consulta = 'INSERT INTO opCedulas (Folio, idEntidad, Fecha) VALUES ('.'\''.$Folio.'\',\''.$idEntidad.'\',\''.$Fecha.'\')'; //Se establece el modelo de consulta de datos.
+                    $consulta = 'INSERT INTO opCedulas (Folio, idEntidad, Horizonte, Fecha) VALUES ('.'\''.$Folio.'\',\''.$idEntidad.'\',\''.$Horizonte.'\',\''.$Fecha.'\')'; //Se establece el modelo de consulta de datos.
                     }
             
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.

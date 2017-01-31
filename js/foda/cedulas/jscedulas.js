@@ -27,6 +27,12 @@ function guardarCedula(url,parametro){
 			error= error+1;
 			}
 	
+	if(document.getElementById("Horizonte").value.toString() == "")
+		{
+			//En caso de no ocurrir un error de validación, se asigna el valor de paso.
+			error= error+1;
+			}
+	
 	if(error > 0)
 		{
 			/*
@@ -49,9 +55,8 @@ function habCedula()
 		 * Esta función habilita los controles del formulario de colonia.
 		 */
 
-		//document.getElementById('Factor').disabled = false;
-		//document.getElementById('Tipo').disabled = false;
 		document.getElementById('idEntfoda').disabled = false;
+		document.getElementById('Horizonte').disabled = false;
 		}
 
 /*

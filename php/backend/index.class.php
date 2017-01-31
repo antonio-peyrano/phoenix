@@ -180,7 +180,8 @@
 
                                     $operProduccion.=   $this->bodyItem("contexto_submenu", "cargar('./php/frontend/gasconsumo/opGasConsumo.php','','escritorio');", "./img/vehconsumo.png", "Consumo de Combustibles")
                                                         .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/consulplan/conObjEst.php','','escritorio');", "./img/planeacion.png", "Planeacion Estrategica")
-                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/usrevafoda/opUsrFODA.php','','escritorio');", "./img/foda.gif", "Evaluacion FODA").
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/usrevafoda/opUsrFODA.php','','escritorio');", "./img/foda.gif", "Evaluacion FODA")
+                                                        .$this->bodyItem("contexto_submenu", "cargar('./php/frontend/foda/resfoda/opResFODA.php','','escritorio');", "./img/resfoda.png", "Resultados FODA").
                                                         '</ul>
                                                     </li>
                                                 </ul>                                
@@ -252,6 +253,7 @@
                                 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
                                 <link rel="stylesheet" href="./css/menuStyle.css" title="style css" type="text/css" media="screen" charset="utf-8"></style>
                                 <link rel="stylesheet" href="./css/divLogin.css"></style>
+                                <link rel="stylesheet" href="./css/foda.css"></style>
                                 <link rel="stylesheet" href="./css/jssor.css"></style>
                                 <link rel="icon" type="image/png" href="./img/icologo.png" />
                                 <title>Micrositio</title>
@@ -287,7 +289,8 @@
                                 <script type="text/javascript" src="./js/foda/factores/jsfactores.js"></script>
                                 <script type="text/javascript" src="./js/foda/escalas/jsescalas.js"></script>
                                 <script type="text/javascript" src="./js/foda/evaluaciones/jsevaluaciones.js"></script>
-                                <script type="text/javascript" src="./js/usrevafoda/jsusrevafoda.js"></script>                                               
+                                <script type="text/javascript" src="./js/usrevafoda/jsusrevafoda.js"></script>
+                                <script type="text/javascript" src="./js/foda/resultados/jsresfoda.js"></script>                                               
                                 ';
                     return $head;                   
                     }

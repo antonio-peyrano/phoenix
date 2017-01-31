@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-12-2016 a las 04:44:58
+-- Tiempo de generación: 31-01-2017 a las 02:51:57
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -374,6 +374,7 @@ CREATE TABLE `opCedulas` (
   `idEntidad` int(11) NOT NULL,
   `Folio` varchar(50) COLLATE utf8_bin NOT NULL,
   `Fecha` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Horizonte` float(4,2) NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -381,10 +382,10 @@ CREATE TABLE `opCedulas` (
 -- Volcado de datos para la tabla `opCedulas`
 --
 
-INSERT INTO `opCedulas` (`idCedula`, `idEntidad`, `Folio`, `Fecha`, `Status`) VALUES
-(1, 1, 'CEF-15122016-051720-1', '15/12/2016 05:17:20pm', 0),
-(2, -2, 'CEF-15122016-054454-175', '15/12/2016 05:44:54pm', 0),
-(3, 2, 'CEF-15122016-054536-221', '15/12/2016 05:45:36pm', 0);
+INSERT INTO `opCedulas` (`idCedula`, `idEntidad`, `Folio`, `Fecha`, `Horizonte`, `Status`) VALUES
+(1, 1, 'CEF-15122016-051720-1', '15/12/2016 05:17:20pm', 3.00, 0),
+(2, -2, 'CEF-15122016-054454-175', '15/12/2016 05:44:54pm', 2.00, 0),
+(3, 2, 'CEF-15122016-054536-221', '15/12/2016 05:45:36pm', 5.00, 0);
 
 -- --------------------------------------------------------
 
@@ -885,10 +886,10 @@ CREATE TABLE `opEscalas` (
 --
 
 INSERT INTO `opEscalas` (`idEscala`, `idCedula`, `Escala`, `Ponderacion`, `Status`) VALUES
-(1, 2, 'Excelente', 5.00, 0),
-(2, 2, 'Bien', 4.00, 0),
-(3, 2, 'Regular', 3.00, 0),
-(4, 2, 'Pesimo', 1.00, 0);
+(1, 1, 'Excelente', 5.00, 0),
+(2, 1, 'Bien', 4.00, 0),
+(3, 1, 'Regular', 3.00, 0),
+(4, 1, 'Pesimo', 1.00, 0);
 
 -- --------------------------------------------------------
 
@@ -910,7 +911,7 @@ CREATE TABLE `opEvaluaciones` (
 --
 
 INSERT INTO `opEvaluaciones` (`idEvaluacion`, `idCedula`, `idEmpleado`, `Folio`, `Fecha`, `Status`) VALUES
-(1, 1, 4, 'EVF-19122016-125040-53', '19/12/2016 12:50:40am', 0);
+(1, 1, 4, 'EVF-19122016-125040-53', '19/12/2016 12:50:40am', 3);
 
 -- --------------------------------------------------------
 
@@ -956,7 +957,7 @@ CREATE TABLE `opFactores` (
 --
 
 INSERT INTO `opFactores` (`idFactor`, `idCedula`, `Factor`, `Tipo`, `Status`) VALUES
-(1, 2, 'El endeudamiento con proveedores', 'Interno', 0),
+(1, 1, 'El endeudamiento con proveedores', 'Interno', 0),
 (2, 1, 'El tipo de cambio peso frente al dolar', 'Externo', 0),
 (3, 2, 'Resistencia al cambio', 'Interno', 0),
 (4, 2, 'Transparencia en rendicion de cuentas', 'Interno', 0),
@@ -1243,6 +1244,28 @@ CREATE TABLE `opProgramas` (
 
 INSERT INTO `opProgramas` (`idPrograma`, `idEntidad`, `idObjEst`, `idObjOpe`, `idEstOpe`, `idResponsable`, `idSubalterno`, `Nomenclatura`, `Programa`, `Monto`, `Periodo`, `Status`) VALUES
 (1, 2, 1, 1, 1, 1, 3, '1.1.1.1', 'PavimentaciÃ³n de calles acceso a colonia Adriana Gonzalez de Hernandez', 50000, '2016', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `opResParFoda`
+--
+
+CREATE TABLE `opResParFoda` (
+  `idResParFoda` int(11) NOT NULL,
+  `idEvaluacion` int(11) NOT NULL,
+  `idFactor` int(11) NOT NULL,
+  `idEscala` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `opResParFoda`
+--
+
+INSERT INTO `opResParFoda` (`idResParFoda`, `idEvaluacion`, `idFactor`, `idEscala`, `Status`) VALUES
+(1, 1, 1, 3, 0),
+(2, 1, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1725,6 +1748,13 @@ ALTER TABLE `opProgramas`
   ADD KEY `idxPrograma` (`idPrograma`);
 
 --
+-- Indices de la tabla `opResParFoda`
+--
+ALTER TABLE `opResParFoda`
+  ADD PRIMARY KEY (`idResParFoda`),
+  ADD KEY `idxResParFoda` (`idResParFoda`);
+
+--
 -- Indices de la tabla `opUsrTemp`
 --
 ALTER TABLE `opUsrTemp`
@@ -1997,6 +2027,11 @@ ALTER TABLE `opProgPro`
 --
 ALTER TABLE `opProgramas`
   MODIFY `idPrograma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `opResParFoda`
+--
+ALTER TABLE `opResParFoda`
+  MODIFY `idResParFoda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `opUsrTemp`
 --
