@@ -19,8 +19,24 @@
     global $username, $password, $servername, $dbname;
     
     $condicionales = ''; //Variable de control de condiciones de clausula select.
-    $sufijo= "col_"; //Variable de control de sufijo de identificadores.
+    $sufijo = "col_"; //Variable de control de sufijo de identificadores.
+    $Inicio = 0;
+    $Pagina = 0;
+    $DisplayRow = 10;
     
+    if(isset($_GET['pagina']))
+        {
+            //Se proporciona referencia de pagina a mostrar.
+            $Pagina = $_GET['pagina']; 
+            $inicio = ($Pagina-1)*$DisplayRow;
+            }
+    else
+        {
+            //En caso de no ser proporcionada la pagina.
+            $inicio = 0;
+            $Pagina = 1;
+            }            
+            
     if(isset($_GET['nomcolonia']))
         {
             /*
@@ -76,14 +92,14 @@
     if($condicionales=="")
         {
             //Cargar la cadena de consulta por default.
-            $consulta= "SELECT idColonia, Colonia, CodigoPostal, Ciudad, Estado, Status FROM catColonias WHERE Status=0"; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idColonia, Colonia, CodigoPostal, Ciudad, Estado, Status FROM catColonias WHERE Status=0"." limit ".$inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     else 
         {
             //En caso de contar con el criterio de filtrado.
-            $consulta= "SELECT idColonia, Colonia, CodigoPostal, Ciudad, Estado, Status FROM catColonias WHERE Status=0 AND " .$condicionales; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idColonia, Colonia, CodigoPostal, Ciudad, Estado, Status FROM catColonias WHERE Status=0 AND " .$condicionales." limit ".$inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
-    
+
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
         
     $column_names= ""; //Variable de control para los nombres de columnas a mostrarse en el grid.

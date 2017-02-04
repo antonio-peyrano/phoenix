@@ -118,7 +118,11 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "cli_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgcliente').value = document.getElementById('nomcliente').value.toString();
+				document.getElementById('pgpaterno').value = document.getElementById('patcliente').value.toString();
+				document.getElementById('pgmaterno').value = document.getElementById('matcliente').value.toString();
+				document.getElementById('pgcolonia').value = document.getElementById('colcliente').value.toString();
     			cargar('./php/frontend/clientes/catClientes.php','?nomcliente='+document.getElementById('nomcliente').value.toString()+'&patcliente='+document.getElementById('patcliente').value.toString()+'&matcliente='+document.getElementById('matcliente').value.toString()+'&colcliente='+document.getElementById('colcliente').value.toString(),'busRes');
     			}
     });                 
@@ -189,3 +193,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "cli_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/clientes/catClientes.php','?nomcliente='+document.getElementById('pgcliente').value.toString()+'&patcliente='+document.getElementById('pgpaterno').value.toString()+'&matcliente='+document.getElementById('pgmaterno').value.toString()+'&colcliente='+document.getElementById('pgcolonia').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "cli_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/clientes/catClientes.php','?nomcliente='+document.getElementById('pgcliente').value.toString()+'&patcliente='+document.getElementById('pgpaterno').value.toString()+'&matcliente='+document.getElementById('pgmaterno').value.toString()+'&colcliente='+document.getElementById('pgcolonia').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

@@ -62,7 +62,10 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "oop_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgobjope').value = document.getElementById('nomobjope').value.toString();
+				document.getElementById('pgnomenclatura').value = document.getElementById('objopenomenclatura').value.toString();
+				document.getElementById('pgperiodo').value = document.getElementById('objopeperiodo').value.toString();
     			cargar('./php/frontend/objope/catObjOpe.php','?nomobjope='+document.getElementById('nomobjope').value.toString()+'&objopenomenclatura='+document.getElementById('objopenomenclatura').value.toString()+'&objopeperiodo='+document.getElementById('objopeperiodo').value.toString(),'busRes');
     			}
     });                 
@@ -133,3 +136,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "oop_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+			    			cargar('./php/frontend/objope/catObjOpe.php','?nomobjope='+document.getElementById('pgobjope').value.toString()+'&objopenomenclatura='+document.getElementById('pgnomenclatura').value.toString()+'&objopeperiodo='+document.getElementById('pgperiodo').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "oop_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+			    			cargar('./php/frontend/objope/catObjOpe.php','?nomobjope='+document.getElementById('pgobjope').value.toString()+'&objopenomenclatura='+document.getElementById('pgnomenclatura').value.toString()+'&objopeperiodo='+document.getElementById('pgperiodo').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

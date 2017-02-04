@@ -290,7 +290,8 @@
                             <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
                         </head>
                         <body>
-                            <div style=display:none>
+                            <div style="display:none">
+                                <input type= "text" id= "pagina" value= "1">
                                 <input type= "text" id= "idActividad" value= "'.$Registro['idActividad'].'">
                                 <input type= "text" id= "idPrograma" value= "'.$idPrograma.'">
                                 <input type= "text" id= "MontoAcumulado" value= "'.$MontoAcumulado.'">

@@ -30,6 +30,7 @@
             
             private $dataset = null; //Objeto de gestion para la tupla de datos.
             private $idEntity = null; //Variable de gestion para el ID de control de los registros en la tupla.
+            private $DisplayRow = 10; //Cantidad de registros a observar.
              
             function __construct($dataset, $titulo, $sufijo, $idEntity)
                 {
@@ -87,7 +88,7 @@
                      */
                     $tupla = @mysql_fetch_array($this->dataset,MYSQL_ASSOC); //Se organiza la tupla para su manipulacion, haciendo un corrimiento al siguiente elemento.
                     $rowCount = 1; //Se inicializa la variable de conteo de filas para su despliegue como información.                    
-                    $totRows = mysql_num_rows($this->dataset);
+                    $totRows = @mysql_num_rows($this->dataset);
                     $response = null; //Se inicializa la cadena de codigo HTML.
                     
                     while($tupla)
@@ -148,7 +149,7 @@
                      * tabla en pantalla.
                      */
                     $response = $response.'<tr class= "dgTotRowsTR"><td alignt= "left" colspan= '.$this->totColumn.'"><img id="'.$this->sufijo.'add" align= "right" src= "./img/grids/add.png" width= "25" height= "25" alt= "Agregar"/></td></tr>';
-                    $response = $response.'<tr class= "dgPagRow"><td align= "left" colspan= "'.$this->totColumn.'">Visualizando ' .($rowCount-1). ' registros</td></tr>';
+                    $response = $response.'<tr class= "dgPagRow"><td align= "left" colspan= "'.$this->totColumn.'">Visualizando ' .($rowCount-1). ' registros <img  align="right" id="'.$this->sufijo.'Previous_'.$this->DisplayRow.'" src="./img/grids/previous.png" width="25" height="25" title="Previos '.$this->DisplayRow.'"><img align="right" id="'.$this->sufijo.'Next_'.$this->DisplayRow.'"src="./img/grids/next.png" width="25" height="25" title="Siguientes '.$this->DisplayRow.'"></td></tr>';
                     $response = $response.'</table>';
                     $response = $response.'</div>';                                          
                     return $response;

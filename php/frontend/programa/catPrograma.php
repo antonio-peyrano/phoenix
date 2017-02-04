@@ -21,7 +21,23 @@
     
     $condicionales = ''; //Variable de control de condiciones de clausula select.
     $sufijo= "prg_"; //Variable de control de sufijo de identificadores.
+    $Inicio = 0;
+    $Pagina = 0;
+    $DisplayRow = 10;
     
+    if(isset($_GET['pagina']))
+        {
+            //Se proporciona referencia de pagina a mostrar.
+            $Pagina = $_GET['pagina'];
+            $Inicio = ($Pagina-1)*$DisplayRow;
+            }
+    else
+        {
+            //En caso de no ser proporcionada la pagina.
+            $Inicio = 0;
+            $Pagina = 1;
+            }
+        
     if(isset($_GET['nomprograma']))
         {
             /*
@@ -65,12 +81,12 @@
                     if($condicionales=="")
                     {
                         //Cargar la cadena de consulta por default.
-                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                     }
                     else
                     {
                         //En caso de contar con el criterio de filtrado.
-                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                     }                    
                     }
             else
@@ -81,12 +97,12 @@
                     if($condicionales=="")
                         {
                             //Cargar la cadena de consulta por default.
-                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND (idResponsable=".$_SESSION['idEmpleado']." OR idSubalterno=".$_SESSION['idEmpleado'].") ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND (idResponsable=".$_SESSION['idEmpleado']." OR idSubalterno=".$_SESSION['idEmpleado'].") ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                             }
                     else
                         {
                             //En caso de contar con el criterio de filtrado.
-                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " AND (idResponsable=".$_SESSION['idEmpleado']." OR idSubalterno=".$_SESSION['idEmpleado'].") ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " AND (idResponsable=".$_SESSION['idEmpleado']." OR idSubalterno=".$_SESSION['idEmpleado'].") ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                             }                    
                     }            
             }
@@ -101,17 +117,17 @@
                     if($condicionales=="")
                         {
                             //Cargar la cadena de consulta por default.
-                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                             }
                     else
                         {
                             //En caso de contar con el criterio de filtrado.
-                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                             }
                     }
             else
                 {
-                    $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=-1 ORDER BY idPrograma"; //Se establece el modelo de consulta de datos.
+                    $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=-1 ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
                     }                                
             }              
     

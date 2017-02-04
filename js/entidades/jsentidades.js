@@ -55,7 +55,9 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "ent_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgentidad').value = document.getElementById('nomentidad').value.toString();
+				document.getElementById('pgidtentidad').value = document.getElementById('nomidtentidad').value.toString();    		
     			cargar('./php/frontend/entidades/catEntidades.php','?nomentidad='+document.getElementById('nomentidad').value.toString()+'&nomidtentidad='+document.getElementById('nomidtentidad').value.toString(),'busRes');
     			}
     });                 
@@ -126,3 +128,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "ent_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/entidades/catEntidades.php','?nomentidad='+document.getElementById('pgentidad').value.toString()+'&nomidtentidad='+document.getElementById('pgidtentidad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "ent_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/entidades/catEntidades.php','?nomentidad='+document.getElementById('pgentidad').value.toString()+'&nomidtentidad='+document.getElementById('pgidtentidad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

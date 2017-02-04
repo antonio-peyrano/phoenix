@@ -10,7 +10,7 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
+    //header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
@@ -20,7 +20,23 @@
     
     $condicionales = ''; //Variable de control de condiciones de clausula select.
     $sufijo= "ffa_"; //Variable de control de sufijo de identificadores.
+    $Inicio = 0;
+    $Pagina = 0;
+    $DisplayRow = 10;
     
+    if(isset($_GET['pagina']))
+        {
+            //Se proporciona referencia de pagina a mostrar.
+            $Pagina = $_GET['pagina'];
+            $Inicio = ($Pagina-1)*$DisplayRow;
+            }
+    else
+        {
+            //En caso de no ser proporcionada la pagina.
+            $Inicio = 0;
+            $Pagina = 1;
+            }
+        
     if(isset($_GET['ffafactor']))
         {
             /*
@@ -82,12 +98,12 @@
     if($condicionales=="")
         {
             //Cargar la cadena de consulta por default.
-            $consulta= "SELECT idFactor, Factor, Tipo, IF(ISNULL(Entidad),'Global',Entidad) AS Entidad, Folio, opFactores.Status FROM ((opFactores LEFT JOIN opCedulas ON opFactores.idCedula = opCedulas.idCedula) LEFT JOIN catEntidades ON opCedulas.idEntidad = catEntidades.idEntidad) WHERE opFactores.Status=0"; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idFactor, Factor, Tipo, IF(ISNULL(Entidad),'Global',Entidad) AS Entidad, Folio, opFactores.Status FROM ((opFactores LEFT JOIN opCedulas ON opFactores.idCedula = opCedulas.idCedula) LEFT JOIN catEntidades ON opCedulas.idEntidad = catEntidades.idEntidad) WHERE opFactores.Status=0"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     else 
         {
             //En caso de contar con el criterio de filtrado.
-            $consulta= "SELECT idFactor, Factor, Tipo, IF(ISNULL(Entidad),'Global',Entidad) AS Entidad, Folio, opFactores.Status FROM ((opFactores LEFT JOIN opCedulas ON opFactores.idCedula = opCedulas.idCedula) LEFT JOIN catEntidades ON opCedulas.idEntidad = catEntidades.idEntidad) WHERE opFactores.Status=0 AND " .$condicionales; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idFactor, Factor, Tipo, IF(ISNULL(Entidad),'Global',Entidad) AS Entidad, Folio, opFactores.Status FROM ((opFactores LEFT JOIN opCedulas ON opFactores.idCedula = opCedulas.idCedula) LEFT JOIN catEntidades ON opCedulas.idEntidad = catEntidades.idEntidad) WHERE opFactores.Status=0 AND " .$condicionales." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.

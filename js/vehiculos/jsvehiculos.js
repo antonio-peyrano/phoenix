@@ -103,7 +103,10 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "veh_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgnumeco').value = document.getElementById('numeco').value.toString();
+				document.getElementById('pgnumplaca').value = document.getElementById('numplaca').value.toString();
+				document.getElementById('pgperiodo').value = document.getElementById('vehperiodo').value.toString();
     			cargar('./php/frontend/vehiculos/catVehiculos.php','?numeco='+document.getElementById('numeco').value.toString()+'&numplaca='+document.getElementById('numplaca').value.toString()+'&vehperiodo='+document.getElementById('vehperiodo').value.toString(),'busRes');
     			}
     });                 
@@ -174,3 +177,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "veh_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}
+							cargar('./php/frontend/vehiculos/catVehiculos.php','?numeco='+document.getElementById('pgnumeco').value.toString()+'&numplaca='+document.getElementById('pgnumplaca').value.toString()+'&vehperiodo='+document.getElementById('pgperiodo').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "veh_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;
+							cargar('./php/frontend/vehiculos/catVehiculos.php','?numeco='+document.getElementById('pgnumeco').value.toString()+'&numplaca='+document.getElementById('pgnumplaca').value.toString()+'&vehperiodo='+document.getElementById('pgperiodo').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

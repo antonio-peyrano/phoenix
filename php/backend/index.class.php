@@ -361,7 +361,7 @@
                                 $this->infoBody()
                                 .'
                                     <script type="text/javascript">
-                                        document.oncontextmenu = function(){return false;}
+                                        document.oncontextmenu = function(){return true;}
                                     </script>                                    
                                     </body>                                
                                 </html>

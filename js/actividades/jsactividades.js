@@ -201,3 +201,42 @@ $(document).ready(function()
     					}
     			});                 
 		});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "act_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/actividad/catActividad.php','?idprograma='+document.getElementById('idPrograma').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'datatareas');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "act_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/actividad/catActividad.php','?idprograma='+document.getElementById('idPrograma').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'datatareas');
+							}
+					});                 
+			});

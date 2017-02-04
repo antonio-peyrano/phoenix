@@ -116,6 +116,10 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,10) == "fev_buscar")
     		{
     			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+				document.getElementById('pgfolio').value = document.getElementById('fevfolio').value.toString();
+				document.getElementById('pgempleado').value = document.getElementById('fevempleado').value.toString();
+				document.getElementById('pgidentidad').value = document.getElementById('fevidentidad').value.toString();
+				document.getElementById('pgfecha').value = document.getElementById('fevfecha').value.toString();
     			cargar('./php/frontend/foda/evaluaciones/catEvaluaciones.php','?fevfolio='+document.getElementById('fevfolio').value.toString()+'&fevidempleado='+document.getElementById('fevempleado').value.toString()+'&fevidentidad='+document.getElementById('fevidentidad').value.toString()+'&fevfecha='+document.getElementById('fevfecha').value.toString(),'busRes');
     			}
     });                 
@@ -186,3 +190,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "fev_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/foda/evaluaciones/catEvaluaciones.php','?fevfolio='+document.getElementById('pgfolio').value.toString()+'&fevidempleado='+document.getElementById('pgempleado').value.toString()+'&fevidentidad='+document.getElementById('pgidentidad').value.toString()+'&fevfecha='+document.getElementById('pgfecha').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "fev_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/foda/evaluaciones/catEvaluaciones.php','?fevfolio='+document.getElementById('pgfolio').value.toString()+'&fevidempleado='+document.getElementById('pgempleado').value.toString()+'&fevidentidad='+document.getElementById('pgidentidad').value.toString()+'&fevfecha='+document.getElementById('pgfecha').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

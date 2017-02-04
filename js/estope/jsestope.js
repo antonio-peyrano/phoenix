@@ -85,7 +85,10 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "eop_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgestope').value = document.getElementById('nomestope').value.toString();
+				document.getElementById('pgestopenom').value = document.getElementById('estopenomenclatura').value.toString();
+				document.getElementById('pgperiodo').value = document.getElementById('estopeperiodo').value.toString();
     			cargar('./php/frontend/estope/catEstOpe.php','?nomestope='+document.getElementById('nomestope').value.toString()+'&estopenomenclatura='+document.getElementById('estopenomenclatura').value.toString()+'&estopeperiodo='+document.getElementById('estopeperiodo').value.toString(),'busRes');
     			}
     });                 
@@ -156,3 +159,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "eop_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/estope/catEstOpe.php','?nomestope='+document.getElementById('pgestope').value.toString()+'&estopenomenclatura='+document.getElementById('pgestopenom').value.toString()+'&estopeperiodo='+document.getElementById('pgperiodo').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "eop_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/estope/catEstOpe.php','?nomestope='+document.getElementById('pgestope').value.toString()+'&estopenomenclatura='+document.getElementById('pgestopenom').value.toString()+'&estopeperiodo='+document.getElementById('pgperiodo').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

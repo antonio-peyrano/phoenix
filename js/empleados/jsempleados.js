@@ -149,6 +149,10 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,10) == "emp_buscar")
     		{
     			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+				document.getElementById('pgempleado').value = document.getElementById('nomempleado').value.toString();
+				document.getElementById('pgpaterno').value = document.getElementById('patempleado').value.toString();
+				document.getElementById('pgmaterno').value = document.getElementById('matempleado').value.toString();
+				document.getElementById('pgidentidad').value = document.getElementById('empidentidad').value.toString();
     			cargar('./php/frontend/empleados/catEmpleados.php','?nomempleado='+document.getElementById('nomempleado').value.toString()+'&patempleado='+document.getElementById('patempleado').value.toString()+'&matempleado='+document.getElementById('matempleado').value.toString()+'&empidentidad='+document.getElementById('empidentidad').value.toString(),'busRes');
     			}
     });                 
@@ -219,3 +223,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "emp_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+			    			cargar('./php/frontend/empleados/catEmpleados.php','?nomempleado='+document.getElementById('pgempleado').value.toString()+'&patempleado='+document.getElementById('pgpaterno').value.toString()+'&matempleado='+document.getElementById('pgmaterno').value.toString()+'&empidentidad='+document.getElementById('pgidentidad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "emp_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+			    			cargar('./php/frontend/empleados/catEmpleados.php','?nomempleado='+document.getElementById('pgempleado').value.toString()+'&patempleado='+document.getElementById('pgpaterno').value.toString()+'&matempleado='+document.getElementById('pgmaterno').value.toString()+'&empidentidad='+document.getElementById('pgidentidad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

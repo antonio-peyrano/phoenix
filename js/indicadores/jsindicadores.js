@@ -107,7 +107,11 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "ind_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgindicador').value = document.getElementById('nomindicador').value.toString();
+				document.getElementById('pgnomenclatura').value = document.getElementById('indnomenclatura').value.toString();
+				document.getElementById('pgpercentil').value = document.getElementById('indpercentil').value.toString();
+				document.getElementById('pgidproceso').value = document.getElementById('nomidproceso').value.toString();
     			cargar('./php/frontend/indicadores/catIndicadores.php','?nomindicador='+document.getElementById('nomindicador').value.toString()+'&indnomenclatura='+document.getElementById('indnomenclatura').value.toString()+'&indpercentil='+document.getElementById('indpercentil').value.toString()+'&nomidproceso='+document.getElementById('nomidproceso').value.toString(),'busRes');
     			}
     });                 
@@ -178,3 +182,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "ind_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/indicadores/catIndicadores.php','?nomindicador='+document.getElementById('pgindicador').value.toString()+'&indnomenclatura='+document.getElementById('pgnomenclatura').value.toString()+'&indpercentil='+document.getElementById('pgpercentil').value.toString()+'&nomidproceso='+document.getElementById('pgidproceso').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "ind_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/indicadores/catIndicadores.php','?nomindicador='+document.getElementById('pgindicador').value.toString()+'&indnomenclatura='+document.getElementById('pgnomenclatura').value.toString()+'&indpercentil='+document.getElementById('pgpercentil').value.toString()+'&nomidproceso='+document.getElementById('pgidproceso').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

@@ -487,7 +487,8 @@
                             <script type="text/javascript" src= "./js/programas/jsprogramas.js"></script>
                         </head>
                         <body>
-                            <div style=display:none>
+                            <div style="display:none">
+                                <input type= "text" id= "pagina" value="1">
                                 <input type= "text" id= "idPrograma" value="'.$Registro['idPrograma'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>                 

@@ -15,7 +15,12 @@
     $sufijo= "cnf_";
     
     echo '  <html>
-                <link rel= "stylesheet" href= "./css/queryStyle.css"></style>        
+                <link rel= "stylesheet" href= "./css/queryStyle.css"></style> 
+                <div id="paginado" style="display:none">
+                    <input id="pagina" type="text" value="1">
+                    <input id="pgperiodo" type="text" value="">
+                    <input id="pgstatus" type="text" value="">
+                </div>               
                 <center><div id= "divbusqueda">
                     <form id="frmbusqueda" method="post" action="">
                         <table class="queryTable" colspan= "7">

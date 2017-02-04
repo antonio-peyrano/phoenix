@@ -68,8 +68,11 @@ $(document).ready(function() {
     	e.stopPropagation();
     	if(e.target.id.substring(0,10) == "fce_buscar")
     		{
-    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.  
-    			cargar('./php/frontend/foda/cedulas/catCedulas.php','?folio='+document.getElementById('folio').value.toString()+'&fecha='+document.getElementById('fecha').value.toString(),'busRes');
+    			//Si el usuario confirma su solicitud de borrar el registro seleccionado.
+				document.getElementById('pgfolio').value = document.getElementById('fcefolio').value.toString();
+				document.getElementById('pgfecha').value = document.getElementById('fcefecha').value.toString();
+				document.getElementById('pgidentidad').value = document.getElementById('fceidentidad').value.toString();
+    			cargar('./php/frontend/foda/cedulas/catCedulas.php','?fcefolio='+document.getElementById('fcefolio').value.toString()+'&fcefecha='+document.getElementById('fcefecha').value.toString()+'&fceidentidad='+document.getElementById('fceidentidad').value.toString(),'busRes');
     			}
     });                 
 });
@@ -139,3 +142,42 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "fce_Previous_10")
+						{
+							//En caso de coincidir con el control de retroceso.
+							if((document.getElementById('pagina').value-1)!=0)
+								{
+									document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+									}							
+							cargar('./php/frontend/foda/cedulas/catCedulas.php','?fcefolio='+document.getElementById('pgfolio').value.toString()+'&fcefecha='+document.getElementById('pgfecha').value.toString()+'&fceidentidad='+document.getElementById('pgidentidad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+ * sobre el grid de datos.
+ */
+	$(document).ready(function()
+		{
+			$("div").click(function(e)
+				{
+					e.stopPropagation();
+					if(e.target.id == "fce_Next_10")
+						{
+							//En caso de coincidir con el control de avance.
+							document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+							cargar('./php/frontend/foda/cedulas/catCedulas.php','?fcefolio='+document.getElementById('pgfolio').value.toString()+'&fcefecha='+document.getElementById('pgfecha').value.toString()+'&fceidentidad='+document.getElementById('pgidentidad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'busRes');
+							}
+					});                 
+			});

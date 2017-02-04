@@ -31,7 +31,13 @@
             }
             
     echo '  <html>
-                <link rel= "stylesheet" href= "./css/queryStyle.css"></style>        
+                <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
+                <div id="paginado" style="display:none">
+                    <input id="pagina" type="text" value="1">
+                    <input id="pgfolio" type="text" value="">
+                    <input id="pgfecha" type="text" value="">
+                    <input id="pgidentidad" type="text" value="">
+                </div>                  
                 <center><div id= "divbusqueda">
                     <form id="frmbusqueda" method="post" action="">
                         <table class="queryTable" colspan= "7">
@@ -40,7 +46,7 @@
                             <tr><td class= "queryRowsnormTR">Por Entidad: </td><td class= "queryRowsnormTR"><select name= "fceidentidad" id= "fceidentidad" value= "-1">';
                             $subconsulta = cargarEntidades();
     echo '                  <option value=-1>Seleccione</option>
-                            <option value=0>Global</option>';
+                            <option value=-2>Global</option>';
                             $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
                             while ($RegNiveles)
                                 {

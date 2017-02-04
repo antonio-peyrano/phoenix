@@ -151,7 +151,7 @@ function dgCabeceras($dataset, $titulo, $sufijo)
 
 function construcCatEvidencias($dataset, $sufijo)
     {        
-        /* Esta funci�n se encarga de crear el contenido HTML de la pagina
+        /* Esta funcion se encarga de crear el contenido HTML de la pagina
          * tal como lo visualizara el usuario en el navegador.
          */        
         echo'

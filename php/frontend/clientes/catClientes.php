@@ -20,7 +20,23 @@
     
     $condicionales = ''; //Variable de control de condiciones de clausula select.
     $sufijo= "cli_"; //Variable de control de sufijo de identificadores.
+    $Inicio = 0;
+    $Pagina = 0;
+    $DisplayRow = 10;
     
+    if(isset($_GET['pagina']))
+        {
+            //Se proporciona referencia de pagina a mostrar.
+            $Pagina = $_GET['pagina'];
+            $Inicio = ($Pagina-1)*$DisplayRow;
+            }
+    else
+        {
+            //En caso de no ser proporcionada la pagina.
+            $Inicio = 0;
+            $Pagina = 1;
+            }
+        
     if(isset($_GET['nomcliente']))
         {
             /*
@@ -76,12 +92,12 @@
     if($condicionales=="")
         {
             //Cargar la cadena de consulta por default.
-            $consulta= "SELECT idCliente, CONCAT(Nombre, ' ',Paterno, ' ', Materno) AS Cliente, CONCAT(Calle, ' ', Nint, ' ', Next, ' ', Colonia) AS Direccion, opClientes.Status FROM opClientes INNER JOIN catColonias ON catColonias.idColonia = opClientes.idColonia WHERE opClientes.Status=0"; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idCliente, CONCAT(Nombre, ' ',Paterno, ' ', Materno) AS Cliente, CONCAT(Calle, ' ', Nint, ' ', Next, ' ', Colonia) AS Direccion, opClientes.Status FROM opClientes INNER JOIN catColonias ON catColonias.idColonia = opClientes.idColonia WHERE opClientes.Status=0"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     else 
         {
             //En caso de contar con el criterio de filtrado.
-            $consulta= "SELECT idCliente, CONCAT(Nombre, ' ',Paterno, ' ', Materno) AS Cliente, CONCAT(Calle, ' ', Nint, ' ', Next, ' Col ', Colonia) AS Direccion, opClientes.Status FROM opClientes INNER JOIN catColonias ON catColonias.idColonia = opClientes.idColonia WHERE opClientes.Status=0 AND " .$condicionales; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idCliente, CONCAT(Nombre, ' ',Paterno, ' ', Materno) AS Cliente, CONCAT(Calle, ' ', Nint, ' ', Next, ' Col ', Colonia) AS Direccion, opClientes.Status FROM opClientes INNER JOIN catColonias ON catColonias.idColonia = opClientes.idColonia WHERE opClientes.Status=0 AND " .$condicionales." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.

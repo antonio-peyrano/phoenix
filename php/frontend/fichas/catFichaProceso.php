@@ -20,7 +20,23 @@
     
     $condicionales = ''; //Variable de control de condiciones de clausula select.
     $sufijo= "fsp_"; //Variable de control de sufijo de identificadores.
+    $Inicio = 0;
+    $Pagina = 0;
+    $DisplayRow = 10;
     
+    if(isset($_GET['pagina']))
+        {
+            //Se proporciona referencia de pagina a mostrar.
+            $Pagina = $_GET['pagina'];
+            $Inicio = ($Pagina-1)*$DisplayRow;
+            }
+    else
+        {
+            //En caso de no ser proporcionada la pagina.
+            $Inicio = 0;
+            $Pagina = 1;
+            }
+        
     if(isset($_GET['nomclave']))
         {
             /*
@@ -50,12 +66,12 @@
     if($condicionales=="")
         {
             //Cargar la cadena de consulta por default.            
-            $consulta= "SELECT idFicha, opFichasProcesos.Clave, catProcesos.Proceso, opFichasProcesos.Status FROM (opFichasProcesos INNER JOIN catProcesos ON opFichasProcesos.idProceso = catProcesos.idProceso) WHERE opFichasProcesos.Status=0 ORDER BY idFicha"; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idFicha, opFichasProcesos.Clave, catProcesos.Proceso, opFichasProcesos.Status FROM (opFichasProcesos INNER JOIN catProcesos ON opFichasProcesos.idProceso = catProcesos.idProceso) WHERE opFichasProcesos.Status=0 ORDER BY idFicha"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     else 
         {
             //En caso de contar con el criterio de filtrado.
-            $consulta= "SELECT idFicha, opFichasProcesos.Clave, catProcesos.Proceso, opFichasProcesos.Status FROM (opFichasProcesos INNER JOIN catProcesos ON opFichasProcesos.idProceso = catProcesos.idProceso) WHERE opFichasProcesos.Status=0 AND " .$condicionales. " ORDER BY idFicha"; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT idFicha, opFichasProcesos.Clave, catProcesos.Proceso, opFichasProcesos.Status FROM (opFichasProcesos INNER JOIN catProcesos ON opFichasProcesos.idProceso = catProcesos.idProceso) WHERE opFichasProcesos.Status=0 AND " .$condicionales. " ORDER BY idFicha"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.

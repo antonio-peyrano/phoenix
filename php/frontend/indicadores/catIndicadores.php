@@ -20,7 +20,23 @@
     
     $condicionales = ''; //Variable de control de condiciones de clausula select.
     $sufijo= "ind_"; //Variable de control de sufijo de identificadores.
+    $Inicio = 0;
+    $Pagina = 0;
+    $DisplayRow = 10;
     
+    if(isset($_GET['pagina']))
+        {
+            //Se proporciona referencia de pagina a mostrar.
+            $Pagina = $_GET['pagina'];
+            $Inicio = ($Pagina-1)*$DisplayRow;
+            }
+    else
+        {
+            //En caso de no ser proporcionada la pagina.
+            $Inicio = 0;
+            $Pagina = 1;
+            }
+        
     if(isset($_GET['nomindicador']))
         {
             /*
@@ -78,12 +94,12 @@
     if($condicionales=="")
         {
             //Cargar la cadena de consulta por default.
-            $consulta= "SELECT relIndPro.idRelIndPro, Indicador, Nomenclatura, Percentil, Proceso, relIndPro.Status FROM (relIndPro INNER JOIN catIndicadores ON catIndicadores.idIndicador = relIndPro.idIndicador) INNER JOIN catProcesos ON catProcesos.idProceso = relIndPro.idProceso WHERE relIndPro.Status=0"; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT relIndPro.idRelIndPro, Indicador, Nomenclatura, Percentil, Proceso, relIndPro.Status FROM (relIndPro INNER JOIN catIndicadores ON catIndicadores.idIndicador = relIndPro.idIndicador) INNER JOIN catProcesos ON catProcesos.idProceso = relIndPro.idProceso WHERE relIndPro.Status=0"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     else 
         {
             //En caso de contar con el criterio de filtrado.
-            $consulta= "SELECT relIndPro.idRelIndPro, Indicador, Nomenclatura, Percentil, Proceso, relIndPro.Status FROM (relIndPro INNER JOIN catIndicadores ON catIndicadores.idIndicador = relIndPro.idIndicador) INNER JOIN catProcesos ON catProcesos.idProceso = relIndPro.idProceso WHERE relIndPro.Status=0 AND " .$condicionales; //Se establece el modelo de consulta de datos.
+            $consulta= "SELECT relIndPro.idRelIndPro, Indicador, Nomenclatura, Percentil, Proceso, relIndPro.Status FROM (relIndPro INNER JOIN catIndicadores ON catIndicadores.idIndicador = relIndPro.idIndicador) INNER JOIN catProcesos ON catProcesos.idProceso = relIndPro.idProceso WHERE relIndPro.Status=0 AND " .$condicionales." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
             }  
     
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
