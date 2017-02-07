@@ -57,7 +57,7 @@ function habIndicador()
 	
 		document.getElementById('Indicador').disabled = false;
 		document.getElementById('Nomenclatura').disabled = false;
-		document.etElementById('Percentil').disabled = false;
+		document.getElementById('Percentil').disabled = false;
 		}
 
 function getidsprocesos()

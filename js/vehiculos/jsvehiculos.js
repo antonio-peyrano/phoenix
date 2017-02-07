@@ -27,7 +27,7 @@ function guardarVehiculos(url,parametro){
 			error= error+1;
 			}
 			
-	if(document.getElementById("NumPlaca").value.toString() == "")
+	if(document.getElementById("NumeroPlaca").value.toString() == "")
 		{
 			//En caso de no ocurrir un error de validación, se asigna el valor de paso.
 			error= error+1;
@@ -86,7 +86,7 @@ function habVehiculos(){
 	document.getElementById('idVehiculo').disabled = false;
 	document.getElementById('idEntidad').disabled = false;
 	document.getElementById('NumEconomico').disabled = false;
-	document.getElementById('NumPlaca').disabled = false;
+	document.getElementById('NumeroPlaca').disabled = false;
 	document.getElementById('Marca').disabled = false;
 	document.getElementById('Modelo').disabled = false;
 	document.getElementById('Color').disabled = false;
