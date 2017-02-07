@@ -89,7 +89,7 @@
                             else
                                 {
                                     //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                                    $Eficacia[$cont-1] = $Ejecucion[$cont-1]*100;
+                                    $Eficacia[$cont-1] = 100.00;
                                     }
                             
                             //Se procede a actualizar el registro de eficacia a nivel de la actividad.
@@ -168,7 +168,7 @@
                     else
                         {
                             //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                            $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                            $Eficacia[$cont] = 100.00;
                             }
                             
                     //Se procede a actualizar el registro de programacion a nivel del programa.
@@ -258,7 +258,7 @@
                     else
                         {
                             //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                            $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                            $Eficacia[$cont] = 100.00;
                             }
                                                         
                     //Se procede a actualizar el registro de programacion a nivel de la Est. Ope.
@@ -348,7 +348,7 @@
                     else
                         {
                             //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                            $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                            $Eficacia[$cont] = 100.00;
                             }
                             
                     //Se procede a actualizar el registro de programacion a nivel del Obj. Ope.
@@ -439,7 +439,7 @@
                             else
                                 {
                                     //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                                    $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                                    $Eficacia[$cont] = 100.00;
                                     }
                             
                             //Se procede a actualizar el registro de programacion a nivel del Obj. Est.

@@ -17,12 +17,24 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
     /*
-     * Para ejecucion en local quite las acotaciones de comentario.
+     * Para ejecuci�n en local quite las acotaciones de comentario.
      */
 
     $servername="397Y09vK3uXj";
     $dbname="4NjY5N7V2ObY4g==";
     $username="5d7k5g==";
     $password="1OXW3t7Qpqmm";
-    $SitioWeb="http://localhost:8081/micrositio/index.php";        
+    $SitioWeb="http://localhost:8081/micrositio/index.php";
+    /*
+     * Para ejecucion en sitio quite las acotaciones de comentario.
+     */
+     
+    /*
+    $servername='5uDhpJ+andTo2OPd4eLWpKDS4tw=';
+    $dbname='1aTUo6WaoaejqaDU39jF4eHi3OPe4Q==';
+    $username='1aTUo6WaoaejqaA=';
+    $password='1OXW3t7Qpqmm';
+    $SitioWeb="http://peycom.byethost5.com/index.php";
+    */
+        
 ?>

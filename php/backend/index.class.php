@@ -253,6 +253,7 @@
                                 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
                                 <link rel="stylesheet" href="./css/menuStyle.css" title="style css" type="text/css" media="screen" charset="utf-8"></style>
                                 <link rel="stylesheet" href="./css/divLogin.css"></style>
+                                <link rel="stylesheet" href="./css/operativo.css"></style>
                                 <link rel="stylesheet" href="./css/foda.css"></style>
                                 <link rel="stylesheet" href="./css/jssor.css"></style>
                                 <link rel="icon" type="image/png" href="./img/icologo.png" />
@@ -361,7 +362,7 @@
                                 $this->infoBody()
                                 .'
                                     <script type="text/javascript">
-                                        document.oncontextmenu = function(){return false;}
+                                        document.oncontextmenu = function(){return true;}
                                     </script>                                    
                                     </body>                                
                                 </html>

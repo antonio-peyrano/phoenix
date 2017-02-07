@@ -77,6 +77,51 @@
             $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
             
             /*
+             * FASE 0: ACTUALIZACIÓN SOBRE EL NIVEL DE ACTIVIDAD.
+             */
+            //Se procede a recoger la referencia de la programacion asociada a la actividad.
+            $consulta = 'SELECT *FROM opProgAct WHERE idActividad='.$idActividad.' AND Status=0';
+            $dsPrgActUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+            $RegPrgActUnit = @mysql_fetch_array($dsPrgActUnit, MYSQL_ASSOC);
+            
+            //Se procede a recoger la referencia de la ejecucion asociada a la actividad.
+            $consulta = 'SELECT *FROM opEjecAct WHERE idActividad='.$idActividad.' AND Status=0';
+            $dsEjcActUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+            $RegEjcActUnit = @mysql_fetch_array($dsEjcActUnit, MYSQL_ASSOC);
+            
+            if($RegPrgActUnit)
+                {
+                    //Recorrido secuencial sobre la colección de tuplas para obtener los valores de Programación.
+                    $totProgramado = 0.00;
+            
+                    for($cont = 1; $cont <= 12; $cont++)
+                        {
+                            //Se obtiene el porcentaje correspondiente a la programación del i-esimo mes.
+                            $Programacion[$cont-1] = $RegPrgActUnit[obtainMes($cont)];
+                            $Ejecucion[$cont-1] = $RegEjcActUnit[obtainMes($cont)];
+            
+                            if($Programacion[$cont-1] != 0)
+                                {
+                                    //En caso de existir programación, se procesa con normalidad.
+                                    $Eficacia[$cont-1] = ($Ejecucion[$cont-1]/$Programacion[$cont-1])*100.00;
+                                    }
+                            else
+                                {
+                                    //En caso de ser programacion igual a cero, se procesa como una sobrecarga.
+                                    $Eficacia[$cont-1] = 100.00;
+                                    }
+            
+                            //Se procede a actualizar el registro de eficacia a nivel de la actividad.
+                            $consulta = 'UPDATE opEficAct SET '.obtainMes($cont).'=\''.$Eficacia[$cont-1].'\' WHERE idActividad='.$idActividad.' AND Status=0'; //Se establece el modelo de consulta de datos.
+                            $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta
+                            }
+                    }
+            
+            $Programacion = array (0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
+            $Ejecucion = array (0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
+            $Eficacia = array (0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
+                        
+            /*
              * FASE 1: ACTUALIZACIÓN SOBRE EL NIVEL DE PROGRAMA.
              */
             //Se procede a recoger la referencia de actividades asociadas al programa.
@@ -142,7 +187,7 @@
                     else
                         {
                             //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                            $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                            $Eficacia[$cont] = 100.00;
                             }
                             
                     //Se procede a actualizar el registro de programacion a nivel del programa.
@@ -232,7 +277,7 @@
                     else
                         {
                             //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                            $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                            $Eficacia[$cont] = 100.00;
                             }
                             
                     //Se procede a actualizar el registro de programacion a nivel de la Est. Ope.
@@ -322,7 +367,7 @@
                     else
                         {
                             //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                            $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                            $Eficacia[$cont] = 100.00;
                             }
                             
                     //Se procede a actualizar el registro de programacion a nivel del Obj. Ope.
@@ -413,7 +458,7 @@
                             else
                                 {
                                     //En caso de ser programacion igual a cero, se procesa como una sobrecarga. 
-                                    $Eficacia[$cont] = $Ejecucion[$cont]*100;
+                                    $Eficacia[$cont] = 100.00;
                                     }
                             
                             //Se procede a actualizar el registro de programacion a nivel del Obj. Est.

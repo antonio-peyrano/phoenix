@@ -21,12 +21,12 @@
     
     $cntrlVar=0;
 
-    if(isset($_GET['id'])&&isset($_GET['identidad'])&&isset($_GET['numeconomico'])&&isset($_GET['numplaca'])&&isset($_GET['color'])&&isset($_GET['marca'])&&isset($_GET['modelo'])&&isset($_GET['tmotor'])&&isset($_GET['periodo'])&&isset($_GET['status']))
+    if(isset($_GET['id'])&&isset($_GET['identidad'])&&isset($_GET['numeconomico'])&&isset($_GET['numeroplaca'])&&isset($_GET['color'])&&isset($_GET['marca'])&&isset($_GET['modelo'])&&isset($_GET['tmotor'])&&isset($_GET['periodo'])&&isset($_GET['status']))
         {
             $idVehiculo = $_GET['id'];
             $idEntidad = $_GET['identidad'];
             $NumEconomico = $_GET['numeconomico'];
-            $NumPlaca = $_GET['numplaca'];
+            $NumPlaca = $_GET['numeroplaca'];
             $Color = $_GET['color'];
             $Marca = $_GET['marca'];
             $Modelo = $_GET['modelo'];
