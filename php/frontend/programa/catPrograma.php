@@ -10,7 +10,7 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     session_start();
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.

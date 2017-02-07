@@ -13,7 +13,7 @@
     /*
      * Este archivo contiene el constructor para el combobox de objetivos operativos a visualizar.
      */
-    header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.

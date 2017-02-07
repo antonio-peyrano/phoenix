@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeaci贸n operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeaci髇 operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,10 +10,10 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificaci贸n a UTF-8.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificaci髇 a ISO-8859-1.
 
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci贸n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci髇.
     
     $parametro = $_GET['id'];
 
@@ -25,8 +25,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta funci贸n obtiene el perfil del sistema activo para el despliegue de la
-             * informaci贸n de la planeaci贸n.
+             * Esta funci髇 obtiene el perfil del sistema activo para el despliegue de la
+             * informaci髇 de la planeaci髇.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -38,7 +38,7 @@
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuraci贸n valida.
+                    //Si ha sido localizada una configuraci髇 valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -48,13 +48,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*
-             * Esta funci贸n carga la parte grafica que corresponde a las banderas de desempe帽o.
+             * Esta funci髇 carga la parte grafica que corresponde a las banderas de desempe帽o.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
             
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medici贸n optima.
+                    //Si el parametro recibido esta en el rango de medici髇 optima.
                     $rowBanderas.='<td><center><img id="optimo_'.$mes.'"align= "middle" src= "./img/banderas/optimo.png" width= "25" height= "25" alt= "Optimo" data-toggle="tooltip" title="Eficacia >='.$Optimo.'%"/></center></td>';
                     } 
                     
@@ -74,7 +74,7 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualizaci贸n.
+             * Si se declaro en la url el control de visualizaci髇.
              */
             $cntview = $_GET['view'];
             }
@@ -86,7 +86,7 @@
     function obtenerMes($Mes)
         {
             /*
-             * Esta funci贸n obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funci髇 obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -141,7 +141,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta funci贸n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funci髇 establece la carga de un registro a partir de su identificador en la base de datos.
              */
             global $username, $password, $servername, $dbname;
     
@@ -156,29 +156,29 @@
     function controlVisual($idRegistro)
         {
             /*
-             * Esta funci贸n controla los botones que deberan verse en la pantalla deacuerdo con la acci贸n solicitada por el
-             * usuario en la ventana previa. Si es una edici贸n, los botones borrar y guardar deben verse. Si es una creaci贸n
+             * Esta funci髇 controla los botones que deberan verse en la pantalla deacuerdo con la acci髇 solicitada por el
+             * usuario en la ventana previa. Si es una edici髇, los botones borrar y guardar deben verse. Si es una creaci髇
              * solo el boton guardar debe visualizarse.
              */
             global $cntview;
     
             if($idRegistro == -1)
                 {
-                    //En caso que la acci贸n corresponda a la creaci贸n de un nuevo registro.
+                    //En caso que la acci髇 corresponda a la creaci髇 de un nuevo registro.
                     echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else
                 {
                     if(($cntview == 1)||($cntview == 3))
                         {
-                            //En caso de procesarse como una acci贸n de visualizaci贸n.
+                            //En caso de procesarse como una acci髇 de visualizaci髇.
                             echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/programa/borrar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habPrograma();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             if($cntview == 0)
                                 {
-                                    //En caso que la acci贸n corresponda a la edici贸n de un registro.
+                                    //En caso que la acci髇 corresponda a la edici髇 de un registro.
                                     echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habPrograma();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                                     }
                             }
@@ -188,7 +188,7 @@
     function cargarObjEst()
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de ObjEst.
+             * Esta funci髇 establece la carga del conjunto de registros de ObjEst.
              */
             global $username, $password, $servername, $dbname;
     
@@ -201,7 +201,7 @@
     function cargarObjOpe($parametro)
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de ObjOpe.
+             * Esta funci髇 establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
     
@@ -214,8 +214,8 @@
     function constructorcb($parametro)
         {
             /*
-             * Esta funci贸n establece los parametros de carga del combobox de obj ope cuando
-             * se ejecuta un proceso de edici贸n.
+             * Esta funci髇 establece los parametros de carga del combobox de obj ope cuando
+             * se ejecuta un proceso de edici髇.
              */
             global $habcampos, $Registro;
     
@@ -247,7 +247,7 @@
     function cargarEstOpe($parametro)
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de ObjOpe.
+             * Esta funci髇 establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
             
@@ -260,8 +260,8 @@
     function constructorcbEstOpe($parametro)
         {
             /*
-             * Esta funci贸n establece los parametros de carga del combobox de Est ope cuando
-             * se ejecuta un proceso de edici贸n.
+             * Esta funci髇 establece los parametros de carga del combobox de Est ope cuando
+             * se ejecuta un proceso de edici髇.
              */
             global $habcampos, $Registro;
             
@@ -293,7 +293,7 @@
     function cargarEmpleado($parametro)
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de Empleados.
+             * Esta funci髇 establece la carga del conjunto de registros de Empleados.
              */
             global $username, $password, $servername, $dbname;
             
@@ -306,8 +306,8 @@
     function constructorcbResponsable($parametro)
         {
             /*
-             * Esta funci贸n establece los parametros de carga del combobox de Responsable cuando
-             * se ejecuta un proceso de edici贸n.
+             * Esta funci髇 establece los parametros de carga del combobox de Responsable cuando
+             * se ejecuta un proceso de edici髇.
              */
              global $habcampos, $Registro;
             
@@ -338,8 +338,8 @@
     function constructorcbSubalterno($parametro)
         {
             /*
-             * Esta funci贸n establece los parametros de carga del combobox de Subalterno cuando
-             * se ejecuta un proceso de edici贸n.
+             * Esta funci髇 establece los parametros de carga del combobox de Subalterno cuando
+             * se ejecuta un proceso de edici髇.
              */
              global $habcampos, $Registro;
             
@@ -371,7 +371,7 @@
     function cargarEntidades()
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de entidades.
+             * Esta funci髇 establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
             
@@ -384,7 +384,7 @@
     function cargarProcesos($idRegistro, $idEntidad)
         {
             /*
-             * Esta funci贸n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funci髇 establece la carga de un registro a partir de su identificador en la base de datos.
              */
              global $username, $password, $servername, $dbname, $habcampos;
             
@@ -395,7 +395,7 @@
              if($idRegistro == -1)
                 {
                     /*
-                     * Si la operaci贸n solicitada es para la creaci贸n de un registro,
+                     * Si la operaci髇 solicitada es para la creaci髇 de un registro,
                      * se carga el listado sin marcar.
                      */
                     echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="chkProcesos">';
@@ -403,7 +403,7 @@
              else
                 {
                     /*
-                     * Si la operaci贸n solicitada es para editar el registro,
+                     * Si la operaci髇 solicitada es para editar el registro,
                      * se carga el listado con los elementos previamente marcados.
                      */
                     echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="chkProcesos">';
@@ -440,13 +440,13 @@
                     while($RegNiveles)
                         {
                             /*
-                             * Mientras no se llegue al final de la colecci贸n, se procede a la lectura
-                             * y generaci贸n del listado.
+                             * Mientras no se llegue al final de la colecci髇, se procede a la lectura
+                             * y generaci髇 del listado.
                              */
                             if(in_array($RegNiveles['idProceso'], $tmparray,true))
                                 {
                                     /*
-                                     * En caso de tratarse de una opci贸n previamente seleccionada por el usuario.
+                                     * En caso de tratarse de una opci髇 previamente seleccionada por el usuario.
                                      */
                                     echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habcampos.' value='.$RegNiveles['idProceso'].' checked>'.$RegNiveles['Proceso'];
                                     }
@@ -468,7 +468,7 @@
     function constructor()
         {
             /*
-             * Esta funci贸n establece los parametros para la creaci贸n de la interfaz de usuario.
+             * Esta funci髇 establece los parametros para la creaci髇 de la interfaz de usuario.
              */
             
             global $Registro, $parametro, $clavecod, $habcampos, $periodo, $cntview;            
@@ -524,7 +524,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                             * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<select id= "idObjOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -532,7 +532,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acci贸n ocurre para un registro existente,
+                                             * Si la acci髇 ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                             echo constructorcb($Registro['idObjEst']).'</div></td></tr>';
@@ -543,7 +543,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                             * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<select id= "idEstOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -551,7 +551,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acci贸n ocurre para un registro existente,
+                                             * Si la acci髇 ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                             echo constructorcbEstOpe($Registro['idObjOpe']).'</div></td></tr>';
@@ -560,7 +560,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                             * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= ""></td></tr>';
@@ -568,7 +568,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acci贸n ocurre para un registro existente,
+                                             * Si la acci髇 ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                              echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
@@ -607,7 +607,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                             * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<select id= "idResponsable"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -615,7 +615,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acci贸n ocurre para un registro existente,
+                                             * Si la acci髇 ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                             echo constructorcbResponsable($Registro['idEntidad']).'</div></td></tr>';
@@ -626,7 +626,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                             * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                              echo'<select id= "idSubalterno"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -634,7 +634,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acci贸n ocurre para un registro existente,
+                                             * Si la acci髇 ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                              echo constructorcbSubalterno($Registro['idEntidad']).'</div></td></tr>';
@@ -646,7 +646,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                             * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                              * se establece el a帽o actual.
                                              */
                                             echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
@@ -654,7 +654,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acci贸n ocurre para un registro existente,
+                                             * Si la acci髇 ocurre para un registro existente,
                                              * se preserva el a帽o almacenado.
                                              */
                                             echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
@@ -682,7 +682,7 @@
                                     $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
                                     $field = @mysql_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Programaci贸n</td>';
+                                    $rowdata='<tr><td class= "queryTitles">Programaci髇</td>';
                                     $count=1;
                                     $totEficacia=0.00;
                                     
@@ -701,7 +701,7 @@
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci贸n de registro.
+                                            //Para el caso de una creaci髇 de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
@@ -723,7 +723,7 @@
                                     $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
                                     $field = @mysql_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Ejecuci贸n</td>';
+                                    $rowdata='<tr><td class= "queryTitles">Ejecuci髇</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -742,7 +742,7 @@
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci贸n de registro.
+                                            //Para el caso de una creaci髇 de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
@@ -784,7 +784,7 @@
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci贸n de registro.
+                                            //Para el caso de una creaci髇 de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)

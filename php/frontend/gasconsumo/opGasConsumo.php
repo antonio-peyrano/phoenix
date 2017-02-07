@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeaci贸n operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,10 +10,10 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificaci贸n a UTF-8.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci贸n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci髇.
     
     $parametro = '';   
     $idVehiculo = '';
@@ -26,13 +26,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*               
-             *Esta funci贸n carga la parte grafica que corresponde a las banderas de consumo.
+             *Esta funci髇 carga la parte grafica que corresponde a las banderas de consumo.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
     
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medici贸n optima.
+                    //Si el parametro recibido esta en el rango de medici髇 optima.
                     $rowBanderas.='<td><center><img id="falla_'.$mes.'"align= "middle" src= "./img/banderas/falla.png" width= "25" height= "25" alt= "Falla" data-toggle="tooltip" title="Consumo critico"/></center></td>';
                     }
     
@@ -52,8 +52,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta funci贸n obtiene el perfil del sistema activo para el despliegue de la
-             * informaci贸n de la planeaci贸n.
+             * Esta funci髇 obtiene el perfil del sistema activo para el despliegue de la
+             * informaci髇 de la planeaci髇.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -65,7 +65,7 @@
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuraci贸n valida.
+                    //Si ha sido localizada una configuraci髇 valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -75,12 +75,12 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualizaci贸n.
+             * Si se declaro en la url el control de visualizaci髇.
              */
             $cntview = $_GET['view'];
             if(($cntview == '0')||($cntview == '3'))
                 {
-                    //Si la visualizaci贸n esta por default, se asigna a parametro
+                    //Si la visualizaci髇 esta por default, se asigna a parametro
                     //el id que corresponde.
                     $parametro = $_GET['idproggas'];
                     $idVehiculo = $_GET['idvehiculo'];
@@ -94,7 +94,7 @@
     function getMes($Mes)
         {
             /*
-             * Esta funci贸n obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funci髇 obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -149,7 +149,7 @@
     function cargarVehiculos()
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de entidades.
+             * Esta funci髇 establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -162,7 +162,7 @@
     function cargarVehiculo($idRegistro)
         {
             /*
-             * Esta funci贸n carga la informaci贸n del vehiculo consultado, apartir del ID.
+             * Esta funci髇 carga la informaci髇 del vehiculo consultado, apartir del ID.
              */
             global $username, $password, $servername, $dbname;
             
@@ -172,12 +172,12 @@
             return $dataset;
             }
 
-    $RegVehiculo = @mysql_fetch_array(cargarVehiculo($idVehiculo), MYSQL_ASSOC);//Llamada a la funci贸n de carga de registro de usuario.            
+    $RegVehiculo = @mysql_fetch_array(cargarVehiculo($idVehiculo), MYSQL_ASSOC);//Llamada a la funci髇 de carga de registro de usuario.            
                         
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta funci贸n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funci髇 establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -187,12 +187,12 @@
             return $dataset;        
             }   
             
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funci贸n de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funci髇 de carga de registro de usuario.
             
     function constructor()
         {
             /*
-             * Esta funci贸n establece el contenido HTML del formulario
+             * Esta funci髇 establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $RegVehiculo, $parametro, $clavecod;
@@ -227,7 +227,7 @@
                             </div>                
                             <div id= "infoact">                                        
                             <table class= "dgTable">
-                                <tr><th class="dgHeader" colspan= "2">Informaci贸n General</th></tr>
+                                <tr><th class="dgHeader" colspan= "2">Informaci髇 General</th></tr>
                                 <tr><td class="dgRowsaltTR"  width="100px">Numero de Placa:</td><td class="dgRowsnormTR" class= "queryRowsnormTR"><select name= "idVehiculo" id= "idVehiculo" value= "-1">';
                                 
                                 $subconsulta = cargarVehiculos();
@@ -241,7 +241,7 @@
                                         if($RegNiveles['idVehiculo']==$idVehiculo)
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci贸n de consulta, se obtiene la referencia seleccionada
+                                                 * En caso que se ejecute una acci髇 de consulta, se obtiene la referencia seleccionada
                                                  * de la unidad.
                                                  */
             echo '                              <option value='.$RegNiveles['idVehiculo'].' selected="selected">'.$RegNiveles['NumPlaca'].'</option>';
@@ -249,7 +249,7 @@
                                         else
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci贸n de creacion de registro.
+                                                 * En caso que se ejecute una acci髇 de creacion de registro.
                                                  */
 
             echo'                               <option value='.$RegNiveles['idVehiculo'].'>'.$RegNiveles['NumPlaca'].'</option>';                                                        
@@ -288,7 +288,7 @@
                         $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
                         $field = @mysql_fetch_field($dsCampos);
             
-                        $rowdata= '<tr><td class= "queryTitles">Programaci贸n</td>';
+                        $rowdata= '<tr><td class= "queryTitles">Programaci髇</td>';
                         $count=1;
                         $totEficacia=0.00;
             
@@ -307,7 +307,7 @@
                                 }
                         else
                             {
-                                //Para el caso de una creaci贸n de registro.
+                                //Para el caso de una creaci髇 de registro.
                                 $counter=1;
             
                                 while($counter <= 12)
@@ -329,7 +329,7 @@
                         $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
                         $field = @mysql_fetch_field($dsCampos);
             
-                        $rowdata= '<tr><td class= "queryTitles">Ejecuci贸n</td>';
+                        $rowdata= '<tr><td class= "queryTitles">Ejecuci髇</td>';
                         $count= 1;
                         $totEficacia= 0;
             
@@ -348,7 +348,7 @@
                                 }
                         else
                             {
-                                //Para el caso de una creaci贸n de registro.
+                                //Para el caso de una creaci髇 de registro.
                                 $counter= 1;
             
                                 while($counter <= 12)
@@ -392,7 +392,7 @@
                                 }
                         else
                             {
-                                //Para el caso de una creaci贸n de registro.
+                                //Para el caso de una creaci髇 de registro.
                                 $counter=1;
             
                                 while($counter <= 12)
