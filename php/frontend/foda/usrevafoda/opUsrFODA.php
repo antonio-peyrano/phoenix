@@ -15,8 +15,6 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
-    session_start(); //Recuperando la sesion para acceder a las variables de usuario.
-
     class usrFODA
         {
             private $idEmpleado='';
@@ -25,6 +23,17 @@
             
             function __construct()
                 {
+                    /*
+                     * Esta funcion constructor asigna el identificador de usuario
+                     * para generar los controles de interfaz de evaluacion.
+                     */
+                    if(!isset($_SESSION))
+                        {
+                            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+                            session_name('micrositio');
+                            session_start();
+                            }
+                            
                     if(isset($_SESSION['idEmpleado']))
                         {
                             $this->idEmpleado=$_SESSION['idEmpleado'];
@@ -133,7 +142,7 @@
                             $rowSetFactores = @mysql_fetch_array($dataSetFactores,MYSQL_ASSOC);
                             }                 
                                
-                    echo $this->cuerpoEva.='<tr align="center"><td class="dgTotRowsTR" colspan='.$this->contarColumnas($this->idEmpleado).'><img id="guardarEncuesta" title="Guardar encuesta parcial" align= "middle" src= "./img/guardar_encuesta.png" width= "35" height= "35" alt= "Guardar"/><img id="enviarEncuesta" title="Enviar encuesta terminada" align= "middle" src= "./img/enviar_encuesta.png" width= "35" height= "35" alt= "Enviar"/></td></tr></table>';                            
+                    echo $this->cuerpoEva.='<tr align="center"><td class="dgTotRowsTR" colspan='.$this->contarColumnas($this->idEmpleado).'><img id="guardarEncuesta" title="Guardar encuesta parcial" align= "middle" src= "./img/operaciones/guardar_encuesta.png" width= "35" height= "35" alt= "Guardar"/><img id="enviarEncuesta" title="Enviar encuesta terminada" align= "middle" src= "./img/operaciones/enviar_encuesta.png" width= "35" height= "35" alt= "Enviar"/></td></tr></table>';                            
                     }
                                         
             function head()

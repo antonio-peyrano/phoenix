@@ -67,11 +67,11 @@ $(document).ready(function() {
 						}
     			if(document.getElementById('Reactivos').value.toString()==document.getElementById('Contestados').value.toString())
     				{
-    					cargar('./php/backend/foda/usrevafoda/Guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'escritorio');
+    					cargar('./php/backend/foda/usrevafoda/Guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
     					}
     			else
     				{
-    					cargar('./php/backend/foda/usrevafoda/quickGuardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'escritorio');
+    					cargar('./php/backend/foda/usrevafoda/quickGuardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
     					}    			
     			}
     });                 
@@ -106,11 +106,11 @@ $(document).ready(function() {
 						}
     			if(document.getElementById('Reactivos').value.toString()==document.getElementById('Contestados').value.toString())
     				{
-    					cargar('./php/backend/foda/usrevafoda/Guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'escritorio');
+    					cargar('./php/backend/foda/usrevafoda/Guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
     					}
     			else
     				{
-    					alert("Aun no se ha concluido con todos los reactivos de la evaluacion");
+                    	bootbox.alert("Aun restan reactivos por completar");
     					}    			
     			}
     });                 

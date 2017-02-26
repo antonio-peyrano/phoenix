@@ -1,18 +1,18 @@
 /**
- * Este archivo de script contiene los comandos de ejecución para la interfaz de gestión del
- * catálogo de evidencias en el sistema.
+ * Este archivo de script contiene los comandos de ejecuciï¿½n para la interfaz de gestiï¿½n del
+ * catï¿½logo de evidencias en el sistema.
  */
 
 function guardarEvidencia(url,parametro){
 	/*
-	 * Esta función valida que los datos para ser almacenados en el registro sean correctos.
+	 * Esta funciï¿½n valida que los datos para ser almacenados en el registro sean correctos.
 	 */
 	var error= 0;
 	var ruta= 0;
     
 	if(document.getElementById("RutaURL").value.toString() == "")
 		{
-			//En caso de no ocurrir un error de validación, se asigna el valor de paso.
+			//En caso de no ocurrir un error de validaciï¿½n, se asigna el valor de paso.
 			error= error+1;
 			}
             
@@ -34,31 +34,31 @@ function guardarEvidencia(url,parametro){
 	if(error > 0)
 		{
 			/*
-			 * En caso de ocurrir un error de validación, se notifica al usuario.
+			 * En caso de ocurrir un error de validaciï¿½n, se notifica al usuario.
 			 */
-			alert("No se ha proporcionado una ruta para la evidencia");
+        	bootbox.alert("Existen campos pendientes por completar");
 			}
 
 	if(ruta == 3)
 		{
 			/*
-			 * En caso de ocurrir un error de validación, se notifica al usuario.
+			 * En caso de ocurrir un error de validaciï¿½n, se notifica al usuario.
 			 */
-			alert("No se ha proporcionado una ruta valida para la evidencia");
+        	bootbox.alert("No se ha proporcionado una ruta valida para la evidencia");
 			}
                         
 	if((error == 0)&&(ruta < 3))
 		{
 			/*
-			 * En caso que la validación de campos sea satisfactoria.
+			 * En caso que la validaciï¿½n de campos sea satisfactoria.
 			 */
-			cargar(url,parametro,'escritorio');
+			cargar(url,parametro,'sandbox');
 			}
 	}
     
 /*
  * El presente segmento de codigo evalua la accion de click sobre cualquier elemento con el id delete_#
- * para ejecutar la acción de actualización sobre el registro de una rejilla de datos.
+ * para ejecutar la acciï¿½n de actualizaciï¿½n sobre el registro de una rejilla de datos.
  */
 $(document).ready(function() {
     $("div").click(function(e){
@@ -66,13 +66,31 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,10) == "evi_delete")
     		{
     			//En caso de coincidir el id con la accion delete.
-    			var respuesta;
-    			respuesta = confirm("¿Esta seguro que desea eliminar el registro seleccionado?");
-    			if(respuesta)
-    				{
-    					//Si el usuario confirma su solicitud de borrar el registro seleccionado.
-    					cargar('./php/backend/evidencias/borrar.php','?id='+e.target.id.substring(11)+'&idejecucion='+document.getElementById('idEjecucion').value.toString()+'&idactividad='+document.getElementById('idActividad').value.toString()+'&idprograma='+document.getElementById('idPrograma').value.toString(),'escritorio');
-    					} 		
+            	bootbox.confirm(
+	            	{
+		            	message: "Â¿Confirma que desea borrar el registro?",
+		            	buttons: 
+		            		{
+		            			confirm: 
+		            				{
+		            					label: 'SI',
+		            					className: 'btn-success'
+		            					},
+		            			cancel: 
+		            				{
+		            					label: 'NO',
+		            					className: 'btn-danger'
+		            					}
+		            			},
+		            	callback: function (result)
+		            		{
+		            			if(result)
+		            				{
+		            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+		            					cargar('./php/backend/evidencias/borrar.php','?id='+e.target.id.substring(11)+'&idejecucion='+document.getElementById('idEjecucion').value.toString()+'&idactividad='+document.getElementById('idActividad').value.toString()+'&idprograma='+document.getElementById('idPrograma').value.toString(),'sandbox');
+		            					}			            					
+		            			}
+	            		});
     			}
     });                 
 });

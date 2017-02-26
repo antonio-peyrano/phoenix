@@ -11,7 +11,6 @@
  */
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
-    session_start();
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
@@ -24,7 +23,14 @@
     $Inicio = 0;
     $Pagina = 0;
     $DisplayRow = 10;
-    
+
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('micrositio');
+            session_start();
+            }
+                
     if(isset($_GET['pagina']))
         {
             //Se proporciona referencia de pagina a mostrar.
@@ -64,7 +70,7 @@
             }
                         
     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-    
+
     if($_SESSION['idEmpleado']!=0)
         {
             /*

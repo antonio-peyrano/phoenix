@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeaci贸n operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeaci髇 operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,11 +10,13 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificaci贸n a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificaci髇 a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci贸n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci髇.
     
+    $imgTitleURL = './img/menu/gasolina.png';
+    $Title = 'Gasolina';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $clavecod = '';   
@@ -27,8 +29,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta funci贸n obtiene el perfil del sistema activo para el despliegue de la
-             * informaci贸n de la planeaci贸n.
+             * Esta funci髇 obtiene el perfil del sistema activo para el despliegue de la
+             * informaci髇 de la planeaci髇.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -40,7 +42,7 @@
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuraci贸n valida.
+                    //Si ha sido localizada una configuraci髇 valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -50,13 +52,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*
-             * Esta funci贸n carga la parte grafica que corresponde a las banderas de consumo.
+             * Esta funci髇 carga la parte grafica que corresponde a las banderas de consumo.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
             
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medici贸n optima.
+                    //Si el parametro recibido esta en el rango de medici髇 optima.
                     $rowBanderas.='<td><center><img id="falla_'.$mes.'"align= "middle" src= "./img/banderas/falla.png" width= "25" height= "25" alt= "Falla" data-toggle="tooltip" title="Consumo critico"/></center></td>';
                     } 
                     
@@ -76,7 +78,7 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualizaci贸n.
+             * Si se declaro en la url el control de visualizaci髇.
              */
             $cntview = $_GET['view'];
             }
@@ -87,7 +89,7 @@
     function getMes($Mes)
         {
             /*
-             * Esta funci贸n obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funci髇 obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -142,7 +144,7 @@
     function cargarEntidades()
         {
             /*
-             * Esta funci贸n establece la carga del conjunto de registros de entidades.
+             * Esta funci髇 establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -155,7 +157,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta funci贸n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funci髇 establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -165,33 +167,33 @@
             return $dataset;        
             }   
             
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funci贸n de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funci髇 de carga de registro de usuario.
 
     function controlVisual($idRegistro)
         {
             /*
-             * Esta funci贸n controla los botones que deberan verse en la pantalla deacuerdo con la acci贸n solicitada por el
-             * usuario en la ventana previa. Si es una edici贸n, los botones borrar y guardar deben verse. Si es una creaci贸n
+             * Esta funci髇 controla los botones que deberan verse en la pantalla deacuerdo con la acci髇 solicitada por el
+             * usuario en la ventana previa. Si es una edici髇, los botones borrar y guardar deben verse. Si es una creaci髇
              * solo el boton guardar debe visualizarse.
              */
             global $cntview;
             
             if($idRegistro == -1)
                 {
-                    //En caso que la acci贸n corresponda a la creaci贸n de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    //En caso que la acci髇 corresponda a la creaci髇 de un nuevo registro.
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
-                            //En caso de procesarse como una acci贸n de visualizaci贸n.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/gasolina/borrar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            //En caso de procesarse como una acci髇 de visualizaci髇.
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/gasolina/borrar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
-                            //En caso que la acci贸n corresponda a la edici贸n de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            //En caso que la acci髇 corresponda a la edici髇 de un registro.
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -199,12 +201,13 @@
     function constructor()
         {
             /*
-             * Esta funci贸n establece el contenido HTML del formulario
+             * Esta funci髇 establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
             global $username, $password, $servername, $dbname, $cntview;           
             global $idPrograma, $periodo,$rowBanderas;
+            global $imgTitleURL, $Title;
             
             $habcampos = 'disabled= "disabled"';
             
@@ -227,26 +230,30 @@
                             <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
                         </head>
                         <body>
+                            <div id="cntOperativo" class="cnt-operativo">
                             <div style=display:none>
                                 <input type= "text" id= "idProgGas" value= "'.$Registro['idProgGas'].'">       
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <div id= "infoact">                                        
-                            <table class= "dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Informaci贸n General</th></tr>
-                                <tr><td class="dgRowsaltTR"  width="100px">Entidad:</td><td class="dgRowsnormTR" class= "queryRowsnormTR"><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "-1">';
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>
+                                            <tr><td class="td-panel" width="100px">Entidad:</td><td><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "-1">';
                                 
                                 $subconsulta = cargarEntidades();
                                 
-            echo '              <option value=-1>Seleccione</option>';
+            echo '                              <option value=-1>Seleccione</option>';
             
                                 $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                
                                 while ($RegNiveles)
                                     {
                                         if($RegNiveles['idEntidad']==$Registro['idEntidad'])
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci贸n de consulta, se obtiene la referencia seleccionada
+                                                 * En caso que se ejecute una acci髇 de consulta, se obtiene la referencia seleccionada
                                                  * de la unidad.
                                                  */
             echo '                              <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
@@ -254,7 +261,7 @@
                                         else
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci贸n de creacion de registro.
+                                                 * En caso que se ejecute una acci髇 de creacion de registro.
                                                  */
             echo'                               <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
                                                 }
@@ -262,37 +269,36 @@
                                                 $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
                                         }
             
-            echo'               </select></td></tr>';                                
+            echo'                           </select></td></tr>';                                
                                                 
                                 if($parametro=="-1")
                                     {
                                         /*
-                                         * Si la acci贸n corresponde a la creacion de un registro nuevo,
+                                         * Si la acci髇 corresponde a la creacion de un registro nuevo,
                                          * se establece el a帽o actual.
                                          */
-                                        echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
+            echo '                          <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
                                         }
                                 else
                                     {
                                         /*
-                                         * Si la acci贸n ocurre para un registro existente,
+                                         * Si la acci髇 ocurre para un registro existente,
                                          * se preserva el a帽o almacenado.
                                          */
-                                        echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
+            echo '                          <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
                                         }
                                         
                                 controlVisual($parametro);
                                                                                                         
-            echo'           </table>
-                            </div>
+            echo'                       </table>
                             <br>';
 
                             $nonhabilitado = 'disabled= "disabled"';
             
             echo'           <div id= "dataact">
-                                <table class= "queryTable">
-                                    <tr><th colspan= "14" class= "queryHeader">Consumo Programado (En pesos)</th></tr>
-                                    <tr><td></td><td class= "queryTitles">Enero</td><td class= "queryTitles">Febrero</td><td class= "queryTitles">Marzo</td><td class= "queryTitles">Abril</td><td class= "queryTitles">Mayo</td><td class= "queryTitles">Junio</td><td class= "queryTitles">Julio</td><td class= "queryTitles">Agosto</td><td class= "queryTitles">Septiembre</td><td class= "queryTitles">Octubre</td><td class= "queryTitles">Noviembre</td><td class= "queryTitles">Diciembre</td><td class= "queryTitles">Total</td></tr>';
+                                <table>
+                                    <tr><th class="dgHeader-Planeacion" colspan= "14">Consumo Programado (En pesos)</th></tr>
+                                    <tr><td></td><td class="dgDH-Planeacion">Enero</td><td class="dgDH-Planeacion">Febrero</td><td class="dgDH-Planeacion">Marzo</td><td class="dgDH-Planeacion">Abril</td><td class="dgDH-Planeacion">Mayo</td><td class="dgDH-Planeacion">Junio</td><td class="dgDH-Planeacion">Julio</td><td class="dgDH-Planeacion">Agosto</td><td class="dgDH-Planeacion">Septiembre</td><td class="dgDH-Planeacion">Octubre</td><td class="dgDH-Planeacion">Noviembre</td><td class="dgDH-Planeacion">Diciembre</td><td class="dgDH-Planeacion">Total</td></tr>';
             
                                     //Se procede con la carga de la programacion que corresponde al programa.
                                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
@@ -302,7 +308,7 @@
                                     $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
                                     $field = @mysql_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Programaci贸n</td>';
+                                    $rowdata='<tr><td class="dgTD-Planeacion">Programaci髇</td>';
                                     $count=1;
                                     $totEficacia=0.00;
                                     
@@ -311,26 +317,26 @@
                                             //Para el caso de una consulta de datos.
                                             while($field)
                                                 {
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$habcampos.' id="P_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
                                                     $field = @mysql_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="P_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci贸n de registro.
+                                            //Para el caso de una creaci髇 de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
                                                 {
                                                     //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$habcampos.' id="P_'.$counter.'" size="4" value="0.00"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$counter.'" value="0.00"></input></td>';
                                                     $counter += 1;
                                                     }
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="P_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
                                             }
                                             
                                     echo $rowdata;
@@ -343,7 +349,7 @@
                                     $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
                                     $field = @mysql_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Ejecuci贸n</td>';
+                                    $rowdata='<tr><td class="dgTD-Planeacion">Ejecuci髇</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -352,26 +358,26 @@
                                             //Para el caso de una consulta de datos.
                                             while($field)
                                                 {
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="E_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
                                                     $field = @mysql_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="E_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                            
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';                                            
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci贸n de registro.
+                                            //Para el caso de una creaci髇 de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
                                                 {
                                                     //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="E_'.$counter.'" size="4" value="0.00"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$counter.'" value="0.00"></input></td>';
                                                     $counter += 1;
                                                     }
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="E_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
                                             }                    
 
                                     echo $rowdata;
@@ -384,7 +390,7 @@
                                     $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
                                     $field = @mysql_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
+                                    $rowdata='<tr><td class="dgTD-Planeacion">Eficacia</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -393,35 +399,38 @@
                                             //Para el caso de una consulta de datos.
                                             while($field)
                                                 {
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="Efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
                                                     cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.
                                                     $totEficacia += $RegAux[$field->name];
                                                     $field = @mysql_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                                             $totEficacia = $totEficacia/12.00;
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="Efic_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                            
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';                                            
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci贸n de registro.
+                                            //Para el caso de una creaci髇 de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
                                                 {
                                                     //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="Efic_'.$counter.'" size="4" value="0.00"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$counter.'" value="0.00"></input></td>';
                                                     cargarBanderas(0.00, $counter);//Se genera la fila de banderas.
                                                     $counter += 1;
                                                     }
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="Efic_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
                                             }                    
                                             
                                     echo $rowdata;
-                                    echo '<tr><td class= "queryTitles">Estado</td>'.$rowBanderas.'</tr>';
+                                    echo '<tr><td class="dgTD-Planeacion">Estado</td>'.$rowBanderas.'</tr>';
             
             echo'               </table>
                             </div>
+                                                    </div>
+                                </div>
+                                            </div> 
                         </body>                
                     </html>';           
         } 

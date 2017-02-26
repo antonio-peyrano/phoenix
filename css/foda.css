@@ -13,7 +13,7 @@
 
 .tdlblFortaleza
 	{
-		border: 1px solid #00a82b;
+		border: 1px solid #008080;
 		height:20px;
 		color:#ffffff;
 		background: #008000;
@@ -25,20 +25,6 @@
 		border-radius: 5px;
 		}
 
-.tdlblFortaleza:hover
-	{
-		border: 1px solid #008080;
-		height:20px;
-		color:#ffffff;
-		background: #00a82b;
-		-webkit-transition:  background 0.3s ease-in-out;
-    	-moz-transition:  background 0.3s ease-in-out;
-    	-ms-transition:  background 0.3s ease-in-out;
-    	-o-transition:  background 0.3s ease-in-out;
-    	transition:  background 0.3s ease-in-out;
-		border-radius: 5px;
-		}
-				
 .tdlblOportunidad
 	{
 		border: 1px solid #0080c0;
@@ -52,38 +38,10 @@
     	transition:  background 0.3s ease-in-out;
 		border-radius: 5px;
 		}
-
-.tdlblOportunidad:hover
-	{
-		border: 1px solid #004080;
-		height:20px;
-		color:#ffffff;
-		background: #0080c0;
-		-webkit-transition:  background 0.3s ease-in-out;
-    	-moz-transition:  background 0.3s ease-in-out;
-    	-ms-transition:  background 0.3s ease-in-out;
-    	-o-transition:  background 0.3s ease-in-out;
-    	transition:  background 0.3s ease-in-out;
-		border-radius: 5px;
-		}
 				
 .tdlblDebilidad
 	{
 		border: 1px solid #ff8000;
-		height:20px;
-		color:#ffffff;
-		background: #840000;
-		-webkit-transition:  background 0.3s ease-in-out;
-    	-moz-transition:  background 0.3s ease-in-out;
-    	-ms-transition:  background 0.3s ease-in-out;
-    	-o-transition:  background 0.3s ease-in-out;
-    	transition:  background 0.3s ease-in-out;
-		border-radius: 5px;
-		}
-
-.tdlblDebilidad:hover
-	{
-		border: 1px solid #bf0000;
 		height:20px;
 		color:#ffffff;
 		background: #bf0000;
@@ -97,24 +55,10 @@
 
 .tdlblAmenaza
 	{
-		border: 1px solid #ff8040;
+		border: 1px solid #ffff00;
 		height:20px;
 		color:#ffffff;
 		background: #ff8000;
-		-webkit-transition:  background 0.3s ease-in-out;
-    	-moz-transition:  background 0.3s ease-in-out;
-    	-ms-transition:  background 0.3s ease-in-out;
-    	-o-transition:  background 0.3s ease-in-out;
-    	transition:  background 0.3s ease-in-out;
-		border-radius: 5px;
-		}	
-				
-.tdlblAmenaza:hover
-	{
-		border: 1px solid #ff8000;
-		height:20px;
-		color:#ffffff;
-		background: #ff9866;
 		-webkit-transition:  background 0.3s ease-in-out;
     	-moz-transition:  background 0.3s ease-in-out;
     	-ms-transition:  background 0.3s ease-in-out;

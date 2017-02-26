@@ -1,0 +1,145 @@
+/*La presente hoja de estilos, provee el formato que se aplicara sobre
+ *las tablas de consulta que se generen en el contexto del portal de micrositio
+ *Se han observado detalles en navegadores de la familia internet explorer,
+ *donde los efectos de estilo degradado no son correctamente aplicados.
+ *Por el contrario, para firefox y chrome no se han detectado anomalias al respecto.
+ */
+
+/*Se define el formato basico para el cuerpo del documento,
+ *estableciendo las coordenadas de renderizado en el origen.
+ */
+
+body
+	{
+		margin-top: 0px;
+		margin-left: 0px;
+		}
+
+/* Este elemento especifica las caracteristicas del contenedor principal
+ * para la tabla.
+ */
+.queryMainDiv
+	{
+		width:98%;
+  		vertical-align: middle;
+  		display: inline-block;
+  		white-space: normal;	
+		}
+
+/*Se define las caracteristicas visuales que debe tener en cuanto a formato
+ *un objeto tabla.
+ */
+		
+.queryTable
+	{
+		font-family:Verdana, Arial, Helvetica, sans-serif;
+		font-size:95%;
+		/*width:100%;*/
+		width:auto;
+		background-color:#FFFFFF;
+		border: 1px solid #808080;
+		border-radius: 5px;
+		}
+
+/*Formato aplicado a la cabecera de titulo,
+/*en un tono azul electrico con degradado.
+*/
+		
+.queryTitles
+	{
+    	background-color:#444;
+    	color:#444;
+    	border-bottom:1px solid #444;
+    	background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.39, rgb(189,189,189)),
+        color-stop(0.7, rgb(224,224,224))
+        );
+    	background:-moz-linear-gradient(
+        center bottom,
+        rgb(189,189,189) 39%,
+        rgb(224,224,224) 70%
+        );
+    	text-shadow:1px 1px 1px #fff;	
+		}
+
+/*Formato aplicado a las cabeceras de la tabla
+/*en un tono de gris acero.
+*/
+.queryHeader
+	{
+    	padding:15px;
+    	color:#fff;
+    	text-shadow:1px 1px 1px #216292;
+    	border:1px solid #379dce;
+    	border-bottom:3px solid #269cdb;
+   		background-color:#2789da;
+    	background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(55,73,212)),
+        color-stop(0.51, rgb(19,77,176)),
+        color-stop(0.87, rgb(41,144,217))
+        );
+    	background: -moz-linear-gradient(
+        center bottom,
+        rgb(55,73,212) 2%,
+        rgb(19,77,176) 51%,
+        rgb(41,144,217) 87%
+        );
+    	-webkit-border-top-left-radius:5px;
+    	-webkit-border-top-right-radius:5px;
+    	-moz-border-radius:5px 5px 0px 0px;
+   		border-top-left-radius:5px;
+    	border-top-right-radius:5px;
+		}
+
+/*
+ * Formato aplicado para los pies de tabla.
+ */
+		
+.queryFooter
+	{
+		font-size:9px;
+		background-color:#EFEFEF;
+		color:#000000;
+		}
+
+.queryRownorm
+	{
+		font-size:100%;
+		border:1px solid #808080;
+		border-left-color:#808080;
+		border-radius: 5px;
+		/*border-bottom-style:none;*/
+		}
+		
+.queryRowalt
+	{
+		font-size:100%;
+		border:1px solid #808080;
+		border-left-color:#808080;
+		border-radius: 5px;
+		/*border-bottom-style:none;*/
+		}
+
+/*Formato aplicado a la fila de datos en despliegue normal
+ *en un tono azul cielo.
+ */
+		
+.queryRowsnormTR, .queryspnormRow
+	{
+		border: 1px solid #808080;
+		height:20px;
+		color:#000000;
+		background: #86c9ea;
+		-webkit-transition:  background 0.3s ease-in-out;
+    	-moz-transition:  background 0.3s ease-in-out;
+    	-ms-transition:  background 0.3s ease-in-out;
+    	-o-transition:  background 0.3s ease-in-out;
+    	transition:  background 0.3s ease-in-out;
+		border-radius: 5px;
+		}

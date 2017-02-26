@@ -233,7 +233,7 @@
                     echo'               <tr colspan= 2><td class="dgRowsaltTR">'.$field->name.'</td><td class="dgRowsnormTR">'.$Registro[$field->name].'</td></tr>';
                                         $field = @mysql_fetch_field($dsCampos);
                                         }
-                    echo'               <tr class= "dgHeader"><td alignt= "left" colspan= 2"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'?idobjest='.$idObjEst.'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a></td></tr>
+                    echo'               <tr class= "dgHeader"><td alignt= "left" colspan= 2"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conObjEst.php\',\'?idobjest='.$idObjEst.'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a></td></tr>
                             </table></div><br>';
                     }
             /*

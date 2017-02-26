@@ -15,6 +15,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/indicadores.png';
+    $Title = 'Indicadores';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $habcampos = 'disabled= "disabled"';
@@ -44,7 +46,7 @@
             $consulta= 'SELECT *FROM catProcesos WHERE Status=0'; //Se establece el modelo de consulta de datos.
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             
-            echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="idProcesoChk">';
+            echo '<tr><td class="td-panel" width="100px">Procesos:</td><td><div id="idProcesoChk">';
             
             if($idRegistro == -1)
                 {
@@ -138,19 +140,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/indicadores/borrar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habIndicador();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/indicadores/borrar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habIndicador();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habIndicador();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habIndicador();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -162,6 +164,7 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod, $habcampos;
+            global $imgTitleURL, $Title;
             
             if($Registro['idIndicador'] == null)
                 {
@@ -175,24 +178,27 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
+                            <div id="cntOperativo" class="cnt-operativo">                
                             <div style=display:none>
                                 <input type= "text" id= "idIndicador" value="'.$Registro['idIndicador'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <center>
-                            <div id="infoIndicador" style="width: 400px; height: 600px;">                                
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Indicador en el Sistema</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Indicador:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Indicador" '.$habcampos.' value= "'.$Registro['Indicador'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Percentil:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Percentil" '.$habcampos.' value= "'.$Registro['Percentil'].'"></td></tr>';
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>
+                                <tr><td class="td-panel" width="100px">Indicador:</td><td><input type= "text" required= "required" id= "Indicador" '.$habcampos.' value= "'.$Registro['Indicador'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Nomenclatura:</td><td><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Percentil:</td><td><input type= "text" required= "required" id= "Percentil" '.$habcampos.' value= "'.$Registro['Percentil'].'"></td></tr>';
             
                                 cargarProcesos($parametro, $Registro['idIndicador']);
                                 controlVisual($parametro);
                                 
             echo'           </table>
-                            </div>
-                            </center>  
+                                    </div>
+                                </div>
+                            </div>   
                         </body>
                     </html>
                     ';            

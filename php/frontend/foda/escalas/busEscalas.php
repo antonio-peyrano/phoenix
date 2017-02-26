@@ -14,92 +14,142 @@
      
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
     
-    $sufijo= "fes_";
-
-    function cargarEntidades()
+    class busEscalas
         {
-            /*
-             * Esta función establece la carga del conjunto de registros de entidades.
-             */
-            global $username, $password, $servername, $dbname;
-            
-            $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-            $consulta= 'SELECT idEntidad, Entidad FROM catEntidades WHERE Status=0'; //Se establece el modelo de consulta de datos.
-            $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            return $dataset;            
-            }
+            private $sufijo= "fes_";
 
-    function cargarCedulas($idEntidad)
-        {
-            /*
-             * Esta función establece la carga del conjunto de registros de cedulas.
-             */
-            global $username, $password, $servername, $dbname;
-            
-            $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-            
-            if($idEntidad==-1)
+            public function cargarEntidades()
                 {
-                    //Se determino que se desean todas las cedulas sin importar su tipo.
-                    $consulta= 'SELECT idCedula, Folio FROM opCedulas WHERE Status=0'; //Se establece el modelo de consulta de datos.
+                    /*
+                     * Esta función establece la carga del conjunto de registros de entidades.
+                     */
+                    global $username, $password, $servername, $dbname;
+            
+                    $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
+                    $consulta = 'SELECT idEntidad, Entidad FROM catEntidades WHERE Status=0'; //Se establece el modelo de consulta de datos.
+                    $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+                    return $dataset;            
+                    }
+
+            public function cargarCedulas($idEntidad)
+                {
+                    /*
+                     * Esta función establece la carga del conjunto de registros de cedulas.
+                     */
+                    global $username, $password, $servername, $dbname;
+            
+                    $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
+            
+                    if($idEntidad == -1)
+                        {
+                            //Se determino que se desean todas las cedulas sin importar su tipo.
+                            $consulta = 'SELECT idCedula, Folio FROM opCedulas WHERE Status=0'; //Se establece el modelo de consulta de datos.
+                            }
+                    else
+                        {
+                            //Se desea visualizar cedulas por un tipo especifico.
+                            $consulta = 'SELECT idCedula, Folio FROM opCedulas WHERE Status=0 AND idEntidad='.$idEntidad; //Se establece el modelo de consulta de datos.
+                            }
+            
+                    $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+                    return $dataset;
+                    }
+
+            public function drawUI()
+                {
+                    echo '  <html>
+                                <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
+                                <div id="paginado" style="display:none">
+                                    <input id="pagina" type="text" value="1">
+                                    <input id="pgescala" type="text" value="">
+                                    <input id="pgcedula" type="text" value="">
+                                    <input id="pgponderacion" type="text" value="">
+                                    <input id="pgidentidad" type="text" value="">
+                                </div>
+                                <center><div id= "divbusqueda">
+                                    <form id="frmbusqueda" method="post" action="">
+                                    <table class="queryTable" colspan= "7">
+                                        <tr><td class= "queryRowsnormTR" width ="180">Por escala: </td><td class= "queryRowsnormTR" width ="250"><input type= "text" id= "fesescala"></td><td rowspan= "4"><img id="'.$this->sufijo.'buscar" align= "left" src= "./img/grids/view.png" width= "25" height= "25" alt="Buscar"/></td></tr>
+                                        <tr><td class= "queryRowsnormTR">Por ponderacion: </td><td class= "queryRowsnormTR"><input type= "text" id= "fesponderacion"></td></tr>
+                                        <tr><td class= "queryRowsnormTR">Por Entidad: </td><td class= "queryRowsnormTR"><select name= "fesidentidad" id= "fesidentidad" value= "-1">';
+                    
+                                        $subconsulta = $this->cargarEntidades();
+                    
+                    echo '                  <option value=-1>Seleccione</option>
+                                            <option value=-2>Global</option>';
+                    
+                                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                    
+                                        while ($RegNiveles)
+                                            {
+                    echo '                      <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
+                                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                                }
+                    
+                    echo'               </select></td></tr>
+                                        <tr><td class= "queryRowsnormTR">Por Cedula: </td><td class= "queryRowsnormTR"><div id="cbCedulas"><select name= "fescedula" id= "fescedula" value= "-1">
+                                            <option value=-1>Seleccione</option>
+                                            </select></div>
+                                        </td>
+                                        </tr>
+                                    </table>
+                                    </form>
+                                </div></center>';
+                    }                    
+        }
+        
+    $objUsrCtrl = new usrctrl();
+        
+    if($objUsrCtrl->getCredenciales())
+        {
+            /*
+             * Se valida que el usuario tenga sus credenciales cargadas
+             * previo login en el sistema.
+             */
+            $idUsuario = $objUsrCtrl->getidUsuario($_SESSION['usuario'], $_SESSION['clave']);
+            $Modulo = 'Escalas';
+        
+            if($objUsrCtrl->validarCredenciales($idUsuario, $Modulo)!='')
+                {
+                    /*
+                     * Se valida que las credenciales autoricen la ejecucion del
+                     * modulo solicitado.
+                     */
+                    $objBusEscalas = new busEscalas();
+        
+                    echo '  <html>
+                                    <center>';
+        
+                    echo            $objBusEscalas->drawUI();
+        
+                    echo '          </center><br>';
+        
+                    echo '          <center><div id= "addEscala">';
+                                        include("opQuickEscalas.php");
+                    echo '          </div></center>';
+    
+                    echo '          <br><div id= "busRes">';
+                                        include_once("catEscalas.php");
+                    echo '          </div>
+                            </html>';
                     }
             else
                 {
-                    //Se desea visualizar cedulas por un tipo especifico.
-                    $consulta= 'SELECT idCedula, Folio FROM opCedulas WHERE Status=0 AND idEntidad='.$idEntidad; //Se establece el modelo de consulta de datos.
+                    /*
+                     * En caso que no cuente con credenciales validas, el sistema impedira
+                     * la brecha de seguridad.
+                     */
+                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
                     }
-            
-            $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            return $dataset;
             }
-                        
-    echo '  <html>
-                <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
-                <div id="paginado" style="display:none">
-                    <input id="pagina" type="text" value="1">
-                    <input id="pgescala" type="text" value="">
-                    <input id="pgcedula" type="text" value="">        
-                    <input id="pgponderacion" type="text" value="">
-                    <input id="pgidentidad" type="text" value="">
-                </div>                  
-                <center><div id= "divbusqueda">
-                    <form id="frmbusqueda" method="post" action="">
-                        <table class="queryTable" colspan= "7">
-                            <tr><td class= "queryRowsnormTR" width ="180">Por escala: </td><td class= "queryRowsnormTR" width ="250"><input type= "text" id= "fesescala"></td><td rowspan= "4"><img id="'.$sufijo.'buscar" align= "left" src= "./img/grids/view.png" width= "25" height= "25" alt="Buscar"/></td></tr>
-                            <tr><td class= "queryRowsnormTR">Por ponderacion: </td><td class= "queryRowsnormTR"><input type= "text" id= "fesponderacion"></td></tr>
-                            <tr><td class= "queryRowsnormTR">Por Entidad: </td><td class= "queryRowsnormTR"><select name= "fesidentidad" id= "fesidentidad" value= "-1">';
-    
-                            $subconsulta = cargarEntidades();
-                            
-    echo '                  <option value=-1>Seleccione</option>
-                            <option value=-2>Global</option>';
-    
-                            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
-                            
-                            while ($RegNiveles)
-                                {
-    echo '                              <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
-                                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
-                                    }
-                                    
-    echo'                   </select></td></tr>
-                            <tr><td class= "queryRowsnormTR">Por Cedula: </td><td class= "queryRowsnormTR"><div id="cbCedulas"><select name= "fescedula" id= "fescedula" value= "-1">
-                                        <option value=-1>Seleccione</option>
-                                    </select></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div></center>';
-    
-    echo '<center><div id= "addEscala">';
-        include("opQuickEscalas.php");
-    echo '</div></center>';
-    
-    echo '<br><div id= "busRes">';
-        include_once("catEscalas.php");
-    echo '</div>
-          </html>';
-    
+    else
+        {
+            /*
+             * En caso que no cuente con credenciales validas, el sistema impedira
+             * la brecha de seguridad.
+             */
+            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
+            }    
 ?>

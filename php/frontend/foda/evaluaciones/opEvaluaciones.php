@@ -15,6 +15,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/evaluacion.png';
+    $Title = 'Evaluaciones';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $habcampos = '';
@@ -102,19 +104,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEvaluacion(\'./php/backend/foda/evaluaciones/guardar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&folio=\'+document.getElementById(\'Folio\').value.toString()+\'&idempleado=\'+document.getElementById(\'fevempleado\').value.toString()+\'&fecha=\'+document.getElementById(\'Fecha\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEvaluacion(\'./php/backend/foda/evaluaciones/guardar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&folio=\'+document.getElementById(\'Folio\').value.toString()+\'&idempleado=\'+document.getElementById(\'fevempleado\').value.toString()+\'&fecha=\'+document.getElementById(\'Fecha\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/foda/evaluaciones/borrar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEvaluacion(\'./php/backend/foda/evaluaciones/guardar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&folio=\'+document.getElementById(\'Folio\').value.toString()+\'&idempleado=\'+document.getElementById(\'fevempleado\').value.toString()+\'&fecha=\'+document.getElementById(\'Fecha\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEvaluacion();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/foda/evaluaciones/borrar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEvaluacion(\'./php/backend/foda/evaluaciones/guardar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&folio=\'+document.getElementById(\'Folio\').value.toString()+\'&idempleado=\'+document.getElementById(\'fevempleado\').value.toString()+\'&fecha=\'+document.getElementById(\'Fecha\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEvaluacion();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEvaluacion(\'./php/backend/foda/evaluaciones/guardar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&folio=\'+document.getElementById(\'Folio\').value.toString()+\'&idempleado=\'+document.getElementById(\'fevempleado\').value.toString()+\'&fecha=\'+document.getElementById(\'Fecha\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEvaluacion();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/evaluaciones/busEvaluaciones.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEvaluacion(\'./php/backend/foda/evaluaciones/guardar.php\',\'?id=\'+document.getElementById(\'idEvaluacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&folio=\'+document.getElementById(\'Folio\').value.toString()+\'&idempleado=\'+document.getElementById(\'fevempleado\').value.toString()+\'&fecha=\'+document.getElementById(\'Fecha\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEvaluacion();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -145,8 +147,8 @@
              */
             global $habcampos;
             
-            echo'   <tr><td width="100px" class="dgRowsaltTR">Empleado:</td>
-                        <td class="dgRowsnormTR">
+            echo'   <tr><td width="100px" class="td-panel">Empleado:</td>
+                        <td>
                             <div id="cbEmpleados">
                                 <select name= "fevempleado" id= "fevempleado" '.$habcampos.' value= "'.$Registro['idEmpleado'].'">';
             
@@ -187,8 +189,8 @@
              */
             global $habcampos;
             
-            echo'   <tr><td width="100px" class="dgRowsaltTR">Empleado:</td>
-                        <td class="dgRowsnormTR">
+            echo'   <tr><td width="100px" class="td-panel">Empleado:</td>
+                        <td>
                             <div id="cbEmpleados">
                                 <select name= "fevempleado" id= "fevempleado" '.$habcampos.' value= "'.$Registro['idEmpleado'].'">';
             
@@ -228,7 +230,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod, $FechaCreacion, $habcampos;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             $FolioCedula = "";
             
@@ -251,18 +254,20 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
+                            <div id="cntOperativo" class="cnt-operativo">                
                             <div style=display:none>
                                 <input type= "text" id= "idEvaluacion" value="'.$Registro['idEvaluacion'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <center>
-                            <div id="infoEmpleado" style="width: 400px; height: 600px;">                                                                    
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Evaluacion en el Sistema</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Folio:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Folio" '.$habcampos.' value= "'.$FolioCedula.'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Fecha:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Fecha" '.$habcampos.' value= "'.$FechaCreacion.'"></td></tr>';
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>
+                                <tr><td class="td-panel" width="100px">Folio:</td><td><input type= "text" required= "required" id= "Folio" '.$habcampos.' value= "'.$FolioCedula.'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Fecha:</td><td><input type= "text" required= "required" id= "Fecha" '.$habcampos.' value= "'.$FechaCreacion.'"></td></tr>';
             
-            echo'               <tr><td width="100px" class="dgRowsaltTR">Entidad:</td><td class="dgRowsnormTR"><select name= "idEntfoda" id= "idEntfoda" '.$habcampos.' value= "'.$Registro['idEntidad'].'">';
+            echo'               <tr><td width="100px" class="td-panel">Entidad:</td><td><select name= "idEntfoda" id= "idEntfoda" '.$habcampos.' value= "'.$Registro['idEntidad'].'">';
 
                                 $subconsulta = cargarEntidades();
                                 
@@ -309,7 +314,7 @@
                                         displayEmpleadoCF($Registro);
                                         }   
 
-            echo'               <tr><td width="100px" class="dgRowsaltTR">Cedula:</td><td class="dgRowsnormTR"><div id="cbCedulas"><select name= "idCedula" id= "idCedula" '.$habcampos.' value= "'.$Registro['idCedula'].'">';
+            echo'               <tr><td width="100px" class="td-panel" >Cedula:</td><td><div id="cbCedulas"><select name= "idCedula" id= "idCedula" '.$habcampos.' value= "'.$Registro['idCedula'].'">';
             
                                 $subconsulta = cargarCedulas($Registro['idEntidad']);
             
@@ -339,8 +344,9 @@
                                 controlVisual($parametro);
                                 
             echo'           </table>
-                            </div>
-                            </center>  
+                                     </div>
+                                </div>
+                            </div>  
                         </body>
                     </html>';            
         } 

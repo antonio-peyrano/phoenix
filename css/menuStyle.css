@@ -4,12 +4,12 @@
  *celular
  */
  
-    .Contenedor 
+    .contenedor 
         {
             position: relative; /*Respecto al cuerpo*/
             height: inherit; /*Altura respecto al contenedor padre*/
             width: 100%; /*Anchura respecto al contenedor padre*/
-            left: 0; /*Separación del margen izquierdo respecto al padre*/
+            left: 240px; /*Separación del margen izquierdo respecto al padre*/
         	/*overflow: scroll;*/
             /*
              * Conjunto de efectos de transición.
@@ -21,12 +21,68 @@
             transition:  left 0.4s ease-in-out;
             }
 
-    .Contenedor.abrir-MenuLateral
+    .contenedor.abrir-menu-lateral
         {
-            left: 240px; /*Separación del margen izquierdo respecto al contenedor*/
+            left: 0px; /*Separación del margen izquierdo respecto al contenedor*/
             }
- 
-	.Area-Deslizar
+
+	.contenedor-principal
+        {
+            position: relative; /*Posición respecto al cuerpo*/
+            width: 100%; /*Anchura respecto al cuerpo*/
+            height: inherit; /*Altura respecto al cuerpo*/
+            padding: 10px; /*Espaciado del contenedor*/
+            background: #F6CE71; /*Color de fondo del contenedor principal*/
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            }
+		
+	.contenedor-principal .content
+        {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            padding-left: 60px;
+            width: 100%;
+            height:inherit;
+            }
+		
+	.contenedor-principal .content h1
+        {
+            font-weight: 100;
+            }
+		
+	.contenedor-principal .content p
+        {
+            width: 100%;
+            line-height: 120%;
+            }
+                        
+	.contenedor-principal #menu-lateral-toggle
+        {
+            background: #F3621E;
+            border-radius: 10px;
+            display: block;
+            position: relative;
+            padding: 10px 7px;
+            float: left;
+            }
+		
+	.contenedor-principal #menu-lateral-toggle .bar
+        {
+            display: block;
+            width: 18px;
+            margin-bottom: 3px;
+            height: 2px;
+            background-color: #F3B71E;
+            border-radius: 1px;   
+            }
+		
+	.contenedor-principal #menu-lateral-toggle .bar:last-child
+        {
+            margin-bottom: 0;   
+            }
+                        
+	.area-deslizar
         {
             /*
              * Este contenedor es el area sobre la cual el usuario utilizara la opción
@@ -41,18 +97,28 @@
             z-index: 0; /*Orden respecto a la profundidad sobre los otros elementos*/
             }
             
-	#informacion
-        {
-            width:inherit;
-            height:20px;
-            background: #000000; /*Color de fondo*/
-            color:#FFFFFF; /*Color de texto*/
-            text-align:center; /*Alineación del texto*/   
-            }
             
-    #menuLateral 
+
+/*
+ * Este segmento de codigo controla el formato con el que se visualizara el menu lateral
+ * de la aplicación para el usuario.
+ */
+
+    #menu-lateral 
         {
-            background: #2290c9; /*Color de fondo del contenedor de menu*/
+        	/*
+        	 * Se aplica formato sobre el elemento cuyo ID corresponda al nombre de
+        	 * menu-lateral.
+        	 */
+            background: #FF8000; /*Color de fondo del contenedor de menu*/
+			/*background: rgba(147,206,222,1);
+			background: -moz-radial-gradient(center, ellipse cover, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(147,206,222,1)), color-stop(41%, rgba(117,189,209,1)), color-stop(100%, rgba(73,165,191,1)));
+			background: -webkit-radial-gradient(center, ellipse cover, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+			background: -o-radial-gradient(center, ellipse cover, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+			background: -ms-radial-gradient(center, ellipse cover, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+			background: radial-gradient(ellipse at center, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf', GradientType=1 );*/
             position: absolute; /*Posicion respecto al cuerpo*/
             width: 240px; /*Anchura respecto al cuerpo*/
             height: inherit; /*Altura respecto al cuerpo*/
@@ -61,19 +127,19 @@
             -moz-box-sizing: border-box;
             }
 
-	#menuLateral ul
+	#menu-lateral ul
         {
             margin: 0;/*Margen en los cuatro cuadrantes para el elemento unsorted list (UL)*/
             padding: 0; /*Espaciado en los cuatro cuadrantes*/
             list-style: none; /*Se elimina la viñeta de enumerado*/
             }
 		
-	#menuLateral ul li
+	#menu-lateral ul li
         {
             margin: 0; /*Margen en los cuatro cuadrantes para el elemento list item (LI)*/
             }
 		
-	#menuLateral ul li a
+	#menu-lateral ul li a
         {
             padding: 15px 20px; /*Espaciado de etiqueta de item*/
             font-size: 16px; /*Tamaño de texto de item*/
@@ -81,106 +147,230 @@
             color: white; /*Color de texto*/		
             text-decoration: none; /*Elementos de decoración del texto*/
             display: block; /*Mostrar en bloque*/
-            border-bottom: 1px solid #196c96; /*Borde inferior [Grosor, Estilo, Color]*/
+            border-bottom: 1px solid #FBF9F8; /*Borde inferior [Grosor, Estilo, Color]*/
             -webkit-transition:  background 0.3s ease-in-out;
             -moz-transition:  background 0.3s ease-in-out;
             -ms-transition:  background 0.3s ease-in-out;
             -o-transition:  background 0.3s ease-in-out;
             transition:  background 0.3s ease-in-out;
             }
-		
-	.contexto_menu:hover
+
+	#item-cabecera-01
         {		
-            background: #196c96;/*Color de fondo cuando el cursor esta sobre el objeto*/
+            background: #FF8000;
             -webkit-transition:  background 0.3s ease-in-out;
             -moz-transition:  background 0.3s ease-in-out;
             -ms-transition:  background 0.3s ease-in-out;
             -o-transition:  background 0.3s ease-in-out;
             transition:  background 0.3s ease-in-out;
             }
-	
-	.contexto_submenu
-        {
-		  background: #374ee8; /*Color de fondo a aplicar sobre elemento secundario de menu*/
-		  }
-		
-	.contexto_submenu:hover
-        {
-            background: #5bb7e3; /*Color de fondo a aplicar*/
+
+	#item-cabecera-01:hover
+        {		
+            background: #FE9A2E;
             -webkit-transition:  background 0.3s ease-in-out;
             -moz-transition:  background 0.3s ease-in-out;
             -ms-transition:  background 0.3s ease-in-out;
             -o-transition:  background 0.3s ease-in-out;
             transition:  background 0.3s ease-in-out;
             }
-							
-	.Contenedor-Principal
-        {
-            position: relative; /*Posición respecto al cuerpo*/
-            width: 100%; /*Anchura respecto al cuerpo*/
-            height: inherit; /*Altura respecto al cuerpo*/
-            padding: 10px; /*Espaciado del contenedor*/
-            background: #D3D4DC; /*Color de fondo del contenedor principal*/
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
+
+	#item-cuerpo-01
+        {		
+            background: #FE9A2E;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
             }
+
+	#item-cuerpo-01:hover
+        {		
+            background: #FF8000;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+                        
+	#item-cabecera-02
+        {	
+        	background: #EEA107;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-02:hover
+        {		
+            background: #FFBF00;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cuerpo-02
+        {	
+        	background: #FFBF00;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cuerpo-02:hover
+        {		
+            background: #EEA107;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+                        
+	#item-cabecera-03
+        {		
+            background: #B40404;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-03:hover
+        {	
+        	background: #DF0101;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cuerpo-03
+        {		
+            background: #DF0101;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cuerpo-03:hover
+        {	
+        	background: #B40404;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+                        
+	#item-cabecera-04
+        {		
+            background: #088A08;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-04:hover
+        {	
+        	background: #04B404;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cuerpo-04
+        {		
+            background: #04B404;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cuerpo-04:hover
+        {	
+        	background: #088A08;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-05
+        {		
+            background: #006E00;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-05:hover
+        {	
+        	background: #44AA18;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-06
+        {		
+            background: #0101DF;
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+
+	#item-cabecera-06:hover
+        {	
+        	background: #013ADF;            
+            -webkit-transition:  background 0.3s ease-in-out;
+            -moz-transition:  background 0.3s ease-in-out;
+            -ms-transition:  background 0.3s ease-in-out;
+            -o-transition:  background 0.3s ease-in-out;
+            transition:  background 0.3s ease-in-out;
+            }
+/*
+ * FIN DE CONFIGURACION DEL FORMATO DE MENU.
+ */                        
 		
-	.Contenedor-Principal .content
-        {
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            padding-left: 60px;
-            width: 100%;
-            height:inherit;
-            }
-		
-	.Contenedor-Principal .content h1
-        {
-            font-weight: 100;
-            }
-		
-	.Contenedor-Principal .content p
-        {
-            width: 100%;
-            line-height: 120%;
-            }
-		
-	/*
-	 * Este segmento de codigo controla la apariencia del boton para el despliegue
-	 * de la barra de menu.
-	 */	
-	.Contenedor-Principal #menuLateral-toggle
-        {
-            background: #2290c9;
-            border-radius: 10px;
-            display: block;
-            position: relative;
-            padding: 10px 7px;
-            float: left;
-            }
-		
-	.Contenedor-Principal #menuLateral-toggle .bar
-        {
-            display: block;
-            width: 18px;
-            margin-bottom: 3px;
-            height: 2px;
-            background-color: #c5e6fe;
-            border-radius: 1px;   
-            }
-		
-	.Contenedor-Principal #menuLateral-toggle .bar:last-child
-        {
-            margin-bottom: 0;   
-            }
+/*
+ * Este segmento da formato al contenedor con la informacion del usuario
+ * en la barra de menu.
+ */	
             
 	div.infousuario
         {
-            background: #2290c9; /*Color de fondo*/
+            /*background: #2290c9; /*Color de fondo*/
   		    position: absolute;        
             }
     
-    .tdInfoUsuario
+    .profileUser
         {
             color: white; /*Color de texto*/
-            }		
+        	font-weight:bold; /*Estilo aplicado*/
+            }           

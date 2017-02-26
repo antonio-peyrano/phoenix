@@ -54,14 +54,14 @@ function guardarActividad(url,parametro)
 						/*
 						 * En caso que el monto no se sobregire.
 						 */
-						alert("Existen campos pendientes por completar");
+                    	bootbox.alert("Existen campos pendientes por completar");
 						}
 				else
 					{
 						/*
 						 * En caso que el monto este sobregirado.
 						 */
-						alert("El monto de la actividad sobrepasa el destinado al programa");
+                    	bootbox.alert("El monto propuesto a la actividad sobrepasa el asignado a programa");
 						}			
 				}
 		else
@@ -69,7 +69,7 @@ function guardarActividad(url,parametro)
 				/*
 				 * En caso que la validación de campos sea satisfactoria.
 				 */
-				cargar(url,parametro,'escritorio');
+				cargar(url,parametro,'sandbox');
 				}
 		}
 	
@@ -140,13 +140,31 @@ $(document).ready(function()
     			if(e.target.id.substring(0,10) == "act_delete")
     				{
     					//En caso de coincidir el id con la accion delete.
-    					var respuesta;
-    					respuesta = confirm("¿Esta seguro que desea eliminar el registro seleccionado?");
-    					if(respuesta)
-    						{
-    							//Si el usuario confirma su solicitud de borrar el registro seleccionado.
-    							cargar('./php/backend/actividad/borrar.php','?id='+e.target.id.substring(11)+'&idprograma='+document.getElementById('idPrograma').value.toString()+'&idview=3','escritorio');
-    							} 		
+		            	bootbox.confirm(
+			            	{
+				            	message: "¿Confirma que desea borrar el registro?",
+				            	buttons: 
+				            		{
+				            			confirm: 
+				            				{
+				            					label: 'SI',
+				            					className: 'btn-success'
+				            					},
+				            			cancel: 
+				            				{
+				            					label: 'NO',
+				            					className: 'btn-danger'
+				            					}
+				            			},
+				            	callback: function (result)
+				            		{
+				            			if(result)
+				            				{
+				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+				            					cargar('./php/backend/actividad/borrar.php','?id='+e.target.id.substring(11)+'&idprograma='+document.getElementById('idPrograma').value.toString()+'&idview=3','sandbox');
+				            					}			            					
+				            			}
+			            		});
     					}
     			});                 
 		});
@@ -163,7 +181,7 @@ $(document).ready(function()
     			if(e.target.id.substring(0,7) == "act_add")
     				{
     					//En caso de coincidir el id con la accion agregar.
-    					cargar('./php/frontend/actividad/opActividad.php','?id=-1&view=0&idprograma='+document.getElementById('idPrograma').value.toString(),'escritorio');
+    					cargar('./php/frontend/actividad/opActividad.php','?id=-1&view=0&idprograma='+document.getElementById('idPrograma').value.toString(),'sandbox');
     					}
     			});                 
 		});
@@ -180,7 +198,7 @@ $(document).ready(function()
     			if(e.target.id.substring(0,14) == "act_visualizar")
     				{
     					//En caso de coincidir el id con la accion visualizar.
-    					cargar('./php/frontend/actividad/opActividad.php','?id='+e.target.id.substring(15)+'&view=1&idprograma='+document.getElementById('idPrograma').value.toString(),'escritorio');
+    					cargar('./php/frontend/actividad/opActividad.php','?id='+e.target.id.substring(15)+'&view=1&idprograma='+document.getElementById('idPrograma').value.toString(),'sandbox');
     					}
     			});                 
 		});
@@ -197,7 +215,7 @@ $(document).ready(function()
     			if(e.target.id.substring(0,8) == "act_edit")
     				{
     					//En caso de coincidir el id con la accion editar.
-    					cargar('./php/frontend/actividad/opActividad.php','?id='+e.target.id.substring(9)+'&view=0&idprograma='+document.getElementById('idPrograma').value.toString(),'escritorio');
+    					cargar('./php/frontend/actividad/opActividad.php','?id='+e.target.id.substring(9)+'&view=0&idprograma='+document.getElementById('idPrograma').value.toString(),'sandbox');
     					}
     			});                 
 		});

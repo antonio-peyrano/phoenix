@@ -68,14 +68,14 @@ function guardarVehiculos(url,parametro){
 			/*
 			 * En caso de ocurrir un error de validación, se notifica al usuario.
 			 */
-			alert("Existen campos pendientes por completar");
+        	bootbox.alert("Existen campos pendientes por completar");
 			}
 	else
 		{
 			/*
 			 * En caso que la validación de campos sea satisfactoria.
 			 */
-			cargar(url,parametro,'escritorio');
+			cargar(url,parametro,'sandbox');
 			}
 	}
 	
@@ -127,7 +127,7 @@ $(document).ready(function() {
     			if(respuesta)
     				{
     					//Si el usuario confirma su solicitud de borrar el registro seleccionado.
-    					cargar('./php/backend/vehiculos/borrar.php','?id='+e.target.id.substring(11),'escritorio');
+    					cargar('./php/backend/vehiculos/borrar.php','?id='+e.target.id.substring(11),'sandbox');
     					} 		
     			}
     });                 
@@ -143,7 +143,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,7) == "veh_add")
     		{
     			//En caso de coincidir el id con la accion agregar.
-    			cargar('./php/frontend/vehiculos/opVehiculos.php','?id=-1&view=0','escritorio');
+    			cargar('./php/frontend/vehiculos/opVehiculos.php','?id=-1&view=0','sandbox');
     			}
     });                 
 });
@@ -158,7 +158,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,14) == "veh_visualizar")
     		{
     			//En caso de coincidir el id con la accion visualizar.
-    			cargar('./php/frontend/vehiculos/opVehiculos.php','?id='+e.target.id.substring(15)+'&view=1','escritorio');
+    			cargar('./php/frontend/vehiculos/opVehiculos.php','?id='+e.target.id.substring(15)+'&view=1','sandbox');
     			}
     });                 
 });
@@ -173,7 +173,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,8) == "veh_edit")
     		{
     			//En caso de coincidir el id con la accion editar.
-    			cargar('./php/frontend/vehiculos/opVehiculos.php','?id='+e.target.id.substring(9)+'&view=0','escritorio');
+    			cargar('./php/frontend/vehiculos/opVehiculos.php','?id='+e.target.id.substring(9)+'&view=0','sandbox');
     			}
     });                 
 });

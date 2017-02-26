@@ -32,14 +32,14 @@
 			/*
 			 * En caso de ocurrir un error de validación, se notifica al usuario.
 			 */
-			alert("Existen campos pendientes por completar");
+        	bootbox.alert("Existen campos pendientes por completar");
 			}
 	else
 		{
 			/*
 			 * En caso que la validación de campos sea satisfactoria.
 			 */
-			cargar(url,parametro,'escritorio');
+			cargar(url,parametro,'sandbox');
 			}
 	}
 	
@@ -67,7 +67,7 @@ function guardarGasolina(url,parametro){
 			/*
 			 * En caso que la validación de campos sea satisfactoria.
 			 */
-			cargar(url,parametro,'escritorio');
+			cargar(url,parametro,'sandbox');
 			}
 	}
 
@@ -145,13 +145,31 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,10) == "gas_delete")
     		{
     			//En caso de coincidir el id con la accion delete.
-    			var respuesta;
-    			respuesta = confirm("¿Esta seguro que desea eliminar el registro seleccionado?");
-    			if(respuesta)
-    				{
-    					//Si el usuario confirma su solicitud de borrar el registro seleccionado.
-    					cargar('./php/backend/gasolina/borrar.php','?id='+e.target.id.substring(11),'escritorio');
-    					} 		
+            	bootbox.confirm(
+	            	{
+		            	message: "¿Confirma que desea borrar el registro?",
+		            	buttons: 
+		            		{
+		            			confirm: 
+		            				{
+		            					label: 'SI',
+		            					className: 'btn-success'
+		            					},
+		            			cancel: 
+		            				{
+		            					label: 'NO',
+		            					className: 'btn-danger'
+		            					}
+		            			},
+		            	callback: function (result)
+		            		{
+		            			if(result)
+		            				{
+		            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+		            					cargar('./php/backend/gasolina/borrar.php','?id='+e.target.id.substring(11),'sandbox');
+		            					}			            					
+		            			}
+	            		});
     			}
     });                 
 });
@@ -166,7 +184,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,7) == "gas_add")
     		{
     			//En caso de coincidir el id con la accion agregar.
-    			cargar('./php/frontend/gasolina/opGasolina.php','?id=-1&view=0','escritorio');
+    			cargar('./php/frontend/gasolina/opGasolina.php','?id=-1&view=0','sandbox');
     			}
     });                 
 });
@@ -181,7 +199,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,14) == "gas_visualizar")
     		{
     			//En caso de coincidir el id con la accion visualizar.
-    			cargar('./php/frontend/gasolina/opGasolina.php','?id='+e.target.id.substring(15)+'&view=1','escritorio');
+    			cargar('./php/frontend/gasolina/opGasolina.php','?id='+e.target.id.substring(15)+'&view=1','sandbox');
     			}
     });                 
 });
@@ -196,7 +214,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,8) == "gas_edit")
     		{
     			//En caso de coincidir el id con la accion editar.
-    			cargar('./php/frontend/gasolina/opGasolina.php','?id='+e.target.id.substring(9)+'&view=0','escritorio');
+    			cargar('./php/frontend/gasolina/opGasolina.php','?id='+e.target.id.substring(9)+'&view=0','sandbox');
     			}
     });                 
 });
@@ -211,7 +229,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,7) == "mcs_add")
     		{
     			//En caso de coincidir el id con la accion agregar.
-    			cargar('./php/frontend/gasconsumo/opEjecGas.php','?id=-1&view=0&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString(),'escritorio');
+    			cargar('./php/frontend/gasconsumo/opEjecGas.php','?id=-1&view=0&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString(),'sandbox');
     			}
     });                 
 });
@@ -231,7 +249,7 @@ $(document).ready(function() {
     			if(respuesta)
     				{
     					//Si el usuario confirma su solicitud de borrar el registro seleccionado.						
-    					cargar('./php/backend/gasconsumo/borrar.php','?id='+e.target.id.substring(11)+'&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&view=3','escritorio');
+    					cargar('./php/backend/gasconsumo/borrar.php','?id='+e.target.id.substring(11)+'&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&view=3','sandbox');
     					} 		
     			}
     });                 
@@ -247,7 +265,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,14) == "mcs_visualizar")
     		{
     			//En caso de coincidir el id con la accion visualizar.
-    			cargar('./php/frontend/gasconsumo/opEjecGas.php','?id='+e.target.id.substring(15)+'&view=1&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString(),'escritorio');
+    			cargar('./php/frontend/gasconsumo/opEjecGas.php','?id='+e.target.id.substring(15)+'&view=1&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString(),'sandbox');
     			}
     });                 
 });
@@ -262,7 +280,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,8) == "mcs_edit")
     		{
     			//En caso de coincidir el id con la accion editar.
-    			cargar('./php/frontend/gasconsumo/opEjecGas.php','?id='+e.target.id.substring(9)+'&view=0&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString(),'escritorio');
+    			cargar('./php/frontend/gasconsumo/opEjecGas.php','?id='+e.target.id.substring(9)+'&view=0&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString(),'sandbox');
     			}
     });                 
 });

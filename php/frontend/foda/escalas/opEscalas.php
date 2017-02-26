@@ -15,6 +15,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/escala.png';
+    $Title = 'Escalas';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     
@@ -58,19 +60,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEscala(\'./php/backend/foda/escalas/guardar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString()+\'&escala=\'+document.getElementById(\'Escala\').value.toString()+\'&ponderacion=\'+document.getElementById(\'Ponderacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEscala(\'./php/backend/foda/escalas/guardar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString()+\'&escala=\'+document.getElementById(\'Escala\').value.toString()+\'&ponderacion=\'+document.getElementById(\'Ponderacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/foda/escalas/borrar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEscala(\'./php/backend/foda/escalas/guardar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString()+\'&escala=\'+document.getElementById(\'Escala\').value.toString()+\'&ponderacion=\'+document.getElementById(\'Ponderacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEscala();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/foda/escalas/borrar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEscala(\'./php/backend/foda/escalas/guardar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString()+\'&escala=\'+document.getElementById(\'Escala\').value.toString()+\'&ponderacion=\'+document.getElementById(\'Ponderacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEscala();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEscala(\'./php/backend/foda/escalas/guardar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString()+\'&escala=\'+document.getElementById(\'Escala\').value.toString()+\'&ponderacion=\'+document.getElementById(\'Ponderacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEscala();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/escalas/busEscalas.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEscala(\'./php/backend/foda/escalas/guardar.php\',\'?id=\'+document.getElementById(\'idEscala\').value.toString()+\'&escala=\'+document.getElementById(\'Escala\').value.toString()+\'&ponderacion=\'+document.getElementById(\'Ponderacion\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEscala();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -82,7 +84,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             $idCedula = '';
             
@@ -107,18 +110,20 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
+                            <div id="cntOperativo" class="cnt-operativo">                
                             <div style=display:none>
                                 <input type= "text" id= "idEscala" value="'.$Registro['idEscala'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <center>
-                            <div id="infoEmpleado" style="width: 400px; height: 600px;">                                                                    
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Escala en el Sistema</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Escala:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Escala" '.$habcampos.' value= "'.$Registro['Escala'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Ponderacion:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Ponderacion" '.$habcampos.' value= "'.$Registro['Ponderacion'].'"></td></tr>';
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>
+                                <tr><td class="td-panel" width="100px">Escala:</td><td><input type= "text" required= "required" id= "Escala" '.$habcampos.' value= "'.$Registro['Escala'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Ponderacion:</td><td><input type= "text" required= "required" id= "Ponderacion" '.$habcampos.' value= "'.$Registro['Ponderacion'].'"></td></tr>';
             
-            echo'               <tr><td width="100px" class="dgRowsaltTR">Cedula:</td><td class="dgRowsnormTR"><select name= "idCedula" id= "idCedula" '.$habcampos.' value= "'.$idCedula.'">';
+            echo'               <tr><td class="td-panel" width="100px">Cedula:</td><td><select name= "idCedula" id= "idCedula" '.$habcampos.' value= "'.$idCedula.'">';
 
                                 $subconsulta = cargarCedulas();
                                 
@@ -148,8 +153,9 @@
                                 controlVisual($parametro);
                                 
             echo'           </table>
-                            </div>
-                            </center>  
+                                    </div>
+                                </div>
+                            </div>  
                         </body>
                     </html>';            
         } 

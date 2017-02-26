@@ -171,11 +171,11 @@
                             
                     $idxFactor = 0;
                     
-                    while($idxFactor<$this->totFactores)                       
+                    while($idxFactor<count($this->Resultados))                       
                         {   
                             /*
-                             * Se corrigen los valores ajustndolos a la media aritmetica
-                             * del total de valuaciones.
+                             * Se corrigen los valores ajustandolos a la media aritmetica
+                             * del total de evaluaciones.
                              */
                             $this->Resultados[$idxFactor] = $this->Resultados[$idxFactor]/$this->totEvaluaciones;
                             $idxFactor += 1;
@@ -208,29 +208,35 @@
                                     //Mientras existan resultados disponibles para computar.
                                     if($RegFactores['Tipo'] == 'Interno')
                                         {
-                                            if($this->Resultados[$idxFactores]>$Horizonte)
+                                            if(count($this->Resultados)>0)
                                                 {
-                                                    //CASO 1: EL FACTOR INTERNO SUPERO EL HORIZONTE.
-                                                    $this->Fortalezas[] = $RegFactores['Factor'];
-                                                    }
-                                            else
-                                                {
-                                                    //CASO 2: EL FACTOR INTERNO NO SUPERO EL HORIZONTE.
-                                                    $this->Debilidades[] = $RegFactores['Factor'];
+                                                    if($this->Resultados[$idxFactores]>$Horizonte)
+                                                        {
+                                                            //CASO 1: EL FACTOR INTERNO SUPERO EL HORIZONTE.
+                                                            $this->Fortalezas[] = $RegFactores['Factor'];
+                                                            }
+                                                    else
+                                                        {
+                                                            //CASO 2: EL FACTOR INTERNO NO SUPERO EL HORIZONTE.
+                                                            $this->Debilidades[] = $RegFactores['Factor'];
+                                                            }
                                                     }
                                             }
 
                                     if($RegFactores['Tipo'] == 'Externo')
                                         {
-                                            if($this->Resultados[$idxFactores]>$Horizonte)
+                                            if(count($this->Resultados)>0)
                                                 {
-                                                    //CASO 1: EL FACTOR INTERNO SUPERO EL HORIZONTE.
-                                                    $this->Oportunidades[] = $RegFactores['Factor'];
-                                                    }
-                                            else
-                                                {
-                                                    //CASO 2: EL FACTOR INTERNO NO SUPERO EL HORIZONTE.
-                                                    $this->Amenazas[] = $RegFactores['Factor'];
+                                                    if($this->Resultados[$idxFactores]>$Horizonte)
+                                                        {
+                                                            //CASO 1: EL FACTOR INTERNO SUPERO EL HORIZONTE.
+                                                            $this->Oportunidades[] = $RegFactores['Factor'];
+                                                            }
+                                                    else
+                                                        {
+                                                            //CASO 2: EL FACTOR INTERNO NO SUPERO EL HORIZONTE.
+                                                            $this->Amenazas[] = $RegFactores['Factor'];
+                                                            }
                                                     }
                                             }                                            
 
@@ -248,10 +254,10 @@
                      */
                     $HTML = '<table class="fodaTable">';
                     
-                    $indexF = sizeof($this->Fortalezas);
-                    $indexO = sizeof($this->Oportunidades);
-                    $indexD = sizeof($this->Debilidades);
-                    $indexA = sizeof($this->Amenazas);
+                    $indexF = count($this->Fortalezas);
+                    $indexO = count($this->Oportunidades);
+                    $indexD = count($this->Debilidades);
+                    $indexA = count($this->Amenazas);
                     
                     $HTML .= '<tr><td class="tdlblFortaleza">F</td><td class="dgRowsaltTR">';
                     for($item = 0; $item < $indexF; $item++)

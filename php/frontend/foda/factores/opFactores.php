@@ -15,6 +15,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/factores.png';
+    $Title = 'Factores';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     
@@ -58,19 +60,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarFactor(\'./php/backend/foda/factores/guardar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString()+\'&factor=\'+document.getElementById(\'Factor\').value.toString()+\'&tipo=\'+document.getElementById(\'Tipo\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr class="td-panel" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarFactor(\'./php/backend/foda/factores/guardar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString()+\'&factor=\'+document.getElementById(\'Factor\').value.toString()+\'&tipo=\'+document.getElementById(\'Tipo\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/foda/factores/borrar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarFactor(\'./php/backend/foda/factores/guardar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString()+\'&factor=\'+document.getElementById(\'Factor\').value.toString()+\'&tipo=\'+document.getElementById(\'Tipo\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habFactor();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr class="td-panel" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/foda/factores/borrar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarFactor(\'./php/backend/foda/factores/guardar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString()+\'&factor=\'+document.getElementById(\'Factor\').value.toString()+\'&tipo=\'+document.getElementById(\'Tipo\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habFactor();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarFactor(\'./php/backend/foda/factores/guardar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString()+\'&factor=\'+document.getElementById(\'Factor\').value.toString()+\'&tipo=\'+document.getElementById(\'Tipo\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habFactor();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr class="td-panel" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/foda/factores/busFactores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarFactor(\'./php/backend/foda/factores/guardar.php\',\'?id=\'+document.getElementById(\'idFactor\').value.toString()+\'&factor=\'+document.getElementById(\'Factor\').value.toString()+\'&tipo=\'+document.getElementById(\'Tipo\').value.toString()+\'&idcedula=\'+document.getElementById(\'idCedula\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habFactor();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -82,7 +84,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             $idCedula = '';
             
@@ -107,17 +110,19 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
+                            <div id="cntOperativo" class="cnt-operativo">                
                             <div style=display:none>
                                 <input type= "text" id= "idFactor" value="'.$Registro['idFactor'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <center>
-                            <div id="infoEmpleado" style="width: 400px; height: 600px;">                                                                    
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Factor en el Sistema</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Factor:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Factor" '.$habcampos.' value= "'.$Registro['Factor'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Tipo:</td>
-                                    <td class="dgRowsnormTR">
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>
+                                <tr><td class="td-panel" width="100px">Factor:</td><td><input type= "text" required= "required" id= "Factor" '.$habcampos.' value= "'.$Registro['Factor'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Tipo:</td>
+                                    <td>
                                         <select name="Tipo" id= "Tipo" '.$habcampos.' value= "'.$Registro['Tipo'].'">';
             
                                 if($Registro['Tipo'] == "Interno")
@@ -146,7 +151,7 @@
                                     </td>
                                 </tr>';
             
-            echo'               <tr><td width="100px" class="dgRowsaltTR">Cedula:</td><td class="dgRowsnormTR"><select name= "idCedula" id= "idCedula" '.$habcampos.' value= "'.$idCedula.'">';
+            echo'               <tr><td width="100px" class="td-panel">Cedula:</td><td><select name= "idCedula" id= "idCedula" '.$habcampos.' value= "'.$idCedula.'">';
 
                                 $subconsulta = cargarCedulas();
                                 
@@ -176,8 +181,9 @@
                                 controlVisual($parametro);
                                 
             echo'           </table>
-                            </div>
-                            </center>  
+                                    </div>
+                                </div>
+                            </div>  
                         </body>
                     </html>';            
         } 

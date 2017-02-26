@@ -13,6 +13,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/objest.png';
+    $Title = 'Objetivo Estrategico';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $clavecod = '';   
@@ -60,19 +62,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarObjEst(\'./php/backend/objest/guardar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&objest=\'+document.getElementById(\'ObjEst\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarObjEst(\'./php/backend/objest/guardar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&objest=\'+document.getElementById(\'ObjEst\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/objest/borrar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarObjEst(\'./php/backend/objest/guardar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&objest=\'+document.getElementById(\'ObjEst\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habObjEst();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/objest/borrar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarObjEst(\'./php/backend/objest/guardar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&objest=\'+document.getElementById(\'ObjEst\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habObjEst();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarObjEst(\'./php/backend/objest/guardar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&objest=\'+document.getElementById(\'ObjEst\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habObjEst();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/objest/busObjEst.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarObjEst(\'./php/backend/objest/guardar.php\',\'?id=\'+document.getElementById(\'idObjEst\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&objest=\'+document.getElementById(\'ObjEst\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habObjEst();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -84,7 +86,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod, $periodo, $regcount;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             conteo();
             
@@ -100,14 +103,16 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
-                            <div style=display:none>
-                                <input type= "text" id= "idObjEst" value="'.$Registro['idObjEst'].'">
-                                <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
-                            </div>
-                            <center>
-                            <div id="infoObjEst" style="width: 400px; height: 600px;">                                
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Objetivo Estrategico en el Sistema</th></tr>';
+                            <div id="cntOperativo" class="cnt-operativo">
+                                <div style=display:none>
+                                    <input type= "text" id= "idObjEst" value="'.$Registro['idObjEst'].'">
+                                    <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
+                                </div>
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>';
             
                                 if($parametro=="-1")
                                     {
@@ -115,7 +120,7 @@
                                          * Si la acción corresponde a la creacion de un registro nuevo,
                                          * se establece el año actual.
                                          */
-                                        echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.($regcount + 1).'"></td></tr>';  
+                                        echo'<tr><td class="td-panel" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.($regcount + 1).'"></td></tr>';  
                                         }
                                 else
                                     {
@@ -123,10 +128,10 @@
                                          * Si la acción ocurre para un registro existente,
                                          * se preserva el año almacenado.
                                          */
-                                        echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
+                                        echo'<tr><td class="td-panel" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
                                         }
                                                                           
-            echo'               <tr><td class="dgRowsaltTR" width="100px">Objetivo Estrategico:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "ObjEst" '.$habcampos.' value= "'.$Registro['ObjEst'].'"></td></tr>';
+            echo'               <tr><td class="td-panel" width="100px">Objetivo Estrategico:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "ObjEst" '.$habcampos.' value= "'.$Registro['ObjEst'].'"></td></tr>';
             
                                 if($parametro=="-1")
                                     {
@@ -134,7 +139,7 @@
                                          * Si la acción corresponde a la creacion de un registro nuevo,
                                          * se establece el año actual.
                                          */
-                                        echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
+                                        echo '<tr><td class="td-panel" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
                                         }
                                 else
                                     {
@@ -142,12 +147,13 @@
                                          * Si la acción ocurre para un registro existente,
                                          * se preserva el año almacenado.
                                          */                              
-                                        echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';                                               
+                                        echo '<tr><td class="td-panel" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';                                               
                                         }
                                 controlVisual($parametro);
             echo'           </table>  
+                                    </div>
+                                </div>
                             </div>
-                            </center>
                         </body>
                     </html>
                     ';            

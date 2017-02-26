@@ -23,8 +23,7 @@
                             $this->idCedula = $_GET['idcedula'];    
                             }
                                                 
-                    $body = '   <body>
-                                    <div id="datosEscala" style="display:none">
+                    $body = '       <div id="datosEscala" style="display:none">
                                         <table class="queryTable">
                                             <tr><td class= "queryRowsnormTR">id Escala:</td><td><input type="text" id="idEscala"></td></tr>
                                             <tr><td class= "queryRowsnormTR">id Cedula:</td><td><input type="text" id="idCedula" value="'.$this->idCedula.'"></td></tr>
@@ -37,15 +36,14 @@
                                             <tr><td class= "queryRowsnormTR">Escala:</td><td class= "queryRowsnormTR"><input type="text" id="Escala"></td><td rowspan= "2"><img id="'.$this->sufijo.'quickAdd" align= "left" src= "./img/grids/add.png" width= "25" height= "25" alt="Agregar"/></td></tr>
                                             <tr><td class= "queryRowsnormTR">Ponderacion:</td><td class= "queryRowsnormTR"><input type="text" id="Ponderacion"></td></tr> 
                                         </table>
-                                    </div>
-                                </body>';
+                                    </div>';
                     return $body;
                     }
             }
 
     $objQuickEscalas = new quickEscalas();
 
-    $html = '<html>'.$objQuickEscalas->body().'</html>';
+    $html = $objQuickEscalas->body();
     
     echo $html;
         

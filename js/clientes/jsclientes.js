@@ -80,14 +80,14 @@ function guardarCliente(url,parametro){
 			/*
 			 * En caso de ocurrir un error de validación, se notifica al usuario.
 			 */
-			alert("Existen campos pendientes por completar");
+        	bootbox.alert("Existen campos pendientes por completar");
 			}
 	else
 		{
 			/*
 			 * En caso que la validación de campos sea satisfactoria.
 			 */
-			cargar(url,parametro,'escritorio');
+			cargar(url,parametro,'sandbox');
 			}
 	}
 	
@@ -138,13 +138,31 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,10) == "cli_delete")
     		{
     			//En caso de coincidir el id con la accion delete.
-    			var respuesta;
-    			respuesta = confirm("¿Esta seguro que desea eliminar el registro seleccionado?");
-    			if(respuesta)
-    				{
-    					//Si el usuario confirma su solicitud de borrar el registro seleccionado.
-    					cargar('./php/backend/clientes/borrar.php','?id='+e.target.id.substring(11),'escritorio');
-    					} 		
+        		bootbox.confirm(
+	            	{
+		            	message: "¿Confirma que desea borrar el registro?",
+		            	buttons: 
+		            		{
+		            			confirm: 
+		            				{
+		            					label: 'SI',
+		            					className: 'btn-success'
+		            					},
+		            			cancel: 
+		            				{
+		            					label: 'NO',
+		            					className: 'btn-danger'
+		            					}
+		            			},
+		            	callback: function (result)
+		            		{
+		            			if(result)
+		            				{
+		            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+		            					cargar('./php/backend/clientes/borrar.php','?id='+e.target.id.substring(11),'sandbox');
+		            					}			            					
+		            			}
+	            		});
     			}
     });                 
 });
@@ -159,7 +177,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,7) == "cli_add")
     		{
     			//En caso de coincidir el id con la accion agregar.
-    			cargar('./php/frontend/clientes/opClientes.php','?id=-1&view=0','escritorio');
+    			cargar('./php/frontend/clientes/opClientes.php','?id=-1&view=0','sandbox');
     			}
     });                 
 });
@@ -174,7 +192,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,14) == "cli_visualizar")
     		{
     			//En caso de coincidir el id con la accion visualizar.
-    			cargar('./php/frontend/clientes/opClientes.php','?id='+e.target.id.substring(15)+'&view=1','escritorio');
+    			cargar('./php/frontend/clientes/opClientes.php','?id='+e.target.id.substring(15)+'&view=1','sandbox');
     			}
     });                 
 });
@@ -189,7 +207,7 @@ $(document).ready(function() {
     	if(e.target.id.substring(0,8) == "cli_edit")
     		{
     			//En caso de coincidir el id con la accion editar.
-    			cargar('./php/frontend/clientes/opClientes.php','?id='+e.target.id.substring(9)+'&view=0','escritorio');
+    			cargar('./php/frontend/clientes/opClientes.php','?id='+e.target.id.substring(9)+'&view=0','sandbox');
     			}
     });                 
 });

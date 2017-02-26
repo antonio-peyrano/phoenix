@@ -13,7 +13,9 @@
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.    
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    
+
+    $imgTitleURL = './img/menu/vehiculos.png';
+    $Title = 'vehiculos';    
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $clavecod = '';   
@@ -61,19 +63,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acciÃ³n corresponda a la creaciÃ³n de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarVehiculos(\'./php/backend/vehiculos/guardar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&numeconomico=\'+document.getElementById(\'NumEconomico\').value.toString()+\'&numeroplaca=\'+document.getElementById(\'NumeroPlaca\').value.toString()+\'&color=\'+document.getElementById(\'Color\').value.toString()+\'&marca=\'+document.getElementById(\'Marca\').value.toString()+\'&modelo=\'+document.getElementById(\'Modelo\').value.toString()+\'&tmotor=\'+document.getElementById(\'TMotor\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarVehiculos(\'./php/backend/vehiculos/guardar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&numeconomico=\'+document.getElementById(\'NumEconomico\').value.toString()+\'&numeroplaca=\'+document.getElementById(\'NumeroPlaca\').value.toString()+\'&color=\'+document.getElementById(\'Color\').value.toString()+\'&marca=\'+document.getElementById(\'Marca\').value.toString()+\'&modelo=\'+document.getElementById(\'Modelo\').value.toString()+\'&tmotor=\'+document.getElementById(\'TMotor\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acciÃ³n de visualizaciÃ³n.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/vehiculos/borrar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarVehiculos(\'./php/backend/vehiculos/guardar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&numeconomico=\'+document.getElementById(\'NumEconomico\').value.toString()+\'&numeroplaca=\'+document.getElementById(\'NumeroPlaca\').value.toString()+\'&color=\'+document.getElementById(\'Color\').value.toString()+\'&marca=\'+document.getElementById(\'Marca\').value.toString()+\'&modelo=\'+document.getElementById(\'Modelo\').value.toString()+\'&tmotor=\'+document.getElementById(\'TMotor\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habVehiculos();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/vehiculos/borrar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarVehiculos(\'./php/backend/vehiculos/guardar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&numeconomico=\'+document.getElementById(\'NumEconomico\').value.toString()+\'&numeroplaca=\'+document.getElementById(\'NumeroPlaca\').value.toString()+\'&color=\'+document.getElementById(\'Color\').value.toString()+\'&marca=\'+document.getElementById(\'Marca\').value.toString()+\'&modelo=\'+document.getElementById(\'Modelo\').value.toString()+\'&tmotor=\'+document.getElementById(\'TMotor\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habVehiculos();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acciÃ³n corresponda a la ediciÃ³n de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarVehiculos(\'./php/backend/vehiculos/guardar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&numeconomico=\'+document.getElementById(\'NumEconomico\').value.toString()+\'&numeroplaca=\'+document.getElementById(\'NumeroPlaca\').value.toString()+\'&color=\'+document.getElementById(\'Color\').value.toString()+\'&marca=\'+document.getElementById(\'Marca\').value.toString()+\'&modelo=\'+document.getElementById(\'Modelo\').value.toString()+\'&tmotor=\'+document.getElementById(\'TMotor\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habVehiculos();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/vehiculos/busVehiculos.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarVehiculos(\'./php/backend/vehiculos/guardar.php\',\'?id=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&numeconomico=\'+document.getElementById(\'NumEconomico\').value.toString()+\'&numeroplaca=\'+document.getElementById(\'NumeroPlaca\').value.toString()+\'&color=\'+document.getElementById(\'Color\').value.toString()+\'&marca=\'+document.getElementById(\'Marca\').value.toString()+\'&modelo=\'+document.getElementById(\'Modelo\').value.toString()+\'&tmotor=\'+document.getElementById(\'TMotor\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habVehiculos();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -85,7 +87,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod, $periodo, $regcount;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             
             if($Registro['idVehiculo'] == null)
@@ -100,22 +103,24 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
-                            <div style=display:none>
-                                <input type= "text" id= "idVehiculo" value="'.$Registro['idVehiculo'].'">
-                                <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
-                            </div>
-                            <center>
-                            <div id="infoVehiculo" style="width: 400px; height: 600px;">                                                                    
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Vehiculo en el Sistema</th></tr>';
+                            <div id="cntOperativo" class="cnt-operativo">
+                                <div style=display:none>
+                                    <input type= "text" id= "idVehiculo" value="'.$Registro['idVehiculo'].'">
+                                    <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
+                                </div>
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>';
                                                                           
-            echo'               <tr><td class="dgRowsaltTR" width="100px">Numero Economico:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "NumEconomico" '.$habcampos.' value= "'.$Registro['NumEconomico'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Numero de Placa:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "NumeroPlaca" '.$habcampos.' value= "'.$Registro['NumPlaca'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Color:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Color" '.$habcampos.' value= "'.$Registro['Color'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Marca:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Marca" '.$habcampos.' value= "'.$Registro['Marca'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Modelo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Modelo" '.$habcampos.' value= "'.$Registro['Modelo'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Tipo de Motor:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "TMotor" '.$habcampos.' value= "'.$Registro['TMotor'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Entidad:</td><td class="dgRowsnormTR"><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "'.$Registro['idEntidad'].'">';
+            echo'                           <tr><td class="td-panel" width="100px">Numero Economico:</td><td><input type= "text" required= "required" id= "NumEconomico" '.$habcampos.' value= "'.$Registro['NumEconomico'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Numero de Placa:</td><td><input type= "text" required= "required" id= "NumeroPlaca" '.$habcampos.' value= "'.$Registro['NumPlaca'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Color:</td><td><input type= "text" required= "required" id= "Color" '.$habcampos.' value= "'.$Registro['Color'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Marca:</td><td><input type= "text" required= "required" id= "Marca" '.$habcampos.' value= "'.$Registro['Marca'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Modelo:</td><td><input type= "text" required= "required" id= "Modelo" '.$habcampos.' value= "'.$Registro['Modelo'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Tipo de Motor:</td><td><input type= "text" required= "required" id= "TMotor" '.$habcampos.' value= "'.$Registro['TMotor'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Entidad:</td><td><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "'.$Registro['idEntidad'].'">';
                                 $subconsulta = cargarEntidades();
             echo '                              <option value=-1>Seleccione</option>';
                        
@@ -137,11 +142,12 @@
                                         }                                    
             
             echo'            
-                                <tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
+                                            <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
                                 controlVisual($parametro);
-            echo'           </table>
-                            </div>
-                            </center>  
+            echo'                       </table>
+                                    </div>
+                                </div>
+                            </div>  
                         </body>
                     </html>
                     ';            

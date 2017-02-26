@@ -15,6 +15,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/clientes.png';
+    $Title = 'Clientes';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     
@@ -58,19 +60,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acci�n corresponda a la creaci�n de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acci�n de visualizaci�n.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/clientes/borrar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habCliente();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/clientes/borrar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habCliente();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acci�n corresponda a la edici�n de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habCliente();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habCliente();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -82,7 +84,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             
             if($Registro['idCliente'] == null)
@@ -97,21 +100,23 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
+                            <div id="cntOperativo" class="cnt-operativo">                
                             <div style=display:none>
                                 <input type= "text" id= "idCliente" value="'.$Registro['idCliente'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <center>
-                            <div id="infoCliente" style="width: 400px; height: 600px;">                                
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Cliente en el Sistema</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Nombre:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nombre" '.$habcampos.' value= "'.$Registro['Nombre'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Paterno:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Paterno" '.$habcampos.' value= "'.$Registro['Paterno'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Materno:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Materno" '.$habcampos.' value= "'.$Registro['Materno'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Calle:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Calle" '.$habcampos.' value= "'.$Registro['Calle'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Interior:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nint" '.$habcampos.' value= "'.$Registro['Nint'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Exterior:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Next" '.$habcampos.' value= "'.$Registro['Next'].'"></td></tr>                                        
-                                <tr><td class="dgRowsaltTR" width="100px">Colonia:</td><td class="dgRowsnormTR"><select name= "idColonia" id= "idColonia" '.$habcampos.' value= "'.$Registro['idColonia'].'">';
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                                
+                                        <table>
+                                <tr><td class="td-panel" width="100px">Nombre:</td><td><input type= "text" required= "required" id= "Nombre" '.$habcampos.' value= "'.$Registro['Nombre'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Paterno:</td><td><input type= "text" required= "required" id= "Paterno" '.$habcampos.' value= "'.$Registro['Paterno'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Materno:</td><td><input type= "text" required= "required" id= "Materno" '.$habcampos.' value= "'.$Registro['Materno'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Calle:</td><td><input type= "text" required= "required" id= "Calle" '.$habcampos.' value= "'.$Registro['Calle'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Interior:</td><td><input type= "text" required= "required" id= "Nint" '.$habcampos.' value= "'.$Registro['Nint'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Exterior:</td><td><input type= "text" required= "required" id= "Next" '.$habcampos.' value= "'.$Registro['Next'].'"></td></tr>                                        
+                                <tr><td class="td-panel" width="100px">Colonia:</td><td><select name= "idColonia" id= "idColonia" '.$habcampos.' value= "'.$Registro['idColonia'].'">';
                                 $subconsulta = cargarColonias();
             echo '                              <option value=-1>Seleccione</option>';
                                 $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
@@ -131,13 +136,16 @@
                                         }
                                 
             echo'               </select></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">RFC:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "RFC" '.$habcampos.' value= "'.$Registro['RFC'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">CURP:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "CURP" '.$habcampos.' value= "'.$Registro['CURP'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Telefono particular:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "TelFijo" '.$habcampos.' value= "'.$Registro['TelFijo'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Telefono celular:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "TelCel" '.$habcampos.' value= "'.$Registro['TelCel'].'"></td></tr>                                                                                                            
+                                <tr><td class="td-panel" width="100px">RFC:</td><td><input type= "text" required= "required" id= "RFC" '.$habcampos.' value= "'.$Registro['RFC'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">CURP:</td><td><input type= "text" required= "required" id= "CURP" '.$habcampos.' value= "'.$Registro['CURP'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Telefono particular:</td><td><input type= "text" required= "required" id= "TelFijo" '.$habcampos.' value= "'.$Registro['TelFijo'].'"></td></tr>
+                                <tr><td class="td-panel" width="100px">Telefono celular:</td><td><input type= "text" required= "required" id= "TelCel" '.$habcampos.' value= "'.$Registro['TelCel'].'"></td></tr>                                                                                                            
                 ';
                                 controlVisual($parametro);
-            echo'           </table>  
+            echo'           </table>
+                                    </div>
+                                </div>
+                            </div>                    
                         </body>
                     </html>
                     ';            

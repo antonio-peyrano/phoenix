@@ -13,8 +13,8 @@
     /*
      *Este archivo contiene la declaraci�n de procedimientos para la creaci�n de la pagina INDEX.
      */
-    header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.     
-    include_once("./php/backend/index.class.php"); //Se carga el archivo de clase.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a UTF-8.     
+    include_once("./php/backend/bl/main/index.class.php"); //Se carga el archivo de clase.
     $index = new index(); //Se crea la instancia de objeto index.
-    $index->drawUI(); //Se ejecuta la funci�n para visualizar la UI.
+    echo $index->drawUI(); //Se ejecuta la funci�n para visualizar la UI.
 ?>

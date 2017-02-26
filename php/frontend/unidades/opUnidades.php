@@ -15,6 +15,8 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    $imgTitleURL = './img/menu/unidades.png';
+    $Title = 'Unidades';    
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $clavecod = '';   
@@ -46,19 +48,19 @@
             if($idRegistro == -1)
                 {
                     //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarUnidad(\'./php/backend/unidades/guardar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&unidad=\'+document.getElementById(\'Unidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
+                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarUnidad(\'./php/backend/unidades/guardar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&unidad=\'+document.getElementById(\'Unidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
                             //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/unidades/borrar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarUnidad(\'./php/backend/unidades/guardar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&unidad=\'+document.getElementById(\'Unidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habUnidad();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/unidades/borrar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarUnidad(\'./php/backend/unidades/guardar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&unidad=\'+document.getElementById(\'Unidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habUnidad();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarUnidad(\'./php/backend/unidades/guardar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&unidad=\'+document.getElementById(\'Unidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habUnidad();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/unidades/busUnidades.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarUnidad(\'./php/backend/unidades/guardar.php\',\'?id=\'+document.getElementById(\'idUnidad\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&unidad=\'+document.getElementById(\'Unidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habUnidad();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
             }
@@ -70,7 +72,8 @@
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
-
+            global $imgTitleURL, $Title;
+            
             $habcampos = 'disabled= "disabled"';
             
             if($Registro['idUnidad'] == null)
@@ -85,20 +88,23 @@
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
                         <body>
-                            <div style=display:none>
-                                <input type= "text" id= "idUnidad" value="'.$Registro['idUnidad'].'">
-                                <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
+                            <div id="cntOperativo" class="cnt-operativo">                
+                                <div style=display:none>
+                                    <input type= "text" id= "idUnidad" value="'.$Registro['idUnidad'].'">
+                                    <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
+                                </div>
+                                <div id="infoRegistro" class="operativo">
+                                    <div id="cabecera" class="cabecera-operativo">'
+                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                    <div id="cuerpo" class="cuerpo-operativo">                               
+                                        <table>
+                                            <tr><td class="td-panel" width="100px">Unidad:</td><td><input type= "text" required= "required" id= "Unidad" '.$habcampos.' value= "'.$Registro['Unidad'].'"></td></tr>
+                                            <tr><td class="td-panel" width="100px">Nomenclatura:</td><td><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
+                                            controlVisual($parametro);
+            echo'                       </table>
+                                    </div>
+                                </div>
                             </div>
-                            <center>
-                            <div id="infoUnidad" style="width: 400px; height: 600px;">                                
-                            <table class="dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Unidad en el Sistema</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Unidad:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Unidad" '.$habcampos.' value= "'.$Registro['Unidad'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
-                                controlVisual($parametro);
-            echo'           </table>
-                            </div>
-                            </center> 
                         </body>
                     </html>
                     ';            

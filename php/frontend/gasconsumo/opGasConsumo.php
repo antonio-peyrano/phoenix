@@ -415,20 +415,7 @@
             echo'       
                             <br>
                             <div id= "divConsumos">';
-                                if($cntview == 3)
-                                    {
-                                        /*
-                                         * En caso que el invocador sea el formulario de actividades.
-                                         */
-                                        include_once("../../frontend/gasconsumo/catEjecGas.php");
-                                        }
-                                else
-                                    {
-                                        /*
-                                         * En caso que el invocador sea el formulario de programa.
-                                         */
-                                        include_once("../gasconsumo/catEjecGas.php");
-                                        }                                                                        
+                                include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasconsumo/catEjecGas.php");
             echo'           </div>              
                         </body>                
                     </html>';
