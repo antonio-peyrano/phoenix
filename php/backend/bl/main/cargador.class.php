@@ -125,7 +125,7 @@
                                              * Si la validacion de credenciales no arroja una URL valida para la carga del modulo,
                                              * se notifica al usuario que no esta autorizado.
                                              */
-                                            include_once ($_SERVER['DOCUMENT_ROOT']."/ecole/php/frontend/notificaciones/noAutorizado.php");
+                                            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
                                             }
                                     else
                                         {
@@ -136,7 +136,7 @@
                                             if(!file_exists($_SERVER['DOCUMENT_ROOT'].$URL))
                                                 {
                                                     //VALIDACION DE UBICACION EN DIRECTORIOS: FALLA.
-                                                    include_once ($_SERVER['DOCUMENT_ROOT']."/ecole/php/frontend/notificaciones/ERROR404.php");
+                                                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERROR404.php");
                                                     }
                                             else
                                                 {
@@ -154,12 +154,12 @@
                                     if(($this->idUsuario == 0)&&(isset($_GET['usuario'])&&isset($_GET['clave'])))
                                         {
                                             //SI EL NOMBRE DE USUARIO Y CLAVE NO ARROJAN UN RESULTADO.
-                                            include_once ($_SERVER['DOCUMENT_ROOT']."/ecole/php/frontend/notificaciones/ERRORUA.php");
+                                            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERRORUA.php");
                                             }
                                     else
                                         {
                                             //POR DEFAULT.
-                                            include_once ($_SERVER['DOCUMENT_ROOT']."/ecole/php/frontend/main/login.php");
+                                            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/login.php");
                                             }                                                                                
                                     }                            
                             }
@@ -176,7 +176,7 @@
                                     /*
                                      * En caso de no contar con una URL valida, se redirecciona a una pagina de ERROR 404
                                      */
-                                    include_once ($_SERVER['DOCUMENT_ROOT']."/ecole/php/frontend/notificaciones/ERROR404.php");
+                                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERROR404.php");
                                     }
                             else
                                 {
