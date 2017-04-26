@@ -3,9 +3,9 @@
  // File:        JPGRAPH_MGRAPH.PHP
  // Description: Class to handle multiple graphs in the same image
  // Created:     2006-01-15
- // Ver:         $Id: jpgraph_mgraph.php 1760 2009-08-01 06:10:28Z ljp $
+ // Ver:         $Id: jpgraph_mgraph.php 1770 2009-08-17 06:10:22Z ljp $
  //
- // Copyright (c) Aditus Consulting. All rights reserved.
+ // Copyright (c) Asial Corporation. All rights reserved.
  //========================================================================
  */
 
@@ -209,7 +209,7 @@ class MGraph {
         $this->footer->iRightMargin += $aShadowWidth;
     }
 
-    function StrokeTitle() {
+    function StrokeTitle($image,$w,$h) {
         // Stroke title
         if( $this->title->t !== '' ) {
 
@@ -325,7 +325,7 @@ class MGraph {
 
         }
 
-        $this->StrokeTitle();
+        $this->StrokeTitle($image,$w,$h);
         $this->footer->Stroke($image);
 
         // Output image
