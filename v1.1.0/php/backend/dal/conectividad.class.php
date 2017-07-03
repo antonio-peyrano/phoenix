@@ -16,7 +16,7 @@
  ***********************************************************************************************************
  * Desarrollador: Mtro. Jesus Antonio Peyrano Luna * Ultima modificacion: 27/09/2016                       *
  ***********************************************************************************************************/
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
 	class mySQL_conexion
 		{

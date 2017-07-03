@@ -15,8 +15,8 @@
      */
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     $idVehiculo = $_GET['id'];
     
@@ -49,10 +49,10 @@
             }
                         
     $subconsulta = cargarIDProgGas($idVehiculo);    
-    $RegProgGas = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+    $RegProgGas = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
 
     $subconsulta = cargarIDEjecGas($idVehiculo);
-    $RegEjecGas = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+    $RegEjecGas = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
         
     echo '  <input type= "text" id= "idProgGas" value= "'.$RegProgGas['idProgGas'].'"><br>
             <input type= "text" id= "idEjecGas" value= "'.$RegEjecGas['idEjecGas'].'"><br>';       

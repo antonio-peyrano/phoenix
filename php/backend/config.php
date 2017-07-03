@@ -14,7 +14,7 @@
      * Este es el archivo de configuraci�n principal del sistema, debe cargarse en cada modulo que requiera del uso
      * de las constantes predefinidas de ejecuci�n.
     */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
     /*
      * Para ejecuci�n en local quite las acotaciones de comentario.
@@ -23,7 +23,15 @@
     $servername="397Y09vK3uXj";
     $dbname="4NjY5N7V2ObY4g==";
     $username="5d7k5g==";
-    $password="1OXW3t7Qpqmm";
-    $SitioWeb="http://localhost:8081/micrositio/index.php";
-            
+    $password="";//"1OXW3t7Qpqmm";
+    $SitioWeb="http://localhost/micrositio/index.php";
+
+/*   
+    $objCodificador=new codificador();
+
+    echo $objCodificador->decrypt($servername,'ouroboros');
+    echo $objCodificador->decrypt($dbname,'ouroboros');
+    echo $objCodificador->decrypt($username,'ouroboros');
+    echo $objCodificador->decrypt($password,'ouroboros');
+*/
 ?>

@@ -1,6 +1,6 @@
 <?php
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
     
     class opInputPregunta
         {
@@ -33,15 +33,15 @@
                     global $username, $password, $servername, $dbname;                    
                     
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                    $consulta = 'SELECT *FROM catUsuarios WHERE Correo=\''.$this->Correo.'\''; //Se establece el modelo de consulta de datos.
-                    $dsUsuarios = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+                    $consulta = 'SELECT *FROM catUsuarios WHERE Correo=\''.$this->Correo.'\''; //Se establece el modelo de consulta de datos.                    
+                    $dsUsuarios = $objConexion->conectar($consulta); //Se ejecuta la consulta.
                     
-                    $RegUsuarios = @mysql_fetch_array($dsUsuarios, MYSQL_ASSOC);
+                    $RegUsuarios = @mysqli_fetch_array($dsUsuarios, MYSQLI_ASSOC);
                     
                     if($RegUsuarios)
                         {
                             //Solo si existe un registro con el correo solicitado.
-                            $this->Pregunta = $RegUsuarios['Pregunta'];                            
+                            $this->Pregunta = $RegUsuarios['Pregunta'];
                             }                    
                     }                    
             }

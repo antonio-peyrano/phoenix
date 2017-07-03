@@ -1,5 +1,5 @@
 <?php
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/mail.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/mail.class.php"); //Se carga la referencia del codificador de cadenas.
     
     class oprecordarclave
         {

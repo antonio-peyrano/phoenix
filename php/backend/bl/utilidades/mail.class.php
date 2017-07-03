@@ -1,10 +1,10 @@
 <?php
-    require_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/mailsupport/class.phpmailer.php");
-    require_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/mailsupport/class.phpmailer.php");
-    require_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/mailsupport/class.smtp.php");
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    require_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/mailsupport/class.phpmailer.php");
+    require_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/mailsupport/class.phpmailer.php");
+    require_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/mailsupport/class.smtp.php");
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
     class mail
         {
@@ -61,7 +61,7 @@
                     $consulta= 'SELECT *FROM catUsuarios WHERE Correo=\''.$this->Correo.'\''.' AND Pregunta =\''.$this->Pregunta.'\' AND Respuesta=\''.$this->Respuesta.'\''; //Se establece el modelo de consulta de datos.
                     $dsUsuarios = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                     
-                    $RegUsuarios = @mysql_fetch_array($dsUsuarios, MYSQL_ASSOC);
+                    $RegUsuarios = @mysqli_fetch_array($dsUsuarios,MYSQLI_ASSOC);
                     
                     if($RegUsuarios)
                         {

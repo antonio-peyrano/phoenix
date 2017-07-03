@@ -66,7 +66,7 @@
                     
                     $consulta = 'SELECT *FROM catModulos WHERE Modulo="'.$Modulo.'" AND Status=0';
                     $dsModulos = $conexion->conectar($consulta);
-                    $drModulos = @mysql_fetch_array($dsModulos,MYSQL_ASSOC);
+                    $drModulos = @mysqli_fetch_array($dsModulos,MYSQLI_ASSOC);
                     
                     if($drModulos)
                         {
@@ -92,7 +92,7 @@
                     
                     $consulta = 'SELECT opEmpleados.idEmpleado FROM (opEmpleados INNER JOIN relUsrEmp ON opEmpleados.idEmpleado = relUsrEmp.idEmpleado) WHERE relUsrEmp.idUsuario="'.$idUsuario.'" AND opEmpleados.Status=0';
                     $dsEmpleados = $conexion->conectar($consulta);
-                    $drEmpleados = @mysql_fetch_array($dsEmpleados,MYSQL_ASSOC);
+                    $drEmpleados = @mysqli_fetch_array($dsEmpleados,MYSQLI_ASSOC);
 
                     if($drEmpleados)
                         {
@@ -119,7 +119,7 @@
                     
                     $consulta = 'SELECT *FROM (catUsuarios INNER JOIN catNiveles ON catUsuarios.idNivel = catNiveles.idNivel) WHERE Usuario="'.$Usuario.'" AND Clave="'.$objCodificador->encrypt($Clave, "ouroboros").'" AND catUsuarios.Status=0';
                     $dsUsuarios = $conexion->conectar($consulta);
-                    $drUsuarios = @mysql_fetch_array($dsUsuarios,MYSQL_ASSOC);
+                    $drUsuarios = @mysqli_fetch_array($dsUsuarios,MYSQLI_ASSOC);
                     
                     if($drUsuarios)
                         {
@@ -147,7 +147,7 @@
                     $conexion = new mySQL_conexion($username, $password, $servername, $dbname);
                     $consulta = 'SELECT *FROM (opRelPerUsr INNER JOIN catModulos ON opRelPerUsr.idModulo = catModulos.idModulo) WHERE idUsuario="'.$idUsuario.'" AND Modulo="'.$Modulo.'" AND opRelPerUsr.Status=0';
                     $dsPermisos = $conexion->conectar($consulta);
-                    $drPermisos = @mysql_fetch_array($dsPermisos,MYSQL_ASSOC);
+                    $drPermisos = @mysqli_fetch_array($dsPermisos,MYSQLI_ASSOC);
                     
                     if($drPermisos)
                         {

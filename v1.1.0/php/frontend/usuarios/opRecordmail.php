@@ -10,12 +10,12 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    require_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/mailsupport/class.phpmailer.php");
-    require_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/mailsupport/class.phpmailer.php");
-    require_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/mailsupport/class.smtp.php");
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.    
+    require_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/mailsupport/class.phpmailer.php");
+    require_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/mailsupport/class.phpmailer.php");
+    require_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/mailsupport/class.smtp.php");
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.    
     
     $correoElectronico = '';
     $Pregunta = '';
@@ -52,7 +52,7 @@
             $consulta= 'SELECT *FROM catUsuarios WHERE Correo=\''.$Correo.'\''.' AND Pregunta =\''.$Pregunta.'\' AND Respuesta=\''.$Respuesta.'\''; //Se establece el modelo de consulta de datos.
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             if($Registro)
                 {
                     //Solo si existe un registro con el correo solicitado.

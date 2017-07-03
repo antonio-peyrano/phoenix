@@ -15,8 +15,8 @@
  */
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     if(isset($_GET['id']))
         {
@@ -139,14 +139,14 @@
                      */ 
                                         
                     //Se construye un vector con los indicadores asociados al proceso.                    
-                    $regIndicadores = @mysql_fetch_array($dataSet, MYSQL_ASSOC); //Llamada a la función de carga de registros de procesos.
+                    $regIndicadores = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Llamada a la función de carga de registros de procesos.
                     $template = '';
                                                    
                     while($regIndicadores)
                         {
                             //Mientras existan elementos en al tupla de datos.
                             $template.= '<input type="checkbox" class="check" id="idIndicador[]" name="idIndicador[]" value='.$regIndicadores['idIndicador'].'>'.$regIndicadores['Indicador'];
-                            $regIndicadores = @mysql_fetch_array($dataSet, MYSQL_ASSOC); //Llamada a la función de carga de registros de procesos.
+                            $regIndicadores = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Llamada a la función de carga de registros de procesos.
                             }
                     }
             else
@@ -161,7 +161,7 @@
                                         
                     $subconsulta = 'SELECT *FROM relIndFicha WHERE idFicha='.$idRegistro.' AND Status=0'; //Se establece el modelo de consulta de datos.
                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
-                    $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
                     $vector = "";
                     
                     if($RegNiveles)
@@ -173,7 +173,7 @@
                             $vector.=$RegNiveles['idIndicador'];
                             }
                     
-                    $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
                     
                     while ($RegNiveles)
                         {
@@ -182,13 +182,13 @@
                              * los id de las entidades seleccionadas por el usuario previamente.
                              */
                             $vector.=','.$RegNiveles['idIndicador'];
-                            $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                            $RegNiveles = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
                             }
                     
                     $tmparray=explode(',',$vector); //El vector resultante se convierte en un arreglo.
                     
                     //Se construye un vector con los indicadores asociados al proceso.                    
-                    $regIndicadores = @mysql_fetch_array($dataSet, MYSQL_ASSOC); //Se ejecuta la lectura sobre la tupla de datos.
+                    $regIndicadores = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Se ejecuta la lectura sobre la tupla de datos.
                     $template = '';
                     
                     while ($regIndicadores)
@@ -212,7 +212,7 @@
                                     $template.= '<input type="checkbox" class="check" id="idIndicador[]" name="idIndicador[]" value='.$regIndicadores['idIndicador'].'>'.$regIndicadores['Indicador'];
                                     }
                     
-                            $regIndicadores = @mysql_fetch_array($dataSet, MYSQL_ASSOC); //Se ejecuta la lectura sobre la tupla de datos.
+                            $regIndicadores = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Se ejecuta la lectura sobre la tupla de datos.
                             }                    
                     }                                
                 return $template;
@@ -229,7 +229,7 @@
             $template = '<select name= "idProceso" id= "idProceso" '.$habCampos.' value= "'.$Registro['idProceso'].'">
                             <option value=-1>Seleccione</option>';            
             
-            $regProcesos = @mysql_fetch_array($dataSet, MYSQL_ASSOC); //Llamada a la función de carga de registros de procesos.
+            $regProcesos = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Llamada a la función de carga de registros de procesos.
             
             while($regProcesos)
                 {
@@ -243,7 +243,7 @@
                             //En caso contrario se carga la etiqueta por default.
                             $template = $template. '<option value='.$regProcesos['idProceso'].'>'.$regProcesos['Proceso'].'</option>';
                             }
-                    $regProcesos = @mysql_fetch_array($dataSet, MYSQL_ASSOC); //Llamada a la función de carga de registros de procesos.
+                    $regProcesos = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Llamada a la función de carga de registros de procesos.
                     }
             
             $template = $template. '</select>';
@@ -260,7 +260,7 @@
             return str_replace(array("<br>"), "\n", $str);
             }
                         
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC); //Llamada a la función de carga de registro de Ficha de Proceso.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC); //Llamada a la función de carga de registro de Ficha de Proceso.
     $habCampos = 'disabled= "disabled"'; //Se establece por default el bloque de campos.
     
     if($Registro['idFicha'] == null)

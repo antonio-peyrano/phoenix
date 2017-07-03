@@ -16,9 +16,9 @@
  */
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
     $valadmin = 0;
     
@@ -133,7 +133,7 @@
                     }            
             }
     
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
     
     $objCodificador= new codificador();
     
@@ -186,7 +186,7 @@
                             
             echo '              <option value=-1>Seleccione</option>';
                        
-                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 
                                 while($RegNiveles)
                                     {
@@ -200,7 +200,7 @@
                                                 //En caso contrario se carga la etiqueta por default.
             echo '                              <option value='.$RegNiveles['idNivel'].'>'.$RegNiveles['Nivel'].'</option>';                                                
                                                 }
-                                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                        $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
                                 
             echo'               </select></td></tr>';

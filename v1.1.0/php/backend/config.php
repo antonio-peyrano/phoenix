@@ -14,7 +14,7 @@
      * Este es el archivo de configuraci�n principal del sistema, debe cargarse en cada modulo que requiera del uso
      * de las constantes predefinidas de ejecuci�n.
     */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
     /*
      * Para ejecuci�n en local quite las acotaciones de comentario.

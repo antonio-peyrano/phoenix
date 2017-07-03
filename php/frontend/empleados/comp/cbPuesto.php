@@ -40,7 +40,7 @@
     echo' <select name= "idPuesto" id= "idPuesto" '.$habcampos.' value= "'.$Registro['idPuesto'].'">
                 <option value=-1>Seleccione</option>';
 
-    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+    $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
 
     while($RegNiveles)
         {
@@ -54,7 +54,7 @@
                     //En caso contrario se carga la etiqueta por default.
     echo '          <option value='.$RegNiveles['idPuesto'].'>'.$RegNiveles['Puesto'].'</option>';
                     }
-            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+            $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
             }
 
     echo'   </select>';

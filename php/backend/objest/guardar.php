@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecución del comando guardar, cuando es ejecutado desde un formulario
      * para la edición de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -62,7 +62,7 @@
                     //Se busca el la Est Ope para obtener su id.
                     $consulta = 'SELECT *FROM catObjEst WHERE ObjEst LIKE \'%'.$ObjEst.'%\''; //Se establece el modelo de consulta de datos.
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
             
                     //Se crea la tupla vacia para el registro de valores programados.
                     $consulta = 'INSERT INTO opProgOE(idObjEst, Periodo) VALUES ('.'\''.$Registro['idObjEst'].'\',\''.$Periodo.'\')';
@@ -77,7 +77,7 @@
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.            
                     }
             
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/objest/busObjEst.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/objest/busObjEst.php");
             }
     else
         {
@@ -85,6 +85,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }            
     ?>

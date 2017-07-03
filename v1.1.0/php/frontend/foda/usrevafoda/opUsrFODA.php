@@ -12,8 +12,8 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     session_start(); //Recuperando la sesion para acceder a las variables de usuario.
 
@@ -39,7 +39,7 @@
                     $consulta = "SELECT *FROM opResParFoda WHERE idEvaluacion=".$idEvaluacion." AND Status=0";
                     $dataSet = $objConexion->conectar($consulta);
                     
-                    return @mysql_num_rows($dataSet);
+                    return mysqli_num_rows($dataSet);
                     }
                                         
             function checksave($idEscala, $idFactor, $idEvaluacion)
@@ -50,7 +50,7 @@
                     $consulta = "SELECT *FROM opResParFoda WHERE idEscala=".$idEscala." AND idFactor=".$idFactor." AND idEvaluacion=".$idEvaluacion." AND Status=0";
                     $dataSet = $objConexion->conectar($consulta);
                     
-                    if(@mysql_num_rows($dataSet) == 0)
+                    if(mysqli_num_rows($dataSet) == 0)
                         {
                             return "";
                             }
@@ -67,7 +67,7 @@
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname);
                     $consulta = "SELECT *FROM (opResParFoda INNER JOIN opEscalas ON opEscalas.idEscala = opResParFoda.idEscala) WHERE opResParFoda.idEscala=".$idEscala." AND opResParFoda.idFactor=".$idFactor." AND opResParFoda.idEvaluacion=".$idEvaluacion." AND opResParFoda.Status=0";
                     $dataSet = $objConexion->conectar($consulta);
-                    $registro = @mysql_fetch_array($dataSet,MYSQL_ASSOC);
+                    $registro = @mysql_fetch_array($dataSet,MYSQLI_ASSOC);
                     
                     if($registro)
                         {
@@ -84,7 +84,7 @@
                     global $username, $password, $servername, $dbname;
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname);
                     $dataSetEscalas = $objConexion->conectar("SELECT opCedulas.Folio, idEscala, Escala FROM ((opEvaluaciones INNER JOIN opCedulas ON opEvaluaciones.idCedula = opCedulas.idCedula) INNER JOIN opEscalas ON opEscalas.idCedula = opCedulas.idCedula) WHERE opEvaluaciones.Status = 0 AND idEmpleado=".$idEmpleado);
-                    $conteo =  mysql_num_rows($dataSetEscalas);
+                    $conteo =  mysqli_num_rows($dataSetEscalas);
                     return $conteo;
                     }
                             
@@ -101,7 +101,7 @@
                      */
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname);
                     $dataSetFactores = $objConexion->conectar("SELECT opCedulas.Folio, idFactor, Factor FROM ((opEvaluaciones INNER JOIN opCedulas ON opEvaluaciones.idCedula = opCedulas.idCedula) INNER JOIN opFactores ON opFactores.idCedula = opCedulas.idCedula) WHERE opEvaluaciones.Status = 0 AND idEmpleado=".$idEmpleado);
-                    $rowSetFactores = @mysql_fetch_array($dataSetFactores,MYSQL_ASSOC);                    
+                    $rowSetFactores = @mysql_fetch_array($dataSetFactores,MYSQLI_ASSOC);                    
                                         
                     $this->cuerpoEva = '    <table class="dgTable">
                                                 <tr><th class= "dgHeader" colspan='.$this->contarColumnas($this->idEmpleado).'>'.$rowSetFactores['Folio'].'</th></tr>';
@@ -113,7 +113,7 @@
                             $this->cuerpoEva.='<tr class="dgRowsaltTR">';
                             
                             $dataSetEscalas = $objConexion->conectar("SELECT opCedulas.Folio, idEscala, Escala, Ponderacion FROM ((opEvaluaciones INNER JOIN opCedulas ON opEvaluaciones.idCedula = opCedulas.idCedula) INNER JOIN opEscalas ON opEscalas.idCedula = opCedulas.idCedula) WHERE opEvaluaciones.Status = 0 AND idEmpleado=".$idEmpleado);
-                            $rowSetEscalas = @mysql_fetch_array($dataSetEscalas,MYSQL_ASSOC);
+                            $rowSetEscalas = @mysql_fetch_array($dataSetEscalas,MYSQLI_ASSOC);
                             
                             $conteo+=1;
                             $tmpidEscala=0;
@@ -126,11 +126,11 @@
                                             $tmpidEscala = $rowSetEscalas['idEscala'];
                                             }
                                     $this->cuerpoEva.='<td><input type="text" style="display:none" class="txtescala" id="idEscala_'.$conteo.'" value="'.$rowSetEscalas['idEscala'].'"><input type="radio" class="radio" id="Escala_'.$conteo.'" name="Escala_'.$conteo.'" value="'.$rowSetEscalas['Ponderacion'].'"'.$state.'>'.$rowSetEscalas['Escala'].'</td>';
-                                    $rowSetEscalas = @mysql_fetch_array($dataSetEscalas,MYSQL_ASSOC);
+                                    $rowSetEscalas = @mysql_fetch_array($dataSetEscalas,MYSQLI_ASSOC);
                                     }
                                     
                             $this->cuerpoEva.='<td style="display:none"><input type="text" id="Res_'.$conteoFactor.'" value="'.$this->checkResultado($tmpidEscala, $rowSetFactores['idFactor'], $this->idEvaluacion).'"></td></tr>';
-                            $rowSetFactores = @mysql_fetch_array($dataSetFactores,MYSQL_ASSOC);
+                            $rowSetFactores = @mysql_fetch_array($dataSetFactores,MYSQLI_ASSOC);
                             }                 
                                
                     echo $this->cuerpoEva.='<tr align="center"><td class="dgTotRowsTR" colspan='.$this->contarColumnas($this->idEmpleado).'><img id="guardarEncuesta" title="Guardar encuesta parcial" align= "middle" src= "./img/guardar_encuesta.png" width= "35" height= "35" alt= "Guardar"/><img id="enviarEncuesta" title="Enviar encuesta terminada" align= "middle" src= "./img/enviar_encuesta.png" width= "35" height= "35" alt= "Enviar"/></td></tr></table>';                            
@@ -149,8 +149,8 @@
                     
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname);
                     $dataSet = $objConexion->conectar("SELECT *FROM ((opEvaluaciones INNER JOIN opCedulas ON opEvaluaciones.idCedula = opCedulas.idCedula) INNER JOIN opFactores ON opFactores.idCedula = opCedulas.idCedula) WHERE opEvaluaciones.Status = 0 AND opEvaluaciones.idEmpleado=".$this->idEmpleado);
-                    $rowSet = @mysql_fetch_array($dataSet,MYSQL_ASSOC);
-                    $conteo = @mysql_num_rows($dataSet);
+                    $rowSet = @mysql_fetch_array($dataSet,MYSQLI_ASSOC);
+                    $conteo = mysqli_num_rows($dataSet);
 
                     $this->idEvaluacion = $rowSet['idEvaluacion'];
                     
@@ -168,13 +168,13 @@
                                 
                                 if($this->idEmpleado == 0)
                                     {
-                                        include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/notificacionFODA.php");
+                                        include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/notificacionFODA.php");
                                         }
                                 else
                                     {
                                         $objConexion = new mySQL_conexion($username, $password, $servername, $dbname);
                                         $dataSet = $objConexion->conectar("SELECT *FROM opEvaluaciones WHERE Status = 0 AND idEmpleado=".$this->idEmpleado);
-                                        $rowSet = @mysql_fetch_array($dataSet,MYSQL_ASSOC);
+                                        $rowSet = @mysql_fetch_array($dataSet,MYSQLI_ASSOC);
                                         
                                         if($rowSet)
                                             {
@@ -182,7 +182,7 @@
                                                 }
                                         else
                                             {
-                                                include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/notificacionFODA.php");
+                                                include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/notificacionFODA.php");
                                                 }                                                
                                         }
                     

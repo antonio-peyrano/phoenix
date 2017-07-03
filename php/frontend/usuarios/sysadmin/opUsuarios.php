@@ -9,10 +9,10 @@
  * adjunta de la licencia en todo momento.
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia de la clase para manejo de encriptado.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/usuarios/usuarios.class.php"); //Se carga la referencia a la clase para manejo de la entidad usuarios.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia de la clase para manejo de encriptado.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/usuarios/usuarios.class.php"); //Se carga la referencia a la clase para manejo de la entidad usuarios.
     
     class opUsuarios
         {
@@ -63,7 +63,7 @@
                     $objUsuarios = new usuarios();
                     $dsNiveles = $objUsuarios->getNiveles();
                     
-                    $regNiveles = @mysql_fetch_array($dsNiveles, MYSQL_ASSOC);
+                    $regNiveles = @mysqli_fetch_array($dsNiveles,MYSQLI_ASSOC);
                     
                     while($regNiveles)
                         {
@@ -78,7 +78,7 @@
                                     $HTML .= '<option value='.$regNiveles['idNivel'].'>'.$regNiveles['Nivel'].'</option>';
                                     }
                                     
-                            $regNiveles = @mysql_fetch_array($dsNiveles, MYSQL_ASSOC);
+                            $regNiveles = @mysqli_fetch_array($dsNiveles,MYSQLI_ASSOC);
                             }
                             
                     return $HTML.'</select>';                                                    

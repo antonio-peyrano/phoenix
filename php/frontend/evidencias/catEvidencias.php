@@ -10,8 +10,8 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.    
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.    
     
     global $username, $password, $servername, $dbname;
     
@@ -59,8 +59,8 @@ function dgDatos($dataset, $sufijo)
         //global $sufijo; //Acceso a la variable de sufijo.
         
         $count_row=1;//Se inicializa el contador de filas.
-        $field = @mysql_fetch_field($dataset);
-        $record = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+        $field = mysqli_fetch_field($dataset);
+        $record = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
         
         while ($record) 
             {
@@ -88,7 +88,8 @@ function dgDatos($dataset, $sufijo)
                     {
                         //Para cada elemento en el arreglo, se dispone de una casilla en la
                         //tabla.
-                        if(mysql_field_name($dataset, $fldcount) == "RutaURL")
+                        $finfo = mysqli_fetch_field_direct($dataset, $fldcount);
+                        if($finfo->name == "RutaURL")
                             {
                                 $rows = $rows.'<td><a href="'.$value.'" target="_blank">'.$value.'</a></td>';
                                 }
@@ -111,7 +112,7 @@ function dgDatos($dataset, $sufijo)
                 $rows = $rows.'<td id="reg_'.$record['idEvidencia'].'" width= "90"><a class="borrar" id="'.$sufijo.'delete'.$record['idEvidencia'].'" href="#"><img id="'.$sufijo.'delete_'.$record['idEvidencia'].'" align= "middle" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar"/></a></td></tr>';  
                 echo $rows; //Se envia el codigo HTML generado.
                 $count_row = $count_row + 1; //Se incrementa el contador de filas.
-                $record = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                $record = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                 }
                 
         echo '<tr class= "dgTotRowsTR"><td alignt= "left" colspan= 7"></td></tr>';
@@ -130,9 +131,9 @@ function dgCabeceras($dataset, $titulo, $sufijo)
         //global $sufijo; //Acceso a la variable de sufijo.
         $columns='<th style="display:none">';
         
-        $field = @mysql_fetch_field($dataset);
+        $field = mysqli_fetch_field($dataset);
         $columns= $columns .$field->name."</th>";
-        $field = @mysql_fetch_field($dataset);
+        $field = mysqli_fetch_field($dataset);
         
         while ($field) 
             {                
@@ -140,7 +141,7 @@ function dgCabeceras($dataset, $titulo, $sufijo)
                  *se crea la etiqueta correspondiente <TH> 
                  */
                 $columns = $columns. "<th>".$field->name."</th>";
-                $field = @mysql_fetch_field($dataset);
+                $field = mysqli_fetch_field($dataset);
                 }
                                 
         echo '<div id= "dgDiv" class= "dgMainDiv">';        

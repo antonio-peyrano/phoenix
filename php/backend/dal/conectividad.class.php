@@ -16,7 +16,7 @@
  ***********************************************************************************************************
  * Desarrollador: Mtro. Jesus Antonio Peyrano Luna * Ultima modificacion: 27/09/2016                       *
  ***********************************************************************************************************/
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
     
 	class mySQL_conexion
 		{
@@ -33,7 +33,7 @@
 			 private $userName = '';		#El usuario con el que haremos conexi�n de la BD.
 			 private $userPassword = '';	#La clave asignada del usuario para acceder a la BD.
 			 
-			function __construct($user, $pass, $server, $bd)
+			public function __construct($user, $pass, $server, $bd)
 				{
 					/*
 					 * Esta funci�n inicializa los parametros para interactuar con las funciones de la clase.
@@ -45,42 +45,41 @@
 					$this->userPassword = $objCodificador->decrypt($pass, "ouroboros");	#La clave asignada del usuario para acceder a la BD. 
 					}
 					
-			 function conectar($consulta)
+			 public function conectar($consulta)
 				{
 					/*
 					 * Esta función ejecuta las instrucciones necesarias para conectar con la base de datos
 					 * asi como obtener o modificar la informaci�n mediante la consulta sugerida.
-					 */
-					 
-					$this->conexion = @mysql_connect($this->serverName, $this->userName, $this->userPassword);
-					
+					 */					
+				    $this->conexion = mysqli_connect($this->serverName, $this->userName, $this->userPassword);
+
 					if(!$this->conexion)
 						{
 							//En caso de ocurrir un error con la entrada a la base de datos
 							//se notifica al usuario por medio de un mensaje en pantalla.
-							die('No pudo establecerse la conexión con la BD: ' . mysql_error());
+							die('No pudo establecerse la conexión el servidor: ' . mysqli_error($this->conexion));
 							}
 					else
 						{
 							//En caso de obtener una conexion satisfactoria con la base de datos
 							//se procede a la ejecución de las instrucciones.
-							$this->bdConexion = mysql_select_db($this->bdName, $this->conexion);
+							$this->bdConexion = mysqli_select_db($this->conexion, $this->bdName);
 							
 							if(!$this->bdConexion)
 								{
 									//En caso de ocurrir un error con la selecci�n de la base de datos
 									//se notifica al usuario por medio de un mensaje en pantalla.								
-									die ('No se puede usar '. $this->bdName .': '. mysql_error());
+								    die ('No se puede usar '. $this->bdName .': '. mysqli_error($this->conexion));
 									}
 							else
 								{
 									//En caso de obtener control de la base de datos.
-									$this->dataset = @mysql_query($consulta, $this->conexion);
+                                    $this->dataset = mysqli_query($this->conexion, $consulta);                                    
 									}
 							}
-
+							
 					/*mysql_free_result($this->dataset);*/
-					mysql_close($this->conexion); //Se cierra la conexion con la base de datos.
+					mysqli_close($this->conexion); //Se cierra la conexion con la base de datos.
 					return $this->dataset;
 					}
 			}

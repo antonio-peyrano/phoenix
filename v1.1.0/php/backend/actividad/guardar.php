@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecución del comando guardar, cuando es ejecutado desde un formulario
      * para la edición de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -82,12 +82,12 @@
             //Se procede a recoger la referencia de la programacion asociada a la actividad.
             $consulta = 'SELECT *FROM opProgAct WHERE idActividad='.$idActividad.' AND Status=0';
             $dsPrgActUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegPrgActUnit = @mysql_fetch_array($dsPrgActUnit, MYSQL_ASSOC);
+            $RegPrgActUnit = @mysql_fetch_array($dsPrgActUnit,MYSQLI_ASSOC);
             
             //Se procede a recoger la referencia de la ejecucion asociada a la actividad.
             $consulta = 'SELECT *FROM opEjecAct WHERE idActividad='.$idActividad.' AND Status=0';
             $dsEjcActUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEjcActUnit = @mysql_fetch_array($dsEjcActUnit, MYSQL_ASSOC);
+            $RegEjcActUnit = @mysql_fetch_array($dsEjcActUnit,MYSQLI_ASSOC);
             
             if($RegPrgActUnit)
                 {
@@ -127,7 +127,7 @@
             //Se procede a recoger la referencia de actividades asociadas al programa.
             $consulta = 'SELECT idActividad FROM opActividades WHERE idPrograma='.$idPrograma.' AND Status=0';
             $dsActividades = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegActividades = @mysql_fetch_array($dsActividades, MYSQL_ASSOC);
+            $RegActividades = @mysql_fetch_array($dsActividades,MYSQLI_ASSOC);
             
             $countAct = 0; //Se incializa el conteo de actividades.
             
@@ -140,12 +140,12 @@
                     //Se procede a recoger los datos almacenados en la programacion.
                     $consulta = 'SELECT *FROM opProgAct WHERE idActividad='.$RegActividades['idActividad'].' AND Status=0';
                     $dsProgAct = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegProgAct = @mysql_fetch_array($dsProgAct, MYSQL_ASSOC);
+                    $RegProgAct = @mysql_fetch_array($dsProgAct,MYSQLI_ASSOC);
                     
                     //Se procede a recoger los datos almacenados en la ejecucion.
                     $consulta = 'SELECT *FROM opEjecAct WHERE idActividad='.$RegActividades['idActividad'].' AND Status=0';
                     $dsEjecAct = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegEjecAct = @mysql_fetch_array($dsEjecAct, MYSQL_ASSOC);
+                    $RegEjecAct = @mysql_fetch_array($dsEjecAct,MYSQLI_ASSOC);
 
                     while($RegProgAct)
                         {
@@ -165,12 +165,12 @@
                                     $Ejecucion[$cont-1] += ($RegEjecAct[obtainMes($cont)]*100)/$totProgramado;
                                     }
                                     
-                            $RegEjecAct = @mysql_fetch_array($dsEjecAct, MYSQL_ASSOC);
-                            $RegProgAct = @mysql_fetch_array($dsProgAct, MYSQL_ASSOC);
+                            $RegEjecAct = @mysql_fetch_array($dsEjecAct,MYSQLI_ASSOC);
+                            $RegProgAct = @mysql_fetch_array($dsProgAct,MYSQLI_ASSOC);
                             }
                             
                     $countAct += 1;        
-                    $RegActividades = @mysql_fetch_array($dsActividades, MYSQL_ASSOC);
+                    $RegActividades = @mysql_fetch_array($dsActividades,MYSQLI_ASSOC);
                     }
                     
             for($cont = 0; $cont < 12; $cont++)
@@ -214,7 +214,7 @@
             //Se procede a consultar el programa activo a fin de obtener la Est. Ope. asociada.
             $consulta = 'SELECT idEstOpe FROM opProgramas WHERE idPrograma='.$idPrograma.' AND Status=0';
             $dsProgramas = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegProgramas = @mysql_fetch_array($dsProgramas, MYSQL_ASSOC);
+            $RegProgramas = @mysql_fetch_array($dsProgramas,MYSQLI_ASSOC);
                             
             if($RegProgramas)
                 {
@@ -225,7 +225,7 @@
             //Se procede a obtener los programas asociados a la Est. Ope. adquirida.
             $consulta = 'SELECT idPrograma FROM opProgramas WHERE idEstOpe='.$idEstOpe.' AND Status=0';
             $dsProgramas = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegProgramas = @mysql_fetch_array($dsProgramas, MYSQL_ASSOC);
+            $RegProgramas = @mysql_fetch_array($dsProgramas,MYSQLI_ASSOC);
                     
             $countProg = 0; //Se inicializa el conteo de programas.                    
                     
@@ -238,12 +238,12 @@
                     //Se procede a recoger los datos almacenados en la programacion.
                     $consulta = 'SELECT *FROM opProgPro WHERE idPrograma='.$RegProgramas['idPrograma'].' AND Status=0';
                     $dsProgPro = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegProgPro = @mysql_fetch_array($dsProgPro, MYSQL_ASSOC);
+                    $RegProgPro = @mysql_fetch_array($dsProgPro,MYSQLI_ASSOC);
                             
                     //Se procede a recoger los datos almacenados en la ejecucion.
                     $consulta = 'SELECT *FROM opEjecPro WHERE idPrograma='.$RegProgramas['idPrograma'].' AND Status=0';
                     $dsEjecPro = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegEjecPro = @mysql_fetch_array($dsEjecPro, MYSQL_ASSOC);
+                    $RegEjecPro = @mysql_fetch_array($dsEjecPro,MYSQLI_ASSOC);
                             
                     while($RegProgPro)
                         {
@@ -255,12 +255,12 @@
                                     $Ejecucion[$cont-1] += $RegEjecPro[obtainMes($cont)];                                    
                                     }
                             
-                            $RegEjecPro = @mysql_fetch_array($dsEjecPro, MYSQL_ASSOC);
-                            $RegProgPro = @mysql_fetch_array($dsProgPro, MYSQL_ASSOC);
+                            $RegEjecPro = @mysql_fetch_array($dsEjecPro,MYSQLI_ASSOC);
+                            $RegProgPro = @mysql_fetch_array($dsProgPro,MYSQLI_ASSOC);
                             }
                                                             
                     $countProg += 1;
-                    $RegProgramas = @mysql_fetch_array($dsProgramas, MYSQL_ASSOC);
+                    $RegProgramas = @mysql_fetch_array($dsProgramas,MYSQLI_ASSOC);
                     }
                             
             for($cont = 0; $cont < 12; $cont++)
@@ -304,7 +304,7 @@
             //Se procede a consultar la Est Ope activa a fin de obtener el Obj. Ope. asociado.
             $consulta = 'SELECT idObjOpe FROM catEstOpe WHERE idEstOpe='.$idEstOpe.' AND Status=0';
             $dsProgramas = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEstOpe = @mysql_fetch_array($dsProgramas, MYSQL_ASSOC);
+            $RegEstOpe = @mysql_fetch_array($dsProgramas,MYSQLI_ASSOC);
                             
             if($RegEstOpe)
                 {
@@ -315,7 +315,7 @@
             //Se procede a obtener los programas asociados a la Est. Ope. adquirida.
             $consulta = 'SELECT idEstOpe FROM catEstOpe WHERE idObjOpe='.$idObjOpe.' AND Status=0';
             $dsProgramas = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEstOpe = @mysql_fetch_array($dsProgramas, MYSQL_ASSOC);
+            $RegEstOpe = @mysql_fetch_array($dsProgramas,MYSQLI_ASSOC);
                             
             $countEstOpe = 0; //Se inicializa el conteo de programas.
                             
@@ -328,12 +328,12 @@
                     //Se procede a recoger los datos almacenados en la programacion.
                     $consulta = 'SELECT *FROM opProgEst WHERE idEstOpe='.$RegEstOpe['idEstOpe'].' AND Status=0';
                     $dsProgEst = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegProgEst = @mysql_fetch_array($dsProgEst, MYSQL_ASSOC);
+                    $RegProgEst = @mysql_fetch_array($dsProgEst,MYSQLI_ASSOC);
                             
                     //Se procede a recoger los datos almacenados en la ejecucion.
                     $consulta = 'SELECT *FROM opEjecEst WHERE idEstOpe='.$RegEstOpe['idEstOpe'].' AND Status=0';
                     $dsEjecEst = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegEjecEst = @mysql_fetch_array($dsEjecEst, MYSQL_ASSOC);
+                    $RegEjecEst = @mysql_fetch_array($dsEjecEst,MYSQLI_ASSOC);
                             
                     while($RegProgEst)
                         {
@@ -345,12 +345,12 @@
                                     $Ejecucion[$cont-1] += $RegEjecEst[obtainMes($cont)];
                                     }
                             
-                            $RegEjecEst = @mysql_fetch_array($dsEjecEst, MYSQL_ASSOC);
-                            $RegProgEst = @mysql_fetch_array($dsProgEst, MYSQL_ASSOC);
+                            $RegEjecEst = @mysql_fetch_array($dsEjecEst,MYSQLI_ASSOC);
+                            $RegProgEst = @mysql_fetch_array($dsProgEst,MYSQLI_ASSOC);
                             }
                             
                     $countEstOpe += 1;
-                    $RegEstOpe = @mysql_fetch_array($dsProgramas, MYSQL_ASSOC);
+                    $RegEstOpe = @mysql_fetch_array($dsProgramas,MYSQLI_ASSOC);
                     }
                             
             for($cont = 0; $cont < 12; $cont++)
@@ -394,7 +394,7 @@
             //Se procede a consultar el programa activo a fin de obtener el Obj. Est. asociado.
             $consulta = 'SELECT idObjEst FROM catObjOpe WHERE idObjOpe='.$idObjOpe.' AND Status=0';
             $dsObjOpe = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegObjOpe = @mysql_fetch_array($dsObjOpe, MYSQL_ASSOC);
+            $RegObjOpe = @mysql_fetch_array($dsObjOpe,MYSQLI_ASSOC);
                             
             if($RegObjOpe)
                 {
@@ -405,7 +405,7 @@
             //Se procede a obtener los Obj Ope asociados al Obj. Est. adquirido.
             $consulta = 'SELECT idObjOpe FROM catObjOpe WHERE idObjEst='.$idObjEst.' AND Status=0';
             $dsObjOpe = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegObjOpe = @mysql_fetch_array($dsObjOpe, MYSQL_ASSOC);
+            $RegObjOpe = @mysql_fetch_array($dsObjOpe,MYSQLI_ASSOC);
                             
             $countObjOpe = 0; //Se inicializa el conteo de Obj Ope.
                             
@@ -418,12 +418,12 @@
                     //Se procede a recoger los datos almacenados en la programacion.
                     $consulta = 'SELECT *FROM opProgOO WHERE idObjOpe='.$RegObjOpe['idObjOpe'].' AND Status=0';
                     $dsProgOO = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegProgOO = @mysql_fetch_array($dsProgOO, MYSQL_ASSOC);
+                    $RegProgOO = @mysql_fetch_array($dsProgOO,MYSQLI_ASSOC);
                             
                     //Se procede a recoger los datos almacenados en la ejecucion.
                     $consulta = 'SELECT *FROM opEjecOO WHERE idObjOpe='.$RegObjOpe['idObjOpe'].' AND Status=0';
                     $dsEjecOO = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegEjecOO = @mysql_fetch_array($dsEjecOO, MYSQL_ASSOC);
+                    $RegEjecOO = @mysql_fetch_array($dsEjecOO,MYSQLI_ASSOC);
                             
                     while($RegProgOO)
                         {
@@ -436,12 +436,12 @@
                                     $Ejecucion[$cont-1] += $RegEjecOO[obtainMes($cont)];
                                     }
                             
-                            $RegEjecOO = @mysql_fetch_array($dsEjecOO, MYSQL_ASSOC);
-                            $RegProgOO = @mysql_fetch_array($dsProgOO, MYSQL_ASSOC);
+                            $RegEjecOO = @mysql_fetch_array($dsEjecOO,MYSQLI_ASSOC);
+                            $RegProgOO = @mysql_fetch_array($dsProgOO,MYSQLI_ASSOC);
                             }
                             
                             $countObjOpe += 1;
-                            $RegObjOpe = @mysql_fetch_array($dsObjOpe, MYSQL_ASSOC);
+                            $RegObjOpe = @mysql_fetch_array($dsObjOpe,MYSQLI_ASSOC);
                             }
                             
                     for($cont = 0; $cont < 12; $cont++)
@@ -529,7 +529,7 @@
                     //Se busca el Proceso creado para obtener su id.
                     $consulta = 'SELECT *FROM opActividades WHERE Actividad LIKE \'%'.$Actividad.'%\''; //Se establece el modelo de consulta de datos.
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
                     //Se crea la tupla vacia para el registro de valores programados.
                     $consulta = 'INSERT INTO opProgAct(idActividad, Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre, Periodo) VALUES ('.'\''.$Registro['idActividad'].'\',\''.$P1.'\',\''.$P2.'\',\''.$P3.'\',\''.$P4.'\',\''.$P5.'\',\''.$P6.'\',\''.$P7.'\',\''.$P8.'\',\''.$P9.'\',\''.$P10.'\',\''.$P11.'\',\''.$P12.'\',\''.$Periodo.'\')';
@@ -549,7 +549,7 @@
             $_GET['view'] = 3; //Se establece la variable de control de visualización.
             $_GET['id'] = $idPrograma; //Se establece la variable de control del id del programa.
                     
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/programa/opPrograma.php");                                
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/programa/opPrograma.php");                                
             }
     else
         {
@@ -557,6 +557,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }
     ?>

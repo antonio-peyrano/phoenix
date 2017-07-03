@@ -9,9 +9,9 @@
  * adjunta de la licencia en todo momento.
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia a la clase de manejo de encriptado.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia a la clase de manejo de encriptado.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
     class usuarios
         {
@@ -129,7 +129,7 @@
                     $Consulta= 'SELECT idUsuario, catUsuarios.idNivel, Usuario, Clave, Correo, Pregunta, Respuesta, catUsuarios.Status FROM catUsuarios INNER JOIN catNiveles ON catNiveles.idNivel = catUsuarios.idNivel WHERE idUsuario='.$idRegistro; //Se establece el modelo de consulta de datos.
                     $dsUsuario = $objConexion -> conectar($Consulta); //Se ejecuta la consulta.
                     
-                    $RegUsuario = @mysql_fetch_array($dsUsuario, MYSQL_ASSOC);//Llamada a la funcion de carga de registro de usuario.
+                    $RegUsuario = @mysqli_fetch_array($dsUsuario,MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
                     return $RegUsuario;
                     }                    
 
@@ -278,13 +278,13 @@
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                     
                     $dsModulos = $this->getModulos();                    
-                    $regModulos = @mysql_fetch_array($dsModulos, MYSQL_ASSOC);
+                    $regModulos = @mysqli_fetch_array($dsModulos,MYSQLI_ASSOC);
                     
                     while($regModulos)
                         {
                             //MIENTRAS EXISTAN MODULOS POR VERIFICAR.
                             $dsPermisos = $this->getPermisos($idUsuario);
-                            $regPermisos = @mysql_fetch_array($dsPermisos, MYSQL_ASSOC);
+                            $regPermisos = @mysqli_fetch_array($dsPermisos,MYSQLI_ASSOC);
                             
                             $checkState = '';
                                                         
@@ -296,11 +296,11 @@
                                             //AL ENCONTRAR COINCIDENCIA, SE MARCA EN LA LISTA.
                                             $checkState = 'checked';
                                             }                                            
-                                    $regPermisos = @mysql_fetch_array($dsPermisos, MYSQL_ASSOC);
+                                    $regPermisos = @mysqli_fetch_array($dsPermisos,MYSQLI_ASSOC);
                                     }
                                     
                             $HTML .= '<input type="checkbox" class="check" id="modulos[]" name="modulos[]" '.$habCampos.' value="'.$regModulos['idModulo'].'" '.$checkState.'>'.$regModulos['Modulo'].' ';                                    
-                            $regModulos = @mysql_fetch_array($dsModulos, MYSQL_ASSOC);
+                            $regModulos = @mysqli_fetch_array($dsModulos,MYSQLI_ASSOC);
                             }
                             
                     return $HTML;

@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecuci�n del comando guardar, cuando es ejecutado desde un formulario
      * para la edici�n de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -121,12 +121,12 @@
             //Se procede a recoger los datos almacenados en la programacion.
             $consulta = 'SELECT *FROM opProgGas WHERE idEntidad='.$idEntidad.' AND Status=0';
             $dsProgAct = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegProgAct = @mysql_fetch_array($dsProgAct, MYSQL_ASSOC);
+            $RegProgAct = @mysqli_fetch_array($dsProgAct,MYSQLI_ASSOC);
                     
             //Se procede a recoger los datos almacenados en la ejecucion.
             $consulta = 'SELECT *FROM opEjecGas WHERE idEntidad='.$idEntidad.' AND Status=0';
             $dsEjecAct = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEjecAct = @mysql_fetch_array($dsEjecAct, MYSQL_ASSOC);
+            $RegEjecAct = @mysqli_fetch_array($dsEjecAct,MYSQLI_ASSOC);
 
             while($RegProgAct)
                 {
@@ -148,8 +148,8 @@
                             //$Ejecucion[$cont-1] += ($RegEjecAct[obtainMes($cont)]*100)/$totProgramado;
                             }
                                     
-                    $RegEjecAct = @mysql_fetch_array($dsEjecAct, MYSQL_ASSOC);
-                    $RegProgAct = @mysql_fetch_array($dsProgAct, MYSQL_ASSOC);
+                    $RegEjecAct = @mysqli_fetch_array($dsEjecAct,MYSQLI_ASSOC);
+                    $RegProgAct = @mysqli_fetch_array($dsProgAct,MYSQLI_ASSOC);
                     }
                                                 
             for($cont = 0; $cont < 12; $cont++)
@@ -237,7 +237,7 @@
             //$_GET['view'] = 3; //Se establece la variable de control de visualizacion.
             //$_GET['id'] = $idProgGas; //Se establece la variable de control del id del programa.
     
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasolina/busGasolina.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasolina/busGasolina.php");
             }
     else
         {
@@ -245,6 +245,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }            
     ?>

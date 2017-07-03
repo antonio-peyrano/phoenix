@@ -12,9 +12,9 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
         
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
     
     class busIndicadores
         {
@@ -56,12 +56,12 @@
                                             
                     echo '                  <option value=-1>Seleccione</option>';
                     
-                                            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                            $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                     
                                             while($RegNiveles)
                                                 {
                     echo '                          <option value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'].'</option>';
-                                                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                                    $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                                     }
                     
                     echo'                   </select></td></tr>
@@ -108,7 +108,7 @@
                      * En caso que no cuente con credenciales validas, el sistema impedira
                      * la brecha de seguridad.
                      */
-                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
+                    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/noAutorizado.php");
                 }
             }
     else
@@ -117,6 +117,6 @@
              * En caso que no cuente con credenciales validas, el sistema impedira
              * la brecha de seguridad.
              */
-             include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
+             include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/noAutorizado.php");
             }                            
 ?>

@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecución del comando guardar, cuando es ejecutado desde un formulario
      * para la edición de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -46,7 +46,7 @@
             $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
             $consulta = 'SELECT *FROM relEntPro WHERE idProceso='.$idRegPro.' AND idEntidad='.$idRegEnt; //Se establece el modelo de consulta de datos.
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
     
             if(!$Registro)
                 {
@@ -123,7 +123,7 @@
                     //Se busca el Proceso creado para obtener su id.
                     $consulta = 'SELECT *FROM catProcesos WHERE Proceso LIKE \'%'.$Proceso.'%\''; //Se establece el modelo de consulta de datos.
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
                     //Se crean los elementos de la relacion.
                     for($conteo=1; $conteo < count($temp); $conteo++)
@@ -133,7 +133,7 @@
                             }            
                     }
               
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/procesos/busProcesos.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/procesos/busProcesos.php");
             }
     else
         {
@@ -141,6 +141,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }            
     ?>

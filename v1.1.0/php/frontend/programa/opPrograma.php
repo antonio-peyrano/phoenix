@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeaciï¿½n operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,10 +10,10 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificaciï¿½n a ISO-8859-1.
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraciï¿½n.
     
     $parametro = $_GET['id'];
 
@@ -25,8 +25,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta función obtiene el perfil del sistema activo para el despliegue de la
-             * información de la planeación.
+             * Esta funciï¿½n obtiene el perfil del sistema activo para el despliegue de la
+             * informaciï¿½n de la planeaciï¿½n.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -34,11 +34,11 @@
              $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
              $consulta= "SELECT *FROM catConfiguraciones WHERE Status=0"; //Se establece el modelo de consulta de datos.
              $dsConfiguracion = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-             $RegConfiguracion = @mysql_fetch_array($dsConfiguracion, MYSQL_ASSOC);
+             $RegConfiguracion = @mysql_fetch_array($dsConfiguracion,MYSQLI_ASSOC);
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuración valida.
+                    //Si ha sido localizada una configuraciï¿½n valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -48,13 +48,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*
-             * Esta función carga la parte grafica que corresponde a las banderas de desempeÃ±o.
+             * Esta funciï¿½n carga la parte grafica que corresponde a las banderas de desempeÃ±o.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
             
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medición optima.
+                    //Si el parametro recibido esta en el rango de mediciï¿½n optima.
                     $rowBanderas.='<td><center><img id="optimo_'.$mes.'"align= "middle" src= "./img/banderas/optimo.png" width= "25" height= "25" alt= "Optimo" data-toggle="tooltip" title="Eficacia >='.$Optimo.'%"/></center></td>';
                     } 
                     
@@ -74,7 +74,7 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualización.
+             * Si se declaro en la url el control de visualizaciï¿½n.
              */
             $cntview = $_GET['view'];
             }
@@ -86,7 +86,7 @@
     function obtenerMes($Mes)
         {
             /*
-             * Esta función obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funciï¿½n obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -141,7 +141,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funciï¿½n establece la carga de un registro a partir de su identificador en la base de datos.
              */
             global $username, $password, $servername, $dbname;
     
@@ -151,34 +151,34 @@
             return $dataset;
             }
             
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funciï¿½n de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funciï¿½n de carga de registro de usuario.
 
     function controlVisual($idRegistro)
         {
             /*
-             * Esta función controla los botones que deberan verse en la pantalla deacuerdo con la acción solicitada por el
-             * usuario en la ventana previa. Si es una edición, los botones borrar y guardar deben verse. Si es una creación
+             * Esta funciï¿½n controla los botones que deberan verse en la pantalla deacuerdo con la acciï¿½n solicitada por el
+             * usuario en la ventana previa. Si es una ediciï¿½n, los botones borrar y guardar deben verse. Si es una creaciï¿½n
              * solo el boton guardar debe visualizarse.
              */
             global $cntview;
     
             if($idRegistro == -1)
                 {
-                    //En caso que la acción corresponda a la creación de un nuevo registro.
+                    //En caso que la acciï¿½n corresponda a la creaciï¿½n de un nuevo registro.
                     echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else
                 {
                     if(($cntview == 1)||($cntview == 3))
                         {
-                            //En caso de procesarse como una acción de visualización.
+                            //En caso de procesarse como una acciï¿½n de visualizaciï¿½n.
                             echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/programa/borrar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString(),\'escritorio\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habPrograma();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
                             if($cntview == 0)
                                 {
-                                    //En caso que la acción corresponda a la edición de un registro.
+                                    //En caso que la acciï¿½n corresponda a la ediciï¿½n de un registro.
                                     echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'escritorio\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habPrograma();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                                     }
                             }
@@ -188,7 +188,7 @@
     function cargarObjEst()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de ObjEst.
+             * Esta funciï¿½n establece la carga del conjunto de registros de ObjEst.
              */
             global $username, $password, $servername, $dbname;
     
@@ -201,7 +201,7 @@
     function cargarObjOpe($parametro)
         {
             /*
-             * Esta función establece la carga del conjunto de registros de ObjOpe.
+             * Esta funciï¿½n establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
     
@@ -214,8 +214,8 @@
     function constructorcb($parametro)
         {
             /*
-             * Esta función establece los parametros de carga del combobox de obj ope cuando
-             * se ejecuta un proceso de edición.
+             * Esta funciï¿½n establece los parametros de carga del combobox de obj ope cuando
+             * se ejecuta un proceso de ediciï¿½n.
              */
             global $habcampos, $Registro;
     
@@ -224,7 +224,7 @@
             echo' <select name= "idObjOpe" id= "idObjOpe" '.$habcampos.' value= "'.$Registro['idObjOpe'].'">
                   <option value=-1>Seleccione</option>';
             
-            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+            $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
             
             while($RegNiveles)
                 {
@@ -238,7 +238,7 @@
                             //En caso contrario se carga la etiqueta por default.
                             echo '          <option value='.$RegNiveles['idObjOpe'].'>'.$RegNiveles['CObjOpe'].'</option>';
                             }
-                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                     }
                     
             echo' </select>';
@@ -247,7 +247,7 @@
     function cargarEstOpe($parametro)
         {
             /*
-             * Esta función establece la carga del conjunto de registros de ObjOpe.
+             * Esta funciï¿½n establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
             
@@ -260,8 +260,8 @@
     function constructorcbEstOpe($parametro)
         {
             /*
-             * Esta función establece los parametros de carga del combobox de Est ope cuando
-             * se ejecuta un proceso de edición.
+             * Esta funciï¿½n establece los parametros de carga del combobox de Est ope cuando
+             * se ejecuta un proceso de ediciï¿½n.
              */
             global $habcampos, $Registro;
             
@@ -270,7 +270,7 @@
             echo' <select name= "idEstOpe" id= "idEstOpe" '.$habcampos.' value= "'.$Registro['idEstOpe'].'">
                   <option value=-1>Seleccione</option>';
             
-            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+            $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
             
             while($RegNiveles)
                 {
@@ -284,7 +284,7 @@
                             //En caso contrario se carga la etiqueta por default.
                             echo '          <option value='.$RegNiveles['idEstOpe'].'>'.$RegNiveles['CEstOpe'].'</option>';
                             }
-                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                     }
                     
                     echo' </select>';
@@ -293,7 +293,7 @@
     function cargarEmpleado($parametro)
         {
             /*
-             * Esta función establece la carga del conjunto de registros de Empleados.
+             * Esta funciï¿½n establece la carga del conjunto de registros de Empleados.
              */
             global $username, $password, $servername, $dbname;
             
@@ -306,8 +306,8 @@
     function constructorcbResponsable($parametro)
         {
             /*
-             * Esta función establece los parametros de carga del combobox de Responsable cuando
-             * se ejecuta un proceso de edición.
+             * Esta funciï¿½n establece los parametros de carga del combobox de Responsable cuando
+             * se ejecuta un proceso de ediciï¿½n.
              */
              global $habcampos, $Registro;
             
@@ -316,7 +316,7 @@
              echo' <select name= "idResponsable" id= "idResponsable" '.$habcampos.' value= "'.$Registro['idResponsable'].'">
                    <option value=-1>Seleccione</option>';
              
-                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                 
                 while($RegNiveles)
                     {
@@ -330,7 +330,7 @@
                                 //En caso contrario se carga la etiqueta por default.
                                 echo '          <option value='.$RegNiveles['idEmpleado'].'>'.$RegNiveles['Empleado'].'</option>';
                                 }
-                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                        $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                         }
                 echo' </select>';
             }
@@ -338,8 +338,8 @@
     function constructorcbSubalterno($parametro)
         {
             /*
-             * Esta función establece los parametros de carga del combobox de Subalterno cuando
-             * se ejecuta un proceso de edición.
+             * Esta funciï¿½n establece los parametros de carga del combobox de Subalterno cuando
+             * se ejecuta un proceso de ediciï¿½n.
              */
              global $habcampos, $Registro;
             
@@ -348,7 +348,7 @@
              echo' <select name= "idSubalterno" id= "idSubalterno" '.$habcampos.' value= "'.$Registro['idSubalterno'].'">
              <option value=-1>Seleccione</option>';
              
-             $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+             $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
              
                 while($RegNiveles)
                     {
@@ -362,7 +362,7 @@
                                 //En caso contrario se carga la etiqueta por default.
                                 echo '          <option value='.$RegNiveles['idEmpleado'].'>'.$RegNiveles['Empleado'].'</option>';
                                 }
-                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                        $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                         }
                         
                 echo' </select>';
@@ -371,7 +371,7 @@
     function cargarEntidades()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de entidades.
+             * Esta funciï¿½n establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
             
@@ -384,7 +384,7 @@
     function cargarProcesos($idRegistro, $idEntidad)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funciï¿½n establece la carga de un registro a partir de su identificador en la base de datos.
              */
              global $username, $password, $servername, $dbname, $habcampos;
             
@@ -395,7 +395,7 @@
              if($idRegistro == -1)
                 {
                     /*
-                     * Si la operación solicitada es para la creación de un registro,
+                     * Si la operaciï¿½n solicitada es para la creaciï¿½n de un registro,
                      * se carga el listado sin marcar.
                      */
                     echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="chkProcesos">';
@@ -403,14 +403,14 @@
              else
                 {
                     /*
-                     * Si la operación solicitada es para editar el registro,
+                     * Si la operaciï¿½n solicitada es para editar el registro,
                      * se carga el listado con los elementos previamente marcados.
                      */
                     echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="chkProcesos">';
                     $subconsulta = 'SELECT *FROM relProgPro WHERE idPrograma='.$idRegistro.' AND Status=0'; //Se establece el modelo de consulta de datos.
                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                     $vector = "";
-                    $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);
             
                     if($RegNiveles)
                         {
@@ -421,7 +421,7 @@
                             $vector.=$RegNiveles['idProceso'];
                             }
             
-                    $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);
             
                     while ($RegNiveles)
                         {
@@ -430,23 +430,23 @@
                              * los id de las Procesoes seleccionadas por el usuario previamente.
                              */
                             $vector.=','.$RegNiveles['idProceso'];
-                            $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                            $RegNiveles = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);
                             }
             
                     $tmparray=explode(',',$vector); //El vector resultante se convierte en un arreglo.
             
-                    $RegNiveles = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
                     while($RegNiveles)
                         {
                             /*
-                             * Mientras no se llegue al final de la colección, se procede a la lectura
-                             * y generación del listado.
+                             * Mientras no se llegue al final de la colecciï¿½n, se procede a la lectura
+                             * y generaciï¿½n del listado.
                              */
                             if(in_array($RegNiveles['idProceso'], $tmparray,true))
                                 {
                                     /*
-                                     * En caso de tratarse de una opción previamente seleccionada por el usuario.
+                                     * En caso de tratarse de una opciï¿½n previamente seleccionada por el usuario.
                                      */
                                     echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habcampos.' value='.$RegNiveles['idProceso'].' checked>'.$RegNiveles['Proceso'];
                                     }
@@ -458,7 +458,7 @@
                                     echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habcampos.' value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
                                     }
             
-                            $RegNiveles = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $RegNiveles = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
                             }
                     }
             
@@ -468,7 +468,7 @@
     function constructor()
         {
             /*
-             * Esta función establece los parametros para la creación de la interfaz de usuario.
+             * Esta funciï¿½n establece los parametros para la creaciï¿½n de la interfaz de usuario.
              */
             
             global $Registro, $parametro, $clavecod, $habcampos, $periodo, $cntview;            
@@ -501,7 +501,7 @@
             echo '                  <tr><td class="dgRowsaltTR" width="100px">Objetivo Estrategico:</td><td class="dgRowsnormTR"><select name= "idObjEst" id= "idObjEst" '.$habcampos.' value= "'.$Registro['idObjEst'].'">
                                     <option value=-1>Seleccione</option>';
             
-                                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                     
                                     while($RegNiveles)
                                         {
@@ -515,7 +515,7 @@
                                                     //En caso contrario se carga la etiqueta por default.
             echo '                                  <option value='.$RegNiveles['idObjEst'].'>'.$RegNiveles['CObjEst'].'</option>';
                                                     }
-                                            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                            $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                             }
             
             echo'               </select></td></tr>            
@@ -524,7 +524,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acción corresponde a la creacion de un registro nuevo,
+                                             * Si la acciï¿½n corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<select id= "idObjOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -532,7 +532,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acción ocurre para un registro existente,
+                                             * Si la acciï¿½n ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                             echo constructorcb($Registro['idObjEst']).'</div></td></tr>';
@@ -543,7 +543,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acción corresponde a la creacion de un registro nuevo,
+                                             * Si la acciï¿½n corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<select id= "idEstOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -551,7 +551,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acción ocurre para un registro existente,
+                                             * Si la acciï¿½n ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                             echo constructorcbEstOpe($Registro['idObjOpe']).'</div></td></tr>';
@@ -560,7 +560,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acción corresponde a la creacion de un registro nuevo,
+                                             * Si la acciï¿½n corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= ""></td></tr>';
@@ -568,7 +568,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acción ocurre para un registro existente,
+                                             * Si la acciï¿½n ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                              echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
@@ -583,7 +583,7 @@
                                     
             echo'                   <option value=-1>Seleccione</option>';
             
-                                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                     
                                     while($RegNiveles)
                                         {
@@ -597,7 +597,7 @@
                                                     //En caso contrario se carga la etiqueta por default.
             echo'                                   <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
                                                     }
-                                            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                            $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                             }
             
             echo'                   </select></td></tr>';
@@ -607,7 +607,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acción corresponde a la creacion de un registro nuevo,
+                                             * Si la acciï¿½n corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                             echo'<select id= "idResponsable"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -615,7 +615,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acción ocurre para un registro existente,
+                                             * Si la acciï¿½n ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                             echo constructorcbResponsable($Registro['idEntidad']).'</div></td></tr>';
@@ -626,7 +626,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acción corresponde a la creacion de un registro nuevo,
+                                             * Si la acciï¿½n corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
                                              echo'<select id= "idSubalterno"><option value=-1>Seleccione</option></select></div></td></tr>';
@@ -634,7 +634,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acción ocurre para un registro existente,
+                                             * Si la acciï¿½n ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                              echo constructorcbSubalterno($Registro['idEntidad']).'</div></td></tr>';
@@ -646,7 +646,7 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acción corresponde a la creacion de un registro nuevo,
+                                             * Si la acciï¿½n corresponde a la creacion de un registro nuevo,
                                              * se establece el aÃ±o actual.
                                              */
                                             echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
@@ -654,7 +654,7 @@
                                     else
                                         {
                                             /*
-                                             * Si la acción ocurre para un registro existente,
+                                             * Si la acciï¿½n ocurre para un registro existente,
                                              * se preserva el aÃ±o almacenado.
                                              */
                                             echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
@@ -679,10 +679,10 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgPro WHERE status= 0 AND idPrograma= '.$Registro['idPrograma'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
-                                    $field = @mysql_fetch_field($dsCampos);
+                                    $RegAux = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);                                    
+                                    $field = mysqli_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Programación</td>';
+                                    $rowdata='<tr><td class= "queryTitles">Programaciï¿½n</td>';
                                     $count=1;
                                     $totEficacia=0.00;
                                     
@@ -693,7 +693,7 @@
                                                 {
                                                     $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="pr_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
-                                                    $field = @mysql_fetch_field($dsCampos);
+                                                    $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
@@ -701,7 +701,7 @@
                                             }
                                     else
                                         {
-                                            //Para el caso de una creación de registro.
+                                            //Para el caso de una creaciï¿½n de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
@@ -720,10 +720,10 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecPro WHERE status= 0 AND idPrograma= '.$Registro['idPrograma'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
-                                    $field = @mysql_fetch_field($dsCampos);
+                                    $RegAux = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);                                    
+                                    $field = mysqli_fetch_field($dsCampos);
                         
-                                    $rowdata='<tr><td class= "queryTitles">Ejecución</td>';
+                                    $rowdata='<tr><td class= "queryTitles">Ejecuciï¿½n</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -734,7 +734,7 @@
                                                 {
                                                     $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="ej_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
-                                                    $field = @mysql_fetch_field($dsCampos);
+                                                    $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
@@ -742,7 +742,7 @@
                                             }
                                     else
                                         {
-                                            //Para el caso de una creación de registro.
+                                            //Para el caso de una creaciï¿½n de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
@@ -761,8 +761,8 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficPro WHERE status= 0 AND idPrograma= '.$Registro['idPrograma'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
-                                    $field = @mysql_fetch_field($dsCampos);
+                                    $RegAux = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);                                    
+                                    $field = mysqli_fetch_field($dsCampos);
                         
                                     $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
                                     $count=1;
@@ -776,7 +776,7 @@
                                                     $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.                                                    
                                                     $totEficacia += $RegAux[$field->name];
-                                                    $field = @mysql_fetch_field($dsCampos);
+                                                    $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                                             $totEficacia = $totEficacia/12.00;
@@ -784,7 +784,7 @@
                                             }
                                     else
                                         {
-                                            //Para el caso de una creación de registro.
+                                            //Para el caso de una creaciï¿½n de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)

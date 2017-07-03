@@ -52,9 +52,9 @@
                      */
                     
                     $colHeader = '<th style="display:none">';
-                    $field = @mysql_fetch_field($this->dataset); //Se realiza el desplazamiento al siguiente elemento de la coleccion.
+                    $field = mysqli_fetch_field($this->dataset); //Se realiza el desplazamiento al siguiente elemento de la coleccion.
                     $colHeader= $colHeader.$field->name.'</th>'; //Se obtiene el primer nombre de campo para la tabla.
-                    $field = @mysql_fetch_field($this->dataset); //Se realiza el desplazamiento al siguiente elemento de la coleccion.
+                    $field = mysqli_fetch_field($this->dataset); //Se realiza el desplazamiento al siguiente elemento de la coleccion.
                     $this->totColumn = 1;
                     
                     while($field)
@@ -65,7 +65,7 @@
                              * correspondiente a los campos de la cabecera.
                              */
                             $colHeader = $colHeader.'<th>'.$field->name.'</th>';
-                            $field = @mysql_fetch_field($this->dataset); //Se realiza el desplazamiento al siguiente elemento de la coleccion.
+                            $field = mysqli_fetch_field($this->dataset); //Se realiza el desplazamiento al siguiente elemento de la coleccion.
                             $this->totColumn = $this->totColumn+1;
                             }
 
@@ -86,9 +86,9 @@
                      * Esta funcion crea la estructura automatizada de codigo HTML
                      * para el cuerpo de la rejilla de datos.
                      */
-                    $tupla = @mysql_fetch_array($this->dataset,MYSQL_ASSOC); //Se organiza la tupla para su manipulacion, haciendo un corrimiento al siguiente elemento.
+                    $tupla = @mysql_fetch_array($this->dataset,MYSQLI_ASSOC); //Se organiza la tupla para su manipulacion, haciendo un corrimiento al siguiente elemento.
                     $rowCount = 1; //Se inicializa la variable de conteo de filas para su despliegue como información.                    
-                    $totRows = @mysql_num_rows($this->dataset);
+                    $totRows = mysqli_num_rows($this->dataset);
                     $response = null; //Se inicializa la cadena de codigo HTML.
                     
                     while($tupla)
@@ -136,7 +136,7 @@
                         
                             $response = $response.'<td id="reg_'.$tupla[$this->idEntity].'" width= "90"><img id="'.$this->sufijo.'visualizar_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/view.png" width= "25" height= "25" alt= "Visualizar"/><img id="'.$this->sufijo.'edit_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar"/><a class="borrar" id="'.$this->sufijo.'delete'.$tupla[$this->idEntity].'" href="#"><img id="'.$this->sufijo.'delete_'.$tupla[$this->idEntity].'" align= "middle" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar"/></a></td></tr>';
                             $rowCount = $rowCount + 1; //Se incrementa el contador de filas.     
-                            $tupla = @mysql_fetch_array($this->dataset,MYSQL_ASSOC); //Se organiza la tupla para su manipulacion, haciendo un corrimiento al siguiente elemento.
+                            $tupla = @mysql_fetch_array($this->dataset,MYSQLI_ASSOC); //Se organiza la tupla para su manipulacion, haciendo un corrimiento al siguiente elemento.
                             }
                             
                     if($totRows == 0)

@@ -16,8 +16,8 @@
      */
     $parametro = $_GET['id'];
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     
     global $username, $password, $servername, $dbname;
     
@@ -25,5 +25,5 @@
     $consulta= 'UPDATE catEntidades SET Status=1 where idEntidad='.$parametro; //Se establece el modelo de consulta de datos.
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
         
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/entidades/busEntidades.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/entidades/busEntidades.php");
     ?>

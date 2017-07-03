@@ -10,10 +10,10 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
     header('Content-Type: text/html; charset=ISO-8859-1'); //Forzar la codificación a ISO-8859-1.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia de la clase para control del encriptado.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia de la clase para control del encriptado.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
     class cargador
         {
@@ -125,7 +125,7 @@
                                              * Si la validacion de credenciales no arroja una URL valida para la carga del modulo,
                                              * se notifica al usuario que no esta autorizado.
                                              */
-                                            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
+                                            include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/noAutorizado.php");
                                             }
                                     else
                                         {
@@ -136,7 +136,7 @@
                                             if(!file_exists($_SERVER['DOCUMENT_ROOT'].$URL))
                                                 {
                                                     //VALIDACION DE UBICACION EN DIRECTORIOS: FALLA.
-                                                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERROR404.php");
+                                                    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/ERROR404.php");
                                                     }
                                             else
                                                 {
@@ -154,12 +154,12 @@
                                     if(($this->idUsuario == 0)&&(isset($_GET['usuario'])&&isset($_GET['clave'])))
                                         {
                                             //SI EL NOMBRE DE USUARIO Y CLAVE NO ARROJAN UN RESULTADO.
-                                            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERRORUA.php");
+                                            include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/ERRORUA.php");
                                             }
                                     else
                                         {
                                             //POR DEFAULT.
-                                            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/login.php");
+                                            include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/login.php");
                                             }                                                                                
                                     }                            
                             }
@@ -176,7 +176,7 @@
                                     /*
                                      * En caso de no contar con una URL valida, se redirecciona a una pagina de ERROR 404
                                      */
-                                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERROR404.php");
+                                    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/ERROR404.php");
                                     }
                             else
                                 {

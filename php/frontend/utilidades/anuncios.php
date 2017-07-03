@@ -13,7 +13,7 @@
     /*
      *Este archivo contiene la declaraci�n de procedimientos para la creaci�n de la pagina INDEX.
      */     
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/anuncios.class.php"); //Se carga el archivo de clase.
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/utilidades/anuncios.class.php"); //Se carga el archivo de clase.
     $anuncios = new anuncios(); //Se crea la instancia de objeto index.
     $anuncios->drawUI(); //Se ejecuta la funci�n para visualizar la UI.
 ?>

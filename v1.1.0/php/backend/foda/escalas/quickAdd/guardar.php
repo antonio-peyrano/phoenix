@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecución del comando guardar, cuando es ejecutado desde un formulario
      * para la edición de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -59,7 +59,7 @@
                     }
             
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/foda/escalas/opQuickEscalas.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/foda/escalas/opQuickEscalas.php");
             }
     else
         {
@@ -67,6 +67,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-             include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+             include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }            
     ?>

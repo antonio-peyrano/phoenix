@@ -17,9 +17,9 @@
  * Desarrollador: Mtro. Jesus Antonio Peyrano Luna * Ultima modificacion: 27/09/2016                    *
  ********************************************************************************************************/
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/utilidades/codificador.class.php");
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/utilidades/codificador.class.php");
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     class index
         {
@@ -387,7 +387,7 @@
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                                                 
                     //Se verifica si existen datos dentro de la consulta generada.
-                    $row = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $row = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
                     if($row)
                         {
@@ -402,7 +402,7 @@
                              */ 
                             $consulta= 'SELECT *FROM ((opEmpleados INNER JOIN catColonias ON catColonias.idColonia = opEmpleados.idColonia) INNER JOIN relUsrEmp ON relUsrEmp.idEmpleado = opEmpleados.idEmpleado) LEFT JOIN catUsuarios ON catUsuarios.idUsuario = relUsrEmp.idUsuario WHERE catUsuarios.idUsuario='.$row['idUsuario'];
                             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                            $row = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $row = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
                             $_SESSION['idEmpleado'] = 0; //Valor por default, sera cero mientras que no se localice referencias de empleado.
                             
                             if($row)

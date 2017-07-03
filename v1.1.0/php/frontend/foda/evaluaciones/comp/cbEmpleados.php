@@ -15,8 +15,8 @@
      */
     header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     $idEntidad = $_GET['id'];
     
@@ -40,14 +40,14 @@
     echo' <select name= "fevempleado" id= "fevempleado" '.$habcampos.' value= "-1">
                 <option value=-1>Seleccione</option>';
     
-                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 
                                 while($RegNiveles)
                                     {
                                         
     echo '                              <option value='.$RegNiveles['idEmpleado'].'>'.$RegNiveles['Empleado'].'</option>';
                                                     
-                                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                        $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
     
     echo' </select>';    

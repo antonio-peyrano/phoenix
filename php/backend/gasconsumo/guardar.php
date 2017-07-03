@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecuci�n del comando guardar, cuando es ejecutado desde un formulario
      * para la edici�n de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -115,12 +115,12 @@
             //Se procede a recoger la referencia de la programacion asociada a la actividad.
             $consulta = 'SELECT *FROM opProgGas WHERE idProgGas='.$idProgGas.' AND Status=0';
             $dsPrgGasUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegPrgGasUnit = @mysql_fetch_array($dsPrgGasUnit, MYSQL_ASSOC);
+            $RegPrgGasUnit = @mysqli_fetch_array($dsPrgGasUnit,MYSQLI_ASSOC);
             
             //Se procede a recoger la referencia de la ejecucion asociada a la actividad.
             $consulta = 'SELECT *FROM opEjecGas WHERE idEjecGas='.$idEjecGas.' AND Status=0';
             $dsEjcGasUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEjcGasUnit = @mysql_fetch_array($dsEjcGasUnit, MYSQL_ASSOC);
+            $RegEjcGasUnit = @mysqli_fetch_array($dsEjcGasUnit,MYSQLI_ASSOC);
             
             if($RegPrgGasUnit)
                 {
@@ -166,13 +166,13 @@
             //Se procede a recoger los datos almacenados en la ejecucion.
             $consulta = 'SELECT Monto FROM opMovGas WHERE idEjecGas='.$idEjecGas.' AND Mes='.$Mes.' AND Status=0';
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
             
             while($Registro)
                 {
                     //Mientras existan registros computables, se procede a la sumarizaci�n.
                     $cantTotal+= $Registro['Monto'];
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                     }                                
                                 
             //Se procede a actualizar el registro de ejecuciones a nivel de la actividad.
@@ -217,7 +217,7 @@
             $_GET['idproggas'] = $idProgGas; //Se retorna la referencia de programacion de gasto de combustible.
             $_GET['idejecgas']= $idEjecGas; //Se retorna la referencia de ejecucion de gasto de combustible.
     
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasconsumo/opGasConsumo.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasconsumo/opGasConsumo.php");
             }
     else
         {
@@ -225,6 +225,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-             include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+             include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }                
     ?>

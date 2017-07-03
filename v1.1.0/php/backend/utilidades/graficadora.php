@@ -10,10 +10,10 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/jpgraph/src/jpgraph.php"); //Se carga la referencia a la clase base de graficador.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/jpgraph/src/jpgraph_bar.php"); //Se carga la referencia a la clase especifica de grafica de barras.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/jpgraph/src/jpgraph.php"); //Se carga la referencia a la clase base de graficador.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/jpgraph/src/jpgraph_bar.php"); //Se carga la referencia a la clase especifica de grafica de barras.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     $Periodo = '';
     $idEntidad = '';
@@ -128,7 +128,7 @@
             //Se obtiene el referente del identificador a evaluar.
             $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
             $dsIdentificador = $objConexion -> conectar($consIdentificador); //Se ejecuta la consulta.
-            $RegIdentificador = @mysql_fetch_array($dsIdentificador, MYSQL_ASSOC);
+            $RegIdentificador = @mysql_fetch_array($dsIdentificador,MYSQLI_ASSOC);
 
             $Identificador = $RegIdentificador[$idCampo];
             
@@ -136,13 +136,13 @@
             $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
             $consulta = $consProgramacion;
             $dsProgPro = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegProgPro = @mysql_fetch_array($dsProgPro, MYSQL_ASSOC);
+            $RegProgPro = @mysql_fetch_array($dsProgPro,MYSQLI_ASSOC);
             
             //Se obtienen los datos de la ejecucion.
             $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
             $consulta = $consEjecucion;
             $dsEjecPro = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEjecPro = @mysql_fetch_array($dsEjecPro, MYSQL_ASSOC);
+            $RegEjecPro = @mysql_fetch_array($dsEjecPro,MYSQLI_ASSOC);
                         
             While($RegProgPro)
                 {
@@ -156,8 +156,8 @@
                             }
                             
                     $progtot += 1;//Se efectua el incremento sobre el conteo de programacion.
-                    $RegEjecPro = @mysql_fetch_array($dsEjecPro, MYSQL_ASSOC);
-                    $RegProgPro = @mysql_fetch_array($dsProgPro, MYSQL_ASSOC);
+                    $RegEjecPro = @mysql_fetch_array($dsEjecPro,MYSQLI_ASSOC);
+                    $RegProgPro = @mysql_fetch_array($dsProgPro,MYSQLI_ASSOC);
                     }
                     
             if($progtot>0)

@@ -18,8 +18,8 @@
     $idEntidad = $_GET['identidad'];
     $idEjecGas = 0;
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -32,7 +32,7 @@
     //Se procede a obtener el ID del registro de ejecucion de gastos.
     $consulta = 'SELECT idEjecGas FROM opEjecGas WHERE idEntidad='.$idEntidad.' AND Status=0';
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
     $idEjecGas = $Registro['idEjecGas'];
 
     //Se eliminan las referencias de consumos de gasolina.
@@ -47,5 +47,5 @@
     $consulta= 'UPDATE opEficGas SET Status=1 where idEntidad='.$idEntidad; //Se establece el modelo de consulta de datos.
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                    
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasolina/busGasolina.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasolina/busGasolina.php");
     ?>

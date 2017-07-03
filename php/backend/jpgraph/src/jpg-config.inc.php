@@ -135,4 +135,5 @@ define('DEFAULT_THEME_CLASS', 'UniversalTheme');
 define('SUPERSAMPLING', true);
 define('SUPERSAMPLING_SCALE', 1);
 
+define('TTF_DIR','/usr/share/fonts/truetype/');
 ?>

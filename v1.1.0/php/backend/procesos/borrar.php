@@ -25,8 +25,8 @@
             $listado = $_GET['listado'];
             }
                 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -55,5 +55,5 @@
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             }
                 
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/procesos/busProcesos.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/procesos/busProcesos.php");
     ?>

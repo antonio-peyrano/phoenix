@@ -16,13 +16,13 @@
      */
     $parametro = $_GET['id'];
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     
     global $username, $password, $servername, $dbname;
     
     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
     $consulta= 'UPDATE catConfiguraciones SET Status=1 where idConfiguracion='.$parametro; //Se establece el modelo de consulta de datos.
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.    
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/configuracion/busConfiguraciones.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/configuracion/busConfiguraciones.php");
     ?>

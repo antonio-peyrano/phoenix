@@ -14,5 +14,5 @@
      * Este archivo contiene el constructor para el combobox de objetivos operativos a visualizar.
      */
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasconsumo/catEjecGas.php");
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasconsumo/catEjecGas.php");
 ?>

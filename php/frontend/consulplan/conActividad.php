@@ -12,8 +12,8 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     global $username, $password, $servername, $dbname;
     
@@ -41,7 +41,7 @@
              $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
              $consulta= "SELECT *FROM catConfiguraciones WHERE Status=0"; //Se establece el modelo de consulta de datos.
              $dsConfiguracion = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-             $RegConfiguracion = @mysql_fetch_array($dsConfiguracion, MYSQL_ASSOC);
+             $RegConfiguracion = @mysqli_fetch_array($dsConfiguracion,MYSQLI_ASSOC);
              
              if($RegConfiguracion)
                 {
@@ -141,7 +141,7 @@
 
             if(!empty($dataset))
                 {
-                    $record = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $record = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                     while ($record) 
                         {
                             //Mientras existan elementos en la colección de filas.
@@ -180,7 +180,7 @@
                         
                             $rows = $rows.'<td id="reg_'.$record['idActividad'].'" width= "90"><img id="'.$sufijo.'visualizar_'.$record['idActividad'].'"align= "middle" src= "./img/grids/view.png" width= "25" height= "25" alt= "Visualizar"/></td></tr>';  
                             echo $rows; //Se envia el codigo HTML generado.
-                            $record = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $record = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                             $count_row = $count_row + 1; //Se incrementa el contador de filas.                      
                             }                    
                     }        
@@ -202,9 +202,9 @@
             $columns='<th style="display:none">';
             if(!empty($dataset))
                 {   
-                    $field = @mysql_fetch_field($dataset);
+                    $field = mysqli_fetch_field($dataset);
                     $columns= $columns .$field->name."</th>";
-                    $field = @mysql_fetch_field($dataset);
+                    $field = mysqli_fetch_field($dataset);
                     
                     while ($field) 
                         {                
@@ -212,7 +212,7 @@
                              *se crea la etiqueta correspondiente <TH> 
                              */
                             $columns = $columns. "<th>".$field->name."</th>";
-                            $field = @mysql_fetch_field($dataset);
+                            $field = mysqli_fetch_field($dataset);
                             }                    
                     }        
                                 
@@ -238,14 +238,14 @@
              $consulta= "SELECT idPrograma AS ID, Nomenclatura, Programa, Monto, Periodo, Status FROM opProgramas WHERE Status=0 AND idEstOpe=".$idRegistro; //Se establece el modelo de consulta de datos.
              $dsPadre = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
              $dsCampos = $dsPadre;
-             $Registro = @mysql_fetch_array($dsPadre, MYSQL_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
+             $Registro = @mysqli_fetch_array($dsPadre,MYSQLI_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
                 
              if($Registro)
                 {
                     /*
                      * Si existe información para ser procesada.
                      */
-                    $field = @mysql_fetch_field($dsCampos);
+                    $field = mysqli_fetch_field($dsCampos);
                     echo'<div id= "headinfo" style= "display:none">
                             <input type="text" id="idObjEst" value='.$idObjEst.'></input>
                             <input type="text" id="idObjOpe" value='.$idObjOpe.'></input>
@@ -258,7 +258,7 @@
                                 while($field)
                                     {    
                     echo'               <tr colspan= 2><td class="dgRowsaltTR">'.$field->name.'</td><td class="dgRowsnormTR">'.$Registro[$field->name].'</td></tr>';
-                                        $field = @mysql_fetch_field($dsCampos);
+                                        $field = mysqli_fetch_field($dsCampos);
                                         }
                     echo'               <tr class= "dgHeader"><td alignt= "left" colspan= 2"><a href="#" onclick="cargar(\'./php/frontend/consulplan/conPrograma.php\',\'?idestope='.$idEstOpe.'&idobjope='.$idObjOpe.'&idobjest='.$idObjEst.'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a></td></tr>
                             </table></div><br>';
@@ -270,7 +270,7 @@
              $consulta= "SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgPro WHERE Status=0 AND idPrograma=".$idRegistro; //Se establece el modelo de consulta de datos.
              $dsPadre = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
              $dsTitulos = $dsPadre;
-             $Registro = @mysql_fetch_array($dsPadre, MYSQL_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
+             $Registro = @mysqli_fetch_array($dsPadre,MYSQLI_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
              
              if($Registro)
                 {
@@ -278,13 +278,13 @@
                      * Si existe información para ser procesada.
                      */
                     $rowdata='<table class="queryTable"><tr><th colspan= "14" class= "queryHeader">Datos de la Programacion</th></tr>';
-                    $field = @mysql_fetch_field($dsTitulos);
+                    $field = mysqli_fetch_field($dsTitulos);
                     $rowdata.='<tr><td></td>';
                     
                     while($field)
                         {
                             $rowdata.= '<td class= "queryTitles">'.$field->name.'</td>';
-                            $field = @mysql_fetch_field($dsTitulos);
+                            $field = mysqli_fetch_field($dsTitulos);
                             }
                     
                     $rowdata.='<td class= "queryTitles">Total %</td>';
@@ -293,7 +293,7 @@
                     $dsPadre = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                     $dsCampos = $dsPadre;
                                                 
-                    $field = @mysql_fetch_field($dsCampos);
+                    $field = mysqli_fetch_field($dsCampos);
                     $rowdata.='<tr><td class= "queryTitles">Programado</td>';
                     $count=1;
                     
@@ -303,7 +303,7 @@
                         {
                             $rowdata.= '<td class="dgRowsnormTR"><input type="text" id="pr_'.$count.'" size="4" value="'.$Registro[$field->name].'"></input></td>';
                             $totProgramado += $Registro[$field->name];
-                            $field = @mysql_fetch_field($dsCampos);
+                            $field = mysqli_fetch_field($dsCampos);
                             $count += 1;          
                             }
                     $rowdata.='<td class="dgRowsnormTR"><input type="text" id="pr_'.$count.'" size="4" value="'.$totProgramado.'"></input></td></tr>';
@@ -316,14 +316,14 @@
             $consulta= "SELECT Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecPro WHERE Status=0 AND idPrograma=".$idRegistro; //Se establece el modelo de consulta de datos.
             $dsPadre = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             $dsCampos = $dsPadre;
-            $Registro = @mysql_fetch_array($dsPadre, MYSQL_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
+            $Registro = @mysqli_fetch_array($dsPadre,MYSQLI_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
                      
             if($Registro)
                 {
                     /*
                      * Si existe información para ser procesada.
                      */
-                    $field = @mysql_fetch_field($dsCampos);
+                    $field = mysqli_fetch_field($dsCampos);
                     $rowdata='<tr><td class= "queryTitles">Ejecutado</td>';
                     $count=1;
                     $totEjecutado=0;
@@ -332,7 +332,7 @@
                         {
                             $rowdata.= '<td class="dgRowsnormTR"><input type="text" id="ej_'.$count.'" size="4" value="'.$Registro[$field->name].'"></input></td>';
                             $totEjecutado += $Registro[$field->name];
-                            $field = @mysql_fetch_field($dsCampos);
+                            $field = mysqli_fetch_field($dsCampos);
                             $count += 1;
                             }
                             
@@ -347,14 +347,14 @@
             $consulta= "SELECT Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficPro WHERE Status=0 AND idPrograma=".$idRegistro; //Se establece el modelo de consulta de datos.
             $dsPadre = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             $dsCampos = $dsPadre;
-            $Registro = @mysql_fetch_array($dsPadre, MYSQL_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
+            $Registro = @mysqli_fetch_array($dsPadre,MYSQLI_ASSOC); //Se obtiene el registro que coincide con el criterio proporcionado.
                      
             if($Registro)
                 {
                     /*
                      * Si existe información para ser procesada.
                      */
-                    $field = @mysql_fetch_field($dsCampos);
+                    $field = mysqli_fetch_field($dsCampos);
                     $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
                     $count=1;
                     $totEficacia=0;
@@ -364,7 +364,7 @@
                             $rowdata.= '<td class="dgRowsnormTR"><input type="text" id="efic_'.$count.'" size="4" value="'.$Registro[$field->name].'"></input></td>';
                             cargarBanderas($Registro[$field->name], $count);//Se genera la fila de banderas.                            
                             $totEficacia += $Registro[$field->name];
-                            $field = @mysql_fetch_field($dsCampos);
+                            $field = mysqli_fetch_field($dsCampos);
                             $count += 1;
                             }
                     $totEficacia=$totEficacia/12.00;                            

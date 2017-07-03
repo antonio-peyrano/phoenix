@@ -12,8 +12,8 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     $habcampos = 'disabled= "disabled"';
     $parametro = $_GET['id'];
@@ -45,7 +45,7 @@
             echo'   <select name= "idPuesto" id= "idPuesto" '.$habcampos.' value= "'.$Registro['idPuesto'].'">
                         <option value=-1>Seleccione</option>';
     
-            $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+            $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
     
             while($RegNiveles)
                 {
@@ -59,7 +59,7 @@
                             //En caso contrario se carga la etiqueta por default.
                     echo '  <option value='.$RegNiveles['idPuesto'].'>'.$RegNiveles['Puesto'].'</option>';
                             }
-                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                     }
     
             echo' </select>';
@@ -117,7 +117,7 @@
             return $dataset;        
             }   
             
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
 
     function controlVisual($idRegistro)
         {
@@ -187,7 +187,7 @@
             echo'               <tr><td width="100px" class="dgRowsaltTR">Colonia:</td><td class="dgRowsnormTR"><select name= "idColonia" id= "idColonia" '.$habcampos.' value= "'.$Registro['idColonia'].'">\'';
                                 $subconsulta = cargarColonias();
             echo'                              <option value=-1>Seleccione</option>';
-                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 while ($RegNiveles)
                                     {
                                         if($RegNiveles['idColonia']==$Registro['idColonia'])
@@ -200,7 +200,7 @@
                                                 //En caso contrario se carga la etiqueta por default.
             echo'                              <option value='.$RegNiveles['idColonia'].'>'.$RegNiveles['Colonia'].'</option>';                                                
                                                 }
-                                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                        $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
                                 
             echo'               </select></td></tr>';
@@ -208,7 +208,7 @@
             echo'               <tr><td width="100px" class="dgRowsaltTR">Entidad:</td><td class="dgRowsnormTR"><select name= "idEntEmp" id= "idEntEmp" '.$habcampos.' value= "'.$Registro['idEntidad'].'">\'';
                                 $subconsulta = cargarEntidades();
             echo'                              <option value=-1>Seleccione</option>';
-                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 while ($RegNiveles)
                                     {
                                         if($RegNiveles['idEntidad']==$Registro['idEntidad'])
@@ -221,7 +221,7 @@
                                                 //En caso contrario se carga la etiqueta por default.
                     echo'                       <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
                                                 }
-                                        $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                        $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
             
             echo'               </select></td></tr>';
@@ -252,7 +252,7 @@
                         
                                 $subconsulta = cargarUsuarios();
             echo'                              <option value=-1>Seleccione</option>';
-                                $RegUsuarios = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegUsuarios = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 while ($RegUsuarios)
                                     {
                                         if($RegUsuarios['idUsuario']==$Registro['idUsuario'])
@@ -265,7 +265,7 @@
                                                 //En caso contrario se carga la etiqueta por default.
             echo'                               <option value='.$RegUsuarios['idUsuario'].'>'.$RegUsuarios['Usuario'].'</option>';
                                                 }
-                                        $RegUsuarios = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                        $RegUsuarios = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
             
             echo'               </select></td></tr>';            

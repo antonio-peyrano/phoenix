@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecución del comando guardar, cuando es ejecutado desde un formulario
      * para la edición de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -50,11 +50,11 @@
             
             $consulta = "SELECT *FROM catEstOpe WHERE idObjOpe =".$parametro;
             $dataset = $objAux -> conectar($consulta);            
-            $RowCount = mysql_num_rows($dataset);
+            $RowCount = mysqli_num_rows($dataset);
             
             $consulta = "SELECT Nomenclatura FROM catObjOpe WHERE idObjOpe =".$parametro;
             $dataset = $objAux -> conectar($consulta);
-            $RowObjOpe = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $RowObjOpe = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
             
             $Nomenclatura = $RowObjOpe['Nomenclatura'].'.'.($RowCount + 1);
             }
@@ -88,7 +88,7 @@
                     //Se busca el la Est Ope para obtener su id.
                     $consulta = 'SELECT *FROM catEstOpe WHERE EstOpe LIKE \'%'.$EstOpe.'%\''; //Se establece el modelo de consulta de datos.
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
             
                     //Se crea la tupla vacia para el registro de valores programados.
                     $consulta = 'INSERT INTO opProgEst(idEstOpe, Periodo) VALUES ('.'\''.$Registro['idEstOpe'].'\',\''.$Periodo.'\')';
@@ -103,7 +103,7 @@
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.                        
                     }
                    
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/estope/busEstOpe.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/estope/busEstOpe.php");
             }
     else
         {
@@ -111,6 +111,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }            
     ?>

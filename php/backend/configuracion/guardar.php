@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecuci�n del comando guardar, cuando es ejecutado desde un formulario
      * para la edici�n de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -72,7 +72,7 @@
             
                     $consulta='SELECT idConfiguracion FROM catConfiguraciones WHERE Optimo ='.$Optimo.' AND Tolerancia='.$Tolerable.' AND Periodo='.$Periodo;
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC); //Se obtienen los datos del registro manipulado recientemente.
+                    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC); //Se obtienen los datos del registro manipulado recientemente.
             
                     if($Registro)
                         {
@@ -92,7 +92,7 @@
                             }
                     }
                     
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/configuracion/busConfiguraciones.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/configuracion/busConfiguraciones.php");
             }
     else
         {

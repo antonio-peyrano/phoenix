@@ -14,8 +14,8 @@
      * Este modulo sirve como pasarela de ejecuci�n del comando guardar, cuando es ejecutado desde un formulario
      * para la edici�n de registro.
      */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
 
     global $username, $password, $servername, $dbname;
     
@@ -51,7 +51,7 @@
             $_GET['idprograma'] = $idPrograma;
             $_GET['idactividad'] = $idActividad;
           
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/ejecuciones/opEjecucion.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/ejecuciones/opEjecucion.php");
             }
     else
         {
@@ -59,6 +59,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/errorSistema.php");
+            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/errorSistema.php");
             }           
     ?>

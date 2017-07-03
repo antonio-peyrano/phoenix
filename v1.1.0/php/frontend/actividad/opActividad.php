@@ -12,8 +12,8 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     $parametro = $_GET['id'];
     $idPrograma = $_GET['idprograma'];
@@ -37,7 +37,7 @@
              $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
              $consulta= "SELECT *FROM catConfiguraciones WHERE Status=0"; //Se establece el modelo de consulta de datos.
              $dsConfiguracion = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-             $RegConfiguracion = @mysql_fetch_array($dsConfiguracion, MYSQL_ASSOC);
+             $RegConfiguracion = @mysql_fetch_array($dsConfiguracion,MYSQLI_ASSOC);
              
              if($RegConfiguracion)
                 {
@@ -152,7 +152,7 @@
             $consulta = 'SELECT Monto FROM opProgramas WHERE idPrograma='.$idPrograma; //Se establece el modelo de consulta de datos.
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
     
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
     
             return $Registro['Monto'];
             }
@@ -185,7 +185,7 @@
                             
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
     
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
     
             while($Registro)
                 {
@@ -194,7 +194,7 @@
                      * a la sumatoria.
                      */
                     $sumMonto = $sumMonto + $Registro['Monto'];
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
                     }            
             return $sumMonto;
             }
@@ -225,7 +225,7 @@
             return $dataset;        
             }   
             
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la función de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
 
     function controlVisual($idRegistro)
         {
@@ -308,7 +308,7 @@
                                 
             echo '              <option value=-1>Seleccione</option>';
             
-                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 while ($RegNiveles)
                                     {
                                         if($RegNiveles['idUnidad']==$Registro['idUnidad'])
@@ -327,7 +327,7 @@
             echo'                               <option value='.$RegNiveles['idUnidad'].'>'.$RegNiveles['Unidad'].'</option>';
                                                 }
                                                 
-                                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                                $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
             
             echo'               </select></td></tr>';                                
@@ -369,8 +369,8 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgAct WHERE status= 0 AND idActividad= '.$Registro['idActividad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
-                                    $field = @mysql_fetch_field($dsCampos);
+                                    $RegAux = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);                                    
+                                    $field = mysqli_fetch_field($dsCampos);
                         
                                     $rowdata='<tr><td class= "queryTitles">Programación</td>';
                                     $count=1;
@@ -383,7 +383,7 @@
                                                 {
                                                     $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$habcampos.' id="P_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
-                                                    $field = @mysql_fetch_field($dsCampos);
+                                                    $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
@@ -410,8 +410,8 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecAct WHERE status= 0 AND idActividad= '.$Registro['idActividad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
-                                    $field = @mysql_fetch_field($dsCampos);
+                                    $RegAux = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);                                    
+                                    $field = mysqli_fetch_field($dsCampos);
                         
                                     $rowdata='<tr><td class= "queryTitles">Ejecución</td>';
                                     $count=1;
@@ -424,7 +424,7 @@
                                                 {
                                                     $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="E_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
-                                                    $field = @mysql_fetch_field($dsCampos);
+                                                    $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
@@ -451,8 +451,8 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficAct WHERE status= 0 AND idActividad= '.$Registro['idActividad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);                                    
-                                    $field = @mysql_fetch_field($dsCampos);
+                                    $RegAux = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);                                    
+                                    $field = mysqli_fetch_field($dsCampos);
                         
                                     $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
                                     $count=1;
@@ -466,7 +466,7 @@
                                                     $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="Efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.
                                                     $totEficacia += $RegAux[$field->name];
-                                                    $field = @mysql_fetch_field($dsCampos);
+                                                    $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                                             $totEficacia = $totEficacia/12.00;

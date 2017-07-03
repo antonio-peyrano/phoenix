@@ -10,8 +10,8 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
         
     $Correo = '';
     $Pregunta = '';
@@ -34,7 +34,7 @@
             $consulta= 'SELECT *FROM catUsuarios WHERE Correo=\''.$Parametro.'\''; //Se establece el modelo de consulta de datos.
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
             if($Registro)
                 {

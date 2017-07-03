@@ -15,8 +15,8 @@
  */
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     class cbCedulas
         {
@@ -52,7 +52,7 @@
                     $HTML = '   <select id="'.$this->Sufijo.'idCedula" name="'.$this->Sufijo.'idCedula" value="-1">
                                     <option value="-1">Seleccione</option>';
                     
-                    $regCedulas = @mysql_fetch_array($dsCedulas, MYSQL_ASSOC);
+                    $regCedulas = @mysql_fetch_array($dsCedulas,MYSQLI_ASSOC);
                     
                     while($regCedulas)
                         {
@@ -61,7 +61,7 @@
                              * opciones en el control combobox idEntidad.
                              */
                             $HTML .='<option value="'.$regCedulas['idCedula'].'">'.$regCedulas['Folio'].'</option>' ;
-                            $regCedulas = @mysql_fetch_array($dsCedulas, MYSQL_ASSOC);
+                            $regCedulas = @mysql_fetch_array($dsCedulas,MYSQLI_ASSOC);
                             }
                     
                     $HTML .= '</select>';

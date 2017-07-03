@@ -10,8 +10,8 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     class conObjEst
         {
@@ -31,7 +31,7 @@
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                     $consulta = "SELECT *FROM catConfiguraciones WHERE Status=0"; //Se establece el modelo de consulta de datos.
                     $dsConfiguracion = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $RegConfiguracion = @mysql_fetch_array($dsConfiguracion, MYSQL_ASSOC);
+                    $RegConfiguracion = @mysqli_fetch_array($dsConfiguracion,MYSQLI_ASSOC);
          
                     if($RegConfiguracion)
                         {
@@ -64,7 +64,7 @@
                      */                    
         
                     $count_row = 1;//Se inicializa el contador de filas.
-                    $record = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $record = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
         
                     while ($record) 
                         {
@@ -105,7 +105,7 @@
                             $rows = $rows.'<td id="reg_'.$record['idObjEst'].'" width= "90"><img id="'.$this->sufijo.'visualizar_'.$record['idObjEst'].'"align= "middle" src= "./img/grids/view.png" width= "25" height= "25" alt= "Visualizar"/></td></tr>';  
                             echo $rows; //Se envia el codigo HTML generado.
                             $count_row = $count_row + 1; //Se incrementa el contador de filas.
-                            $record = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $record = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                             }
                 
                     echo '<tr class= "dgTotRowsTR"><td alignt= "left" colspan= 6"></td></tr>';
@@ -123,9 +123,9 @@
                     
                     $columns = '<th style="display:none">';
         
-                    $field = @mysql_fetch_field($dataset);
+                    $field = mysqli_fetch_field($dataset);
                     $columns = $columns .$field->name."</th>";
-                    $field = @mysql_fetch_field($dataset);
+                    $field = mysqli_fetch_field($dataset);
                     $display = 1;
         
                     while ($field) 
@@ -134,7 +134,7 @@
                              *se crea la etiqueta correspondiente <TH> 
                              */
                             $columns = $columns. '<th>'.$field->name.'</th>';                                      
-                            $field = @mysql_fetch_field($dataset);
+                            $field = mysqli_fetch_field($dataset);
                             }
                                                 
                     echo '<div id= "dgDiv" class= "dgMainDiv">';        

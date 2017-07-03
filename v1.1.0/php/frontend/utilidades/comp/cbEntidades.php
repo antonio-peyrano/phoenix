@@ -15,8 +15,8 @@
  */
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
 
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
 
     function cargarEntidades()
         {
@@ -37,12 +37,12 @@
     echo '  Entidad:<select name= "idEntidad" id= "gridEntidad" value= "-1">
                         <option value=-1>Seleccione</option>';
 
-    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
 
     while($RegNiveles)
         {
             echo '  <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
-                    $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subconsulta,MYSQLI_ASSOC);
             }
 
     echo '          </select>';

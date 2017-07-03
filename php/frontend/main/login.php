@@ -10,7 +10,7 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
     header('Content-Type: text/html; charset=ISO-8859-1'); //Forzar la codificaci�n a ISO-8859-1.
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/main/login.class.php"); //Se carga el archivo de clase.
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/main/login.class.php"); //Se carga el archivo de clase.
 
     $objLogin = new login();
     

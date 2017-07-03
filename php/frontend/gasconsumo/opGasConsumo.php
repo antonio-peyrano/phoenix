@@ -12,8 +12,8 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraciï¿½n.
     
     $parametro = '';   
     $idVehiculo = '';
@@ -26,13 +26,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*               
-             *Esta función carga la parte grafica que corresponde a las banderas de consumo.
+             *Esta funciï¿½n carga la parte grafica que corresponde a las banderas de consumo.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
     
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medición optima.
+                    //Si el parametro recibido esta en el rango de mediciï¿½n optima.
                     $rowBanderas.='<td><center><img id="falla_'.$mes.'"align= "middle" src= "./img/banderas/falla.png" width= "25" height= "25" alt= "Falla" data-toggle="tooltip" title="Consumo critico"/></center></td>';
                     }
     
@@ -52,8 +52,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta función obtiene el perfil del sistema activo para el despliegue de la
-             * información de la planeación.
+             * Esta funciï¿½n obtiene el perfil del sistema activo para el despliegue de la
+             * informaciï¿½n de la planeaciï¿½n.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -61,11 +61,11 @@
              $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
              $consulta= "SELECT *FROM catConfiguraciones WHERE Status=0"; //Se establece el modelo de consulta de datos.
              $dsConfiguracion = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-             $RegConfiguracion = @mysql_fetch_array($dsConfiguracion, MYSQL_ASSOC);
+             $RegConfiguracion = @mysqli_fetch_array($dsConfiguracion,MYSQLI_ASSOC);
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuración valida.
+                    //Si ha sido localizada una configuraciï¿½n valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -75,12 +75,12 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualización.
+             * Si se declaro en la url el control de visualizaciï¿½n.
              */
             $cntview = $_GET['view'];
             if(($cntview == '0')||($cntview == '3'))
                 {
-                    //Si la visualización esta por default, se asigna a parametro
+                    //Si la visualizaciï¿½n esta por default, se asigna a parametro
                     //el id que corresponde.
                     $parametro = $_GET['idproggas'];
                     $idVehiculo = $_GET['idvehiculo'];
@@ -94,7 +94,7 @@
     function getMes($Mes)
         {
             /*
-             * Esta función obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funciï¿½n obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -149,7 +149,7 @@
     function cargarVehiculos()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de entidades.
+             * Esta funciï¿½n establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -162,7 +162,7 @@
     function cargarVehiculo($idRegistro)
         {
             /*
-             * Esta función carga la información del vehiculo consultado, apartir del ID.
+             * Esta funciï¿½n carga la informaciï¿½n del vehiculo consultado, apartir del ID.
              */
             global $username, $password, $servername, $dbname;
             
@@ -172,12 +172,12 @@
             return $dataset;
             }
 
-    $RegVehiculo = @mysql_fetch_array(cargarVehiculo($idVehiculo), MYSQL_ASSOC);//Llamada a la función de carga de registro de usuario.            
+    $RegVehiculo = @mysqli_fetch_array(cargarVehiculo($idVehiculo),MYSQLI_ASSOC);//Llamada a la funciï¿½n de carga de registro de usuario.            
                         
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funciï¿½n establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -187,12 +187,12 @@
             return $dataset;        
             }   
             
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la función de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funciï¿½n de carga de registro de usuario.
             
     function constructor()
         {
             /*
-             * Esta función establece el contenido HTML del formulario
+             * Esta funciï¿½n establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $RegVehiculo, $parametro, $clavecod;
@@ -227,21 +227,21 @@
                             </div>                
                             <div id= "infoact">                                        
                             <table class= "dgTable">
-                                <tr><th class="dgHeader" colspan= "2">Información General</th></tr>
+                                <tr><th class="dgHeader" colspan= "2">Informaciï¿½n General</th></tr>
                                 <tr><td class="dgRowsaltTR"  width="100px">Numero de Placa:</td><td class="dgRowsnormTR" class= "queryRowsnormTR"><select name= "idVehiculo" id= "idVehiculo" value= "-1">';
                                 
                                 $subconsulta = cargarVehiculos();
                                 
             echo '              <option value=-1>Seleccione</option>';
             
-                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 
                                 while ($RegNiveles)
                                     {
                                         if($RegNiveles['idVehiculo']==$idVehiculo)
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acción de consulta, se obtiene la referencia seleccionada
+                                                 * En caso que se ejecute una acciï¿½n de consulta, se obtiene la referencia seleccionada
                                                  * de la unidad.
                                                  */
             echo '                              <option value='.$RegNiveles['idVehiculo'].' selected="selected">'.$RegNiveles['NumPlaca'].'</option>';
@@ -249,13 +249,13 @@
                                         else
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acción de creacion de registro.
+                                                 * En caso que se ejecute una acciï¿½n de creacion de registro.
                                                  */
 
             echo'                               <option value='.$RegNiveles['idVehiculo'].'>'.$RegNiveles['NumPlaca'].'</option>';                                                        
                                                 }
                                                 
-                                                $RegNiveles = @mysql_fetch_array($subconsulta, MYSQL_ASSOC);
+                                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
             
             echo'               </select></td></tr>';                                
@@ -285,10 +285,14 @@
                         $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgGas WHERE status= 0 AND idEntidad= '.$idEntidad;
                         $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                         $dsCampos = $subdataset;
-                        $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
-                        $field = @mysql_fetch_field($dsCampos);
-            
-                        $rowdata= '<tr><td class= "queryTitles">Programación</td>';
+                        $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                        
+                        if($dsCampos)
+                            {
+                                $field = mysqli_fetch_field($dsCampos);
+                                }
+                                
+                        $rowdata= '<tr><td class= "queryTitles">Programaciï¿½n</td>';
                         $count=1;
                         $totEficacia=0.00;
             
@@ -299,7 +303,7 @@
                                     {
                                         $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$habcampos.' id="P_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                         $totEficacia += $RegAux[$field->name];
-                                        $field = @mysql_fetch_field($dsCampos);
+                                        $field = mysqli_fetch_field($dsCampos);
                                         $count += 1;
                                         }
             
@@ -307,7 +311,7 @@
                                 }
                         else
                             {
-                                //Para el caso de una creación de registro.
+                                //Para el caso de una creaciï¿½n de registro.
                                 $counter=1;
             
                                 while($counter <= 12)
@@ -326,10 +330,14 @@
                         $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecGas WHERE status= 0 AND idEntidad= '.$idEntidad;
                         $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                         $dsCampos = $subdataset;
-                        $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
-                        $field = @mysql_fetch_field($dsCampos);
-            
-                        $rowdata= '<tr><td class= "queryTitles">Ejecución</td>';
+                        $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                        
+                        if($dsCampos)
+                            {
+                                $field = mysqli_fetch_field($dsCampos);
+                                }
+                                
+                        $rowdata= '<tr><td class= "queryTitles">Ejecuciï¿½n</td>';
                         $count= 1;
                         $totEficacia= 0;
             
@@ -340,7 +348,7 @@
                                     {
                                         $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="E_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                         $totEficacia += $RegAux[$field->name];
-                                        $field = @mysql_fetch_field($dsCampos);
+                                        $field = mysqli_fetch_field($dsCampos);
                                         $count += 1;
                                         }
             
@@ -348,7 +356,7 @@
                                 }
                         else
                             {
-                                //Para el caso de una creación de registro.
+                                //Para el caso de una creaciï¿½n de registro.
                                 $counter= 1;
             
                                 while($counter <= 12)
@@ -368,9 +376,13 @@
                         $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficGas WHERE status= 0 AND idEntidad='.$idEntidad;
                         $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                         $dsCampos = $subdataset;
-                        $RegAux = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
-                        $field = @mysql_fetch_field($dsCampos);
-            
+                        $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                        
+                        if($dsCampos)
+                            {
+                                $field = mysqli_fetch_field($dsCampos);
+                                }
+                                
                         $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
                         $count=1;
                         $totEficacia=0;
@@ -383,7 +395,7 @@
                                         $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="Efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                         cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.
                                         $totEficacia += $RegAux[$field->name];
-                                        $field = @mysql_fetch_field($dsCampos);
+                                        $field = mysqli_fetch_field($dsCampos);
                                         $count += 1;
                                         }
                                         
@@ -392,7 +404,7 @@
                                 }
                         else
                             {
-                                //Para el caso de una creación de registro.
+                                //Para el caso de una creaciï¿½n de registro.
                                 $counter=1;
             
                                 while($counter <= 12)
@@ -415,7 +427,7 @@
             echo'       
                             <br>
                             <div id= "divConsumos">';
-                                include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasconsumo/catEjecGas.php");
+                                include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasconsumo/catEjecGas.php");
             echo'           </div>              
                         </body>                
                     </html>';

@@ -11,8 +11,8 @@
  */
 
     header('Content-Type: text/html; charset=UTF-8'); //Forzar la codificación a UTF-8.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     class resFODA
         {
@@ -58,7 +58,7 @@
                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                     $consulta = 'SELECT Horizonte FROM opCedulas WHERE idCedula='.$this->idCedula;
                     $dsCedulas = $objConexion->conectar($consulta);
-                    $regCedulas = @mysql_fetch_array($dsCedulas, MYSQL_ASSOC);
+                    $regCedulas = @mysql_fetch_array($dsCedulas,MYSQLI_ASSOC);
                     
                     if($regCedulas)
                         {                            
@@ -85,7 +85,7 @@
                      */
                     if($dsEvaluaciones)
                         {
-                            $this->totEvaluaciones = @mysql_num_rows($dsEvaluaciones);
+                            $this->totEvaluaciones = mysqli_num_rows($dsEvaluaciones);
                             return $dsEvaluaciones;
                             }
                     }
@@ -109,7 +109,7 @@
                      */
                     if($dsFactores)
                         {
-                            $this->totFactores = @mysql_num_rows($dsFactores);
+                            $this->totFactores = mysqli_num_rows($dsFactores);
                             return $dsFactores;
                             }                        
                     }
@@ -146,7 +146,7 @@
                     $dsEvaluaciones = $this->getEvaluaciones();
                     $dsFactores = $this->getFactores();                    
                     
-                    $regEvaluaciones = @mysql_fetch_array($dsEvaluaciones, MYSQL_ASSOC);
+                    $regEvaluaciones = @mysql_fetch_array($dsEvaluaciones,MYSQLI_ASSOC);
                     
                     while($regEvaluaciones)
                         {
@@ -154,7 +154,7 @@
                              * Se obtienen los datos correspondientes a la i-esima evaluacion.
                              */
                             $dsScore = $this->getScore($regEvaluaciones['idEvaluacion']);
-                            $regScore = @mysql_fetch_array($dsScore, MYSQL_ASSOC);
+                            $regScore = @mysql_fetch_array($dsScore,MYSQLI_ASSOC);
                             
                             while($regScore)
                                 {
@@ -163,10 +163,10 @@
                                      * evaluaciones en una sumatoria estratificada.
                                      */                                    
                                     $this->Resultados[] += $regScore['Ponderacion'];
-                                    $regScore = @mysql_fetch_array($dsScore, MYSQL_ASSOC);
+                                    $regScore = @mysql_fetch_array($dsScore,MYSQLI_ASSOC);
                                     }
                                     
-                            $regEvaluaciones = @mysql_fetch_array($dsEvaluaciones, MYSQL_ASSOC);
+                            $regEvaluaciones = @mysql_fetch_array($dsEvaluaciones,MYSQLI_ASSOC);
                             }
                             
                     $idxFactor = 0;
@@ -195,7 +195,7 @@
                     if($dsFactores)
                         {
                             //CASO: La consulta arrojo resultados validos.
-                            $RegFactores = @mysql_fetch_array($dsFactores, MYSQL_ASSOC);
+                            $RegFactores = @mysql_fetch_array($dsFactores,MYSQLI_ASSOC);
                             
                             $this->pondFortaleza = 0.0;
                             $this->pondOportunidad = 0.0;
@@ -235,7 +235,7 @@
                                             }                                            
 
                                     $idxFactores += 1;                                                    
-                                    $RegFactores = @mysql_fetch_array($dsFactores, MYSQL_ASSOC);
+                                    $RegFactores = @mysql_fetch_array($dsFactores,MYSQLI_ASSOC);
                                     }
                             }
                     }                                        

@@ -9,10 +9,10 @@
  * adjunta de la licencia en todo momento.
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/captcha.class.php");//Se carga la referencia a la clase de manejo de captcha.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/captcha.class.php");//Se carga la referencia a la clase de manejo de captcha.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/codificador.class.php"); //Se carga la referencia del codificador de cadenas.
 
     class dalUsuarios
         {
@@ -79,7 +79,7 @@
                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                     $consulta = 'SELECT *FROM opRelPerUsr WHERE idUsuario='.$idUsuario.' AND idModulo='.$idModulo; //Se establece el modelo de consulta de datos.
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                     
                     if(!$Registro)
                         {
@@ -186,7 +186,7 @@
                                             //BUSQUEDA DE USUARIO RECIEN CREADO PARA OBTENER SU ID.
                                             $consulta = 'SELECT *FROM catUsuarios WHERE Usuario='.$this->Usuario.' AND Clave='.$claveCod; //Se establece el modelo de consulta de datos.
                                             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                                            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                                            $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                                     
                                             //Se crean los elementos de la relacion.
                                             for($conteo=1; $conteo < count($Mod); $conteo++)
@@ -199,12 +199,12 @@
                                     if($this->cntView==9)
                                         {
                                             //El usuario accede como invitado para crear una cuenta.
-                                            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/main/login.php");
+                                            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/main/login.php");
                                             }
                                     else
                                         {
                                             //Se considera la operacion ejecutada por un administrador.
-                                            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/usuarios/sysadmin/busUsuarios.php");
+                                            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/usuarios/sysadmin/busUsuarios.php");
                                             }                                                                                
                                     }
                             else
@@ -214,13 +214,13 @@
                                      * se procesa la solicitud como una invocacion desde las funciones
                                      * de invitado.
                                      */
-                                    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/usuarios/guest/opUsuarios.php");                                    
+                                    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/usuarios/guest/opUsuarios.php");                                    
                                     }                                                                                                    
                             }
                     else
                         {
                             //FALLO DE LA VALIDACION DE PARAMETROS POR URL.
-                            include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/ERROR405.php");
+                            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/ERROR405.php");
                             }
                     }
 
@@ -235,7 +235,7 @@
                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                     $consulta= 'UPDATE catUsuarios SET Status=1 where idUsuario='.$this->idUsuario; //Se establece el modelo de consulta de datos.
                     $dsUsuario = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-                    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/usuarios/sysadmin/busUsuarios.php");
+                    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/usuarios/sysadmin/busUsuarios.php");
                     }
                                         
             public function getAccion()

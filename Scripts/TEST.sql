@@ -21,6 +21,94 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `opRelPerUsr`
+--
+CREATE TABLE `opRelPerUsr` (
+  `idRelPerUsr` int(11) NOT NULL,
+  `idModulo` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `opRelPerUsr`
+--
+
+INSERT INTO `opRelPerUsr` (`idRelPerUsr`, `idModulo`, `idUsuario`, `Status`) VALUES
+(1, 1, 1, 0),
+(2, 2, 1, 0),
+(3, 3, 1, 0),
+(4, 4, 1, 0),
+(5, 5, 1, 0),
+(6, 6, 1, 0),
+(7, 7, 1, 0),
+(8, 8, 1, 0),
+(9, 9, 1, 0),
+(10, 10, 1, 0),
+(11, 11, 1, 0),
+(12, 12, 1, 0),
+(13, 13, 1, 0),
+(14, 14, 1, 0),
+(15, 15, 1, 0),
+(16, 16, 1, 0),
+(17, 17, 1, 0),
+(18, 18, 1, 0),
+(19, 19, 1, 0),
+(20, 20, 1, 0),
+(21, 21, 1, 0),
+(22, 22, 1, 0),
+(23, 23, 1, 0),
+(24, 24, 1, 0),
+(25, 25, 1, 0),
+(26, 26, 1, 0),
+(27, 17, 2, 0),
+(28, 17, 3, 0),
+(29, 17, 4, 0),
+(30, 0, 0, 0),
+(31, 0, 0, 0);
+
+--
+-- Estructura de tabla para la tabla `catModulos`
+--
+CREATE TABLE `catModulos` (
+  `idModulo` int(11) NOT NULL,
+  `Modulo` varchar(250) COLLATE utf8_bin NOT NULL,
+  `URL` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `catModulos`
+--
+
+INSERT INTO `catModulos` (`idModulo`, `Modulo`, `URL`, `Status`) VALUES
+(1, 'Usuarios', '/phoenix/php/frontend/usuarios/sysadmin/busUsuarios.php', 0),
+(2, 'Configuraciones', '/phoenix/php/frontend/configuracion/busConfiguraciones.php', 0),
+(3, 'Unidades', '/phoenix/php/frontend/unidades/busUnidades.php', 0),
+(4, 'Colonias', '/phoenix/php/frontend/colonias/busColonias.php', 0),
+(5, 'Empleados', '/phoenix/php/frontend/empleados/busEmpleados.php', 0),
+(6, 'Clientes', '/phoenix/php/frontend/clientes/busClientes.php', 0),
+(7, 'Entidades', '/phoenix/php/frontend/entidades/busEntidades.php', 0),
+(8, 'Vehiculos', '/phoenix/php/frontend/vehiculos/busVehiculos.php', 0),
+(9, 'Procesos', '/phoenix/php/frontend/procesos/busProcesos.php', 0),
+(10, 'Indicadores', '/phoenix/php/frontend/indicadores/busIndicadores.php', 0),
+(11, 'Puestos', '/phoenix/php/frontend/puestos/busPuestos.php', 0),
+(12, 'Gasolina', '/phoenix/php/frontend/gasolina/busGasolina.php', 0),
+(13, 'Fichas de Proceso', '/phoenix/php/frontend/fichas/busFichaProceso.php', 0),
+(14, 'Objetivo Estrategico', '/phoenix/php/frontend/objest/busObjEst.php', 0),
+(15, 'Objetivo Operativo', '/phoenix/php/frontend/objope/busObjOpe.php', 0),
+(16, 'Estrategia Operativa', '/phoenix/php/frontend/estope/busEstOpe.php', 0),
+(17, 'Programas', '/phoenix/php/frontend/programa/busPrograma.php', 0),
+(18, 'Cedulas', '/phoenix/php/frontend/foda/cedulas/busCedulas.php', 0),
+(19, 'Factores', '/phoenix/php/frontend/foda/factores/busFactores.php', 0),
+(20, 'Escalas', '/phoenix/php/frontend/foda/escalas/busEscalas.php', 0),
+(21, 'Evaluaciones', '/phoenix/php/frontend/foda/evaluaciones/busEvaluaciones.php', 0),
+(22, 'Consumo de Gasolina', '/phoenix/php/frontend/gasconsumo/opGasConsumo.php', 0),
+(23, 'Consulta de Planeacion', '/phoenix/php/frontend/consulplan/conObjEst.php', 0),
+(24, 'Evaluacion FODA', '/phoenix/php/frontend/foda/usrevafoda/opUsrFODA.php', 0),
+(25, 'Resultados FODA', '/phoenix/php/frontend/foda/resfoda/opResFODA.php', 0),
+(26, 'Graficas', '/phoenix/php/frontend/utilidades/graficos.php', 0);
 
 --
 -- Estructura de tabla para la tabla `catColonias`
@@ -4608,6 +4696,20 @@ INSERT INTO `relUsrEmp` (`idRelUsrEmp`, `idEmpleado`, `idUsuario`, `Status`) VAL
 --
 
 --
+-- Indices de la tabla `opRelPerUsr`
+--
+ALTER TABLE `opRelPerUsr`
+  ADD PRIMARY KEY (`idRelPerUsr`),
+  ADD KEY `IdxRelPerUsr` (`idRelPerUsr`);
+
+--
+-- Indices de la tabla `catModulos`
+--
+ALTER TABLE `catModulos`
+  ADD PRIMARY KEY (`idModulo`),
+  ADD KEY `IdxModulo` (`idModulo`);
+
+--
 -- Indices de la tabla `catColonias`
 --
 ALTER TABLE `catColonias`
@@ -4974,6 +5076,18 @@ ALTER TABLE `relUsrEmp`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT for table `opRelPerUsr`
+--
+ALTER TABLE `opRelPerUsr`
+  MODIFY `idRelPerUsr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT for table `catModulos`
+--
+ALTER TABLE `catModulos`
+  MODIFY `idModulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `catColonias`

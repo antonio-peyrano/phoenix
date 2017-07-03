@@ -18,8 +18,8 @@
     $idEjecGas = $_GET['idejecgas'];
     $idProgGas = $_GET['idproggas'];
         
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     
     global $username, $password, $servername, $dbname;
     
@@ -98,12 +98,12 @@
             //Se procede a recoger la referencia de la programacion asociada a la actividad.
             $consulta = 'SELECT *FROM opProgGas WHERE idProgGas='.$idProgGas.' AND Status=0';
             $dsPrgGasUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegPrgGasUnit = @mysql_fetch_array($dsPrgGasUnit, MYSQL_ASSOC);
+            $RegPrgGasUnit = @mysqli_fetch_array($dsPrgGasUnit,MYSQLI_ASSOC);
             
             //Se procede a recoger la referencia de la ejecucion asociada a la actividad.
             $consulta = 'SELECT *FROM opEjecGas WHERE idEjecGas='.$idEjecGas.' AND Status=0';
             $dsEjcGasUnit = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $RegEjcGasUnit = @mysql_fetch_array($dsEjcGasUnit, MYSQL_ASSOC);
+            $RegEjcGasUnit = @mysqli_fetch_array($dsEjcGasUnit,MYSQLI_ASSOC);
             
             if($RegPrgGasUnit)
                 {
@@ -149,13 +149,13 @@
             //Se procede a recoger los datos almacenados en la ejecucion.
             $consulta = 'SELECT Monto FROM opMovGas WHERE idEjecGas='.$idEjecGas.' AND Mes='.$Mes.' AND Status=0';
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-            $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+            $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
             
             while($Registro)
                 {
                     //Mientras existan registros computables, se procede a la sumarizaci�n.
                     $cantTotal+= $Registro['Monto'];
-                    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                     }                                
                                 
             //Se procede a actualizar el registro de movimientos a nivel de la ejecucion programada.
@@ -169,7 +169,7 @@
     //de ejecutar la correcci�n en la planeaci�n.
     $consulta= 'SELECT Mes FROM opMovGas WHERE idMovGas='.$parametro; //Se establece el modelo de consulta de datos.
     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
-    $Registro = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+    $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
     $idMes = $Registro['Mes'];
     
     //Borrando el registro de consumo de gasolina.
@@ -180,5 +180,5 @@
     updt_opEjecGasAnual();
     
     $_GET['view'] = 3; //Se establece la variable de control de visualización. 
-    include_once($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/gasconsumo/opGasConsumo.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasconsumo/opGasConsumo.php");
     ?>

@@ -12,8 +12,8 @@
 
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
      
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
@@ -52,12 +52,12 @@
                      * Si la operación solicitada es para la creación de un registro,
                      * se carga el listado sin marcar.
                      */
-                    $RegNiveles = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
                     while ($RegNiveles)
                         {
                             echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habcampos.' value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
-                            $RegNiveles = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $RegNiveles = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
                             }
                     }
             else
@@ -69,7 +69,7 @@
                     $subconsulta = 'SELECT *FROM relIndPro WHERE idIndicador='.$idIndicador.' AND Status=0'; //Se establece el modelo de consulta de datos.
                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                     $vector = "";
-                    $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);
             
                     if($RegNiveles)
                         {
@@ -80,7 +80,7 @@
                             $vector.=$RegNiveles['idProceso'];
                             }
             
-                    $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);
             
                     while ($RegNiveles)
                         {
@@ -89,12 +89,12 @@
                              * los id de las entidades seleccionadas por el usuario previamente.
                              */
                             $vector.=','.$RegNiveles['idProceso'];
-                            $RegNiveles = @mysql_fetch_array($subdataset, MYSQL_ASSOC);
+                            $RegNiveles = @mysql_fetch_array($subdataset,MYSQLI_ASSOC);
                             }
             
                     $tmparray=explode(',',$vector); //El vector resultante se convierte en un arreglo.
             
-                    $RegNiveles = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                    $RegNiveles = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
             
                     while ($RegNiveles)
                         {
@@ -117,14 +117,14 @@
                                     echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habcampos.' value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
                                     }
             
-                            $RegNiveles = @mysql_fetch_array($dataset, MYSQL_ASSOC);
+                            $RegNiveles = @mysql_fetch_array($dataset,MYSQLI_ASSOC);
                             }
                     }
             
             echo'</div></td></tr>';
             }
                         
-    $Registro = @mysql_fetch_array(cargarRegistro($parametro), MYSQL_ASSOC);//Llamada a la función de carga de registro de usuario.
+    $Registro = @mysql_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
 
     function controlVisual($idRegistro)
         {

@@ -93,7 +93,7 @@
 
 			ajax = nuevoAjax(); //Se crea la instancia del nuevo objeto Ajax.
 			ajax.open("GET", url + parametro,true); //Se carga la referencia del url sobre el objeto Ajax.
-	
+			
 			ajax.onreadystatechange=function()
 				{
 					//Se valida que el estado de llamada del nuevo objeto Ajax corresponda
@@ -102,8 +102,7 @@
 						{
 							contenido.innerHTML = ajax.responseText; //Se carga en el contenido HTML del div destino el resultado del Ajax.
 							}
-					}
-     
+					}			
 			ajax.send(null); //Aqui se determina que valores se envian como parametro a la pagina.	
 			}
 

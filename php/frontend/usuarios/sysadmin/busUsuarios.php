@@ -10,8 +10,8 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
     header('Content-Type: text/html; charset=ISO-8859-1'); //Forzar la codificacion a ISO-8859-1.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/usuarios/usuarios.class.php"); //Se carga la referencia de la clase para manejo de la entidad usuarios.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/usuarios/usuarios.class.php"); //Se carga la referencia de la clase para manejo de la entidad usuarios.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/bl/utilidades/usrctrl.class.php"); //Se carga la referencia de clase para control de accesos.
     
     class busUsuarios
         {
@@ -75,7 +75,7 @@
                      * En caso que no cuente con credenciales validas, el sistema impedira
                      * la brecha de seguridad.
                      */
-                    include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");                    
+                    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/noAutorizado.php");                    
                     }
             }
     else
@@ -84,6 +84,6 @@
              * En caso que no cuente con credenciales validas, el sistema impedira
              * la brecha de seguridad.
              */
-            include_once ($_SERVER['DOCUMENT_ROOT']."/micrositio/php/frontend/notificaciones/noAutorizado.php");
+            include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/notificaciones/noAutorizado.php");
             }                        
 ?>
