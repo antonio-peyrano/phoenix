@@ -55,7 +55,7 @@
                     if(!isset($_SESSION))
                         {
                             //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
-                            session_name('micrositio');
+                            session_name('phoenix');
                             session_start();
                             }
                     
@@ -145,16 +145,14 @@
                      */
                     $body = '<div id= "Contenedor" class= "contenedor">'.
                             $this->drawMenu()
-                                .'<div class="contenedor-principal">
+                                .'<div id="escritorio" class="contenedor-principal">
                                     <div class="area-deslizar"></div>
                                         <a href="#" data-toggle=".contenedor" id="menu-lateral-toggle">
                                             <span class="bar"></span>
                                             <span class="bar"></span>
                                             <span class="bar"></span>
                                         </a>
-                                        <div id="escritorio" class="content">
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                                 <section class="contenedor-seccion">
                                 </section>';
@@ -175,10 +173,12 @@
                             <link rel="stylesheet" href="./css/notificaciones.css"></style>
                             <link rel="stylesheet" href="./css/operativo.css"></style>
                             <link rel="stylesheet" href="./css/captcha.css"></style>
-                            <link rel="stylesheet" href="./css/bootstrap.min.css"/></style>                        
+                            <link rel="stylesheet" href="./css/bootstrap.min.css"/></style>
+                            <link rel="stylesheet" href="./css/jquery.jscrollpane.css"/></style>                        
                             <link rel="icon" type="image/png" href="./img/icologo.png" />
                             <title>Phoenix</title>
                             <script type="text/javascript" src="./js/jquery/jquery-1.9.1.js"></script>
+                            <script type="text/javascript" src="./js/jquery/jquery.jscrollpane.min.js"></script>
                             <script type="text/javascript" src="./js/jquery/jquery-1.9.1.min.js"></script>
                             <script type="text/javascript" src="./js/bootstrap/bootstrap.min.js" charset="ISO-8859-1"></script>
                             <script type="text/javascript" src="./js/bootstrap/bootbox.js" charset="ISO-8859-1"></script>
@@ -230,6 +230,13 @@
                                     $this->HTMLBody()
                                     .'<script type="text/javascript">
                                         document.oncontextmenu = function(){return true;}
+                                        jQuery(document).ready(function ()
+                                            {
+                                                if (!jQuery.browser.webkit)
+                                                    {
+                                                        jQuery(\'.contenedor\').jScrollPane();
+                                                        }
+                                                });
                                     </script>
                                 </body>
                             </html>';

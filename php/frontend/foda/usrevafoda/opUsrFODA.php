@@ -30,7 +30,7 @@
                     if(!isset($_SESSION))
                         {
                             //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
-                            session_name('micrositio');
+                            session_name('phoenix');
                             session_start();
                             }
                             

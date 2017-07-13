@@ -108,8 +108,9 @@
         {
             background-image: url("../img/logo_fondo.png"); /*Imagen de fondo para el contenedor de login*/
             background-size: 64px 64px; /*Tamaño para la imagen de fondo del contenedor de login*/
-            background-repeat: repeat; /*Condicional para repetición del fondo*/            
-            }					
+            background-repeat: repeat; /*Condicional para repetición del fondo*/
+            overflow:scroll;			            
+            }
                         
 /*
  * FIN DEL CODIGO DE FORMATO GENERAL.
@@ -249,6 +250,46 @@
 	.links
 		{
 			
+			}
+			
+	.jspTrack
+		{
+    		background: blue;
+    		position: relative;
+			}
+			
+	.jspDrag
+		{
+    		background: rgba(0,0,0,0.2);
+    		position: relative;
+    		top: 0;
+    		left: 0;
+    		cursor: pointer;
+			}
+
+	::-webkit-scrollbar 
+		{
+      		width: 15px;
+			}
+
+	::-webkit-scrollbar-track 
+		{
+      		background-color: #EEA107;
+			}
+
+	::-webkit-scrollbar-thumb
+		{
+      		background-color: #FF8000;
+			}
+
+	::-webkit-scrollbar-button 
+		{
+      		background-color: #FF8000;
+			}
+
+	::-webkit-scrollbar-corner
+		{
+      		background-color: #FE9A2E;
 			}
 /*
  * FIN DEL CODIGO DE FORMATO DE FORMULARIO DE INGRESO.

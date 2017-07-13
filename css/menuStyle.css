@@ -1,6 +1,6 @@
 /*
  *Esta hoja de estilos controla la apariencia y funcionalidad basica del efecto
- *de menu ocultable sobre la interfaz, a modo de aplicación inteligente de teléfono
+ *de menu ocultable sobre la interfaz, a modo de aplicaciï¿½n inteligente de telï¿½fono
  *celular
  */
  
@@ -9,10 +9,9 @@
             position: relative; /*Respecto al cuerpo*/
             height: inherit; /*Altura respecto al contenedor padre*/
             width: 100%; /*Anchura respecto al contenedor padre*/
-            left: 240px; /*Separación del margen izquierdo respecto al padre*/
-        	/*overflow: scroll;*/
+            left: 240px; /*Separaciï¿½n del margen izquierdo respecto al padre*/
             /*
-             * Conjunto de efectos de transición.
+             * Conjunto de efectos de transiciï¿½n.
              */
             -webkit-transition:  left 0.4s ease-in-out;
             -moz-transition:  left 0.4s ease-in-out;
@@ -23,18 +22,18 @@
 
     .contenedor.abrir-menu-lateral
         {
-            left: 0px; /*Separación del margen izquierdo respecto al contenedor*/
+            left: 0px; /*Separaciï¿½n del margen izquierdo respecto al contenedor*/
             }
 
 	.contenedor-principal
         {
-            position: relative; /*Posición respecto al cuerpo*/
+            position: relative; /*Posiciï¿½n respecto al cuerpo*/
             width: 100%; /*Anchura respecto al cuerpo*/
             height: inherit; /*Altura respecto al cuerpo*/
             padding: 10px; /*Espaciado del contenedor*/
             background: #F6CE71; /*Color de fondo del contenedor principal*/
             box-sizing: border-box;
-            -moz-box-sizing: border-box;
+            -moz-box-sizing: border-box;            
             }
 		
 	.contenedor-principal .content
@@ -85,14 +84,14 @@
 	.area-deslizar
         {
             /*
-             * Este contenedor es el area sobre la cual el usuario utilizara la opción
+             * Este contenedor es el area sobre la cual el usuario utilizara la opciï¿½n
              * de gesto de arrastre en dispositivos moviles.
              */
             position: absolute; /*Respecto al cuerpo*/
             width: 50px; /*Anchura respecto al contenedor padre*/
             height: inherit; /*Altura respecto al contenedor padre*/
-            left: 0; /*Separación del margen izquierdo respecto al padre*/
-            top: 0; /*Separación del margen superior respecto al padre*/
+            left: 0; /*Separaciï¿½n del margen izquierdo respecto al padre*/
+            top: 0; /*Separaciï¿½n del margen superior respecto al padre*/
             background: #f3f3f3; /*Color de fondo del area de arrastre*/
             z-index: 0; /*Orden respecto a la profundidad sobre los otros elementos*/
             }
@@ -101,7 +100,7 @@
 
 /*
  * Este segmento de codigo controla el formato con el que se visualizara el menu lateral
- * de la aplicación para el usuario.
+ * de la aplicaciï¿½n para el usuario.
  */
 
     #menu-lateral 
@@ -122,16 +121,17 @@
             position: absolute; /*Posicion respecto al cuerpo*/
             width: 240px; /*Anchura respecto al cuerpo*/
             height: inherit; /*Altura respecto al cuerpo*/
-            left: -240px; /*Separación respecto al margen izquierdo, un valor negativo indica que no estara visible*/
+            left: -240px; /*Separaciï¿½n respecto al margen izquierdo, un valor negativo indica que no estara visible*/
             box-sizing: border-box;
             -moz-box-sizing: border-box;
+            overflow: scroll;
             }
 
 	#menu-lateral ul
         {
             margin: 0;/*Margen en los cuatro cuadrantes para el elemento unsorted list (UL)*/
             padding: 0; /*Espaciado en los cuatro cuadrantes*/
-            list-style: none; /*Se elimina la viñeta de enumerado*/
+            list-style: none; /*Se elimina la viï¿½eta de enumerado*/
             }
 		
 	#menu-lateral ul li
@@ -142,10 +142,10 @@
 	#menu-lateral ul li a
         {
             padding: 15px 20px; /*Espaciado de etiqueta de item*/
-            font-size: 16px; /*Tamaño de texto de item*/
-            font-weight: 100; /*Proporción de texto*/
+            font-size: 16px; /*Tamaï¿½o de texto de item*/
+            font-weight: 100; /*Proporciï¿½n de texto*/
             color: white; /*Color de texto*/		
-            text-decoration: none; /*Elementos de decoración del texto*/
+            text-decoration: none; /*Elementos de decoraciï¿½n del texto*/
             display: block; /*Mostrar en bloque*/
             border-bottom: 1px solid #FBF9F8; /*Borde inferior [Grosor, Estilo, Color]*/
             -webkit-transition:  background 0.3s ease-in-out;
