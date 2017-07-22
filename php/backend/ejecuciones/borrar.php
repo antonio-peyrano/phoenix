@@ -542,5 +542,5 @@
     updt_opEjecActAnual(); //Llamada a la función del calculo de programación.
         
     $_GET['view'] = 3; //Se establece la variable de control de visualización. 
-    include_once($_SERVER['DOCUMENT_ROOT'].'/micrositio/php/frontend/actividad/opActividad.php');
+    include_once($_SERVER['DOCUMENT_ROOT'].'/phoenix/php/frontend/actividad/opActividad.php');
     ?>

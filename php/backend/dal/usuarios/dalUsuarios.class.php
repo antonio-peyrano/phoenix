@@ -113,7 +113,7 @@
                             if($this->cntView == 9)
                                 {
                                     //CASO: SE INVOCO DESDE EL FORMULARIO DE CREACION DE USUARIO POR INVITADO.
-                                    session_name('ecole');
+                                    session_name('phoenix');
                                     session_start();
                                     $objCaptcha = new captcha();
                                     

@@ -148,9 +148,7 @@
                                 .'<div id="escritorio" class="contenedor-principal">
                                     <div class="area-deslizar"></div>
                                         <a href="#" data-toggle=".contenedor" id="menu-lateral-toggle">
-                                            <span class="bar"></span>
-                                            <span class="bar"></span>
-                                            <span class="bar"></span>
+                                            <img src="./img/menu/menu.png" id="menu-icono" alt="Menu" height="32" width="32" title="Menu">
                                         </a>
                                     </div>                                    
                                 </div>
@@ -174,7 +172,7 @@
                             <link rel="stylesheet" href="./css/operativo.css"></style>
                             <link rel="stylesheet" href="./css/captcha.css"></style>
                             <link rel="stylesheet" href="./css/bootstrap.min.css"/></style>
-                            <link rel="stylesheet" href="./css/jquery.jscrollpane.css"/></style>                        
+                            <link rel="stylesheet" href="./css/jquery.jscrollpane.css"/></style>                                                   
                             <link rel="icon" type="image/png" href="./img/icologo.png" />
                             <title>Phoenix</title>
                             <script type="text/javascript" src="./js/jquery/jquery-1.9.1.js"></script>

@@ -100,6 +100,6 @@
              * En caso de ocurrir un error con la operatividad del sistema,
              * se despliega un mensaje al usuario.
              */
-            include_once($_SERVER['DOCUMENT_ROOT'].'/micrositio/php/frontend/main/errorSistema.php');
+            include_once($_SERVER['DOCUMENT_ROOT'].'/phoenix/php/frontend/main/errorSistema.php');
             }                        
     ?>

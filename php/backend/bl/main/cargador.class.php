@@ -195,6 +195,11 @@
                 <head>
                 </head>
                 <body>
+                    <div class="area-deslizar"></div>
+                        <a href="#" data-toggle=".contenedor" id="menu-lateral-toggle">
+                            <img src="./img/menu/menu.png" id="menu-icono" alt="Menu" height="32" width="32" title="Menu">
+                        </a>
+                    </div>  
                     <div id="sandbox">';
             
                     $cargador->UIResponse();

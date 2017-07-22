@@ -21,12 +21,23 @@
 
 	$(document).ready(function()
 		{
-			$("[data-toggle]").click(function()
+			$("div").click(function(e)
 				{
-					var toggle_el = $(this).data("toggle");
-					$(toggle_el).toggleClass("abrir-menu-lateral");
-					});     
-			});
+					e.stopPropagation();
+					if(("menu-lateral-toggle"==e.target.id.toString())||("menu-icono"==e.target.id.toString()))
+						{
+							if($("#Contenedor").css('left') == '0px')
+								{
+									$("#Contenedor").css('left', '240px');
+									}
+							else
+								{
+									/*$("#menu-lateral").hide();*/
+									$("#Contenedor").css('left', '0px');
+									}
+							}					    
+					});
+		 	});
 
 /*
  * Carga de las referencias de acción sobre los eventos del botón de menu en pantalla.

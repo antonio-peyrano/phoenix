@@ -92,7 +92,7 @@
             height: inherit; /*Altura respecto al contenedor padre*/
             left: 0; /*Separaci�n del margen izquierdo respecto al padre*/
             top: 0; /*Separaci�n del margen superior respecto al padre*/
-            background: #f3f3f3; /*Color de fondo del area de arrastre*/
+            background: rgba(76, 175, 80, 0.0); /*Color de fondo del area de arrastre*/
             z-index: 0; /*Orden respecto a la profundidad sobre los otros elementos*/
             }
             

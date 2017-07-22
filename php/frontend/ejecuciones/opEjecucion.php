@@ -338,10 +338,11 @@
                                     /*
                                      * En caso que el invocador sea el formulario de programa.
                                      */
-                                    include_once("../evidencias/catEvidencias.php");
+                                    include_once("../evidencias/catEvidencias.php");                                   
                                     }
                                                                                         
-            echo'           </div>     
+            echo'           </div>
+                            <a href="#"id="verArchivos">VER ARCHIVOS</a>     
                         </body>                
                     </html>';           
         } 
