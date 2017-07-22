@@ -13,7 +13,7 @@
             background-repeat: repeat; /*Condicional para repetición del fondo*/		
 			}
 			
-    input[type=submit]
+    input[type=submit],input[type=button]
         {
             padding: 0 18px;
   			height: 29px;

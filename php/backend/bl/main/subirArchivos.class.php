@@ -52,7 +52,7 @@
                     else
                         {
                             //En caso de no localizar el directorio, se notifica al usuario.
-                            $HTML = '<b>NO SE LOCALIZARON ARCHIVOS';
+                            $HTML .= '<br><b>NO SE LOCALIZARON ARCHIVOS</b>';
                             }
                     
                     return $HTML.'</div>';            

@@ -1,14 +1,15 @@
-function abrirVentana()
-	{
-		document.getElementById("capaFondo").style.visibility="visible";
-		document.getElementById("capaVentana").style.visibility="visible";
-		document.formulario.bAceptar.focus();
-		}
- 
-function cerrarVentana()
-	{
-		alert("1");
-		document.getElementById("capaFondo").style.visibility="hidden";
-		document.getElementById("capaVentana").style.visibility="hidden";
-		document.formulario.bAceptar.blur();		
-		}
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento cerrarVentana
+ * dentro del formulario de subida de archivos
+ */
+
+$(document).ready(function() {
+    $("div").click(function(e){
+    	e.stopPropagation();
+    	if(e.target.id == "cerrarVentana")
+    		{
+    			//Si el usuario confirma su solicitud de cerrar la ventana de gestion.  
+    			window.close();
+    			}
+    });                 
+});

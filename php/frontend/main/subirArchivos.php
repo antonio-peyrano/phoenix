@@ -19,6 +19,9 @@
             
             $HEAD = '   <head>
                             <link rel="stylesheet" href="'.$SitioWeb.'css/uploadfile.css"></style>
+                            <script type="text/javascript" src="'.$SitioWeb.'js/jquery/jquery-1.9.1.js"></script>
+                            <script type="text/javascript" src="'.$SitioWeb.'js/jquery/jquery.jscrollpane.min.js"></script>
+                            <script type="text/javascript" src="'.$SitioWeb.'js/jquery/jquery-1.9.1.min.js"></script>
                             <script type="text/javascript" src="'.$SitioWeb.'js/main/jsuploadfile.js"></script>
                         </head>';
             return $HEAD;
@@ -49,6 +52,7 @@
                                             .$sa->genList().
                                             '
                                             <div id="Contenedor-Acciones">
+                                                <input id="cerrarVentana" name="cerrarVentana" type="button" value="Cerrar Ventana"/>
                                                 <input id="enviarSolicitud" name="enviarSolicitud" type="submit" value="Subir Archivo" />
                                             </div>
                                         </form>

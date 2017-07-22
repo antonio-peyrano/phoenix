@@ -342,7 +342,12 @@
                                     }
                                                                                         
             echo'           </div>
-                            <a href="#"id="verArchivos">VER ARCHIVOS</a>     
+                            <br>
+                            <div id="adjuntosServidor">
+                                <table class="queryTable">
+                                    <tr><td class= "queryRowsnormTR"><a href="#"id="verArchivos">VER ARCHIVOS ADJUNTOS</a></td></tr>
+                                </table>
+                            </div>     
                         </body>                
                     </html>';           
         } 
