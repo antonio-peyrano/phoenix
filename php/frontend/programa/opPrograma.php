@@ -679,10 +679,14 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgPro WHERE status= 0 AND idPrograma= '.$Registro['idPrograma'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
-                                    $rowdata='<tr><td class= "queryTitles">Programaci�n</td>';
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+
+                                    if($dsCampos)
+                                        {
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }
+                                            
+                                    $rowdata='<tr><td class= "queryTitles">Programacion</td>';
                                     $count=1;
                                     $totEficacia=0.00;
                                     
@@ -720,10 +724,14 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecPro WHERE status= 0 AND idPrograma= '.$Registro['idPrograma'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
-                                    $rowdata='<tr><td class= "queryTitles">Ejecuci�n</td>';
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+
+                                    if($dsCampos)
+                                        {
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }
+                                            
+                                    $rowdata='<tr><td class= "queryTitles">Ejecucion</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -761,9 +769,13 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficPro WHERE status= 0 AND idPrograma= '.$Registro['idPrograma'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+
+                                    if($dsCampos)
+                                        {
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }
+                                            
                                     $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
                                     $count=1;
                                     $totEficacia=0;

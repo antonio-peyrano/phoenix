@@ -292,7 +292,7 @@
                                 $field = mysqli_fetch_field($dsCampos);
                                 }
                                 
-                        $rowdata= '<tr><td class= "queryTitles">Programaci�n</td>';
+                        $rowdata= '<tr><td class= "queryTitles">Programacion</td>';
                         $count=1;
                         $totEficacia=0.00;
             
@@ -337,7 +337,7 @@
                                 $field = mysqli_fetch_field($dsCampos);
                                 }
                                 
-                        $rowdata= '<tr><td class= "queryTitles">Ejecuci�n</td>';
+                        $rowdata= '<tr><td class= "queryTitles">Ejecucion</td>';
                         $count= 1;
                         $totEficacia= 0;
             

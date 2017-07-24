@@ -23,7 +23,7 @@
     $servername="397Y09vK3uXj";
     $dbname="4NjY5N7V2ObY4g==";
     $username="5d7k5g==";
-    $password="";//"1OXW3t7Qpqmm";
+    $password="1OXW3t7Qpqmm";
     $SitioWeb="http://localhost/phoenix/";
 
 /*   

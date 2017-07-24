@@ -8,20 +8,20 @@
  * de la base de datos.
  */
 
-CREATE TABLE `opRelPerUsr` (
-  `idRelPerUsr` int(11) NOT NULL,
-  `idModulo` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '0'
+CREATE TABLE opRelPerUsr (
+  idRelPerUsr int(11) NOT NULL,
+  idModulo int(11) NOT NULL,
+  idUsuario int(11) NOT NULL,
+  Status int(11) NOT NULL DEFAULT '0',
  Index idxRelPerUsr (idRelPerUsr),
  Primary Key (idRelPerUsr)) ENGINE = MyISAM;
 
 
-CREATE TABLE `catModulos` (
-  `idModulo` int(11) NOT NULL,
-  `Modulo` varchar(250) COLLATE utf8_bin NOT NULL,
-  `URL` varchar(250) COLLATE utf8_bin NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '0'
+CREATE TABLE catModulos (
+  idModulo int(11) NOT NULL,
+  Modulo varchar(250) COLLATE utf8_bin NOT NULL,
+  URL varchar(250) COLLATE utf8_bin NOT NULL,
+  Status int(11) NOT NULL DEFAULT '0',
  Index idxModulo (idModulo),
  Primary Key (idModulo)) ENGINE = MyISAM;
 
