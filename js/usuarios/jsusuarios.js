@@ -169,7 +169,7 @@
         					if(respuesta)
         						{
         							//Si el usuario confirma su solicitud de borrar el registro seleccionado.
-        							cargar('./php/backend/usuarios/borrar.php','?id='+e.target.id.substring(11),'sandbox');
+        							cargar('./php/backend/dal/usuarios/dalUsuarios.class.php','?id='+e.target.id.substring(11)+'&accion=EdRS','sandbox');        						
         							} 		
         					}
         			});                 

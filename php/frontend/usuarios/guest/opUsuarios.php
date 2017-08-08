@@ -62,7 +62,7 @@
                     $HTML = '   <div id="cnt-captcha" class="cnt-captcha">
                                     <br>
                                     <div id= "captcha-controll" class= "captcha-controll">
-                                        <img id="captcha" align="middle" src="./php/frontend/utilidades/captcha/comp/captcha.php" alt="CAPTCHA Image" width="150px" height="60px"/>
+                                        <img id="captcha" align="middle" src="./php/frontend/utilidades/captcha/comp/captcha.php?'.rand().'" alt="CAPTCHA Image" width="150px" height="60px"/>
                                     </div>                                
                                     <div id="captcha-refresh" class= "captcha-controll">
                                         <img id="rfrCaptcha" align="middle" src="./img/grids/refresh.png" width="35px" height="35px" title="Actualizar imagen"/>

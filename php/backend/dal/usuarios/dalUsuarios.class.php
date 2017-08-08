@@ -184,7 +184,7 @@
                                             $dsUsuario = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                                     
                                             //BUSQUEDA DE USUARIO RECIEN CREADO PARA OBTENER SU ID.
-                                            $consulta = 'SELECT *FROM catUsuarios WHERE Usuario='.$this->Usuario.' AND Clave='.$claveCod; //Se establece el modelo de consulta de datos.
+                                            $consulta = 'SELECT *FROM catUsuarios WHERE Usuario=\''.$this->Usuario.'\' AND Clave=\''.$claveCod.'\''; //Se establece el modelo de consulta de datos.
                                             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                                             $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                                     

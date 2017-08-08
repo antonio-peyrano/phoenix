@@ -137,7 +137,7 @@
 					//a un estado valido de carga.
 					if(ajax.readyState == 4)
 						{
-							contenido.innerHTML=ajax.responseText; //Se carga en el contenido HTML del div destino el resultado del Ajax.
+							contenido.innerHTML = ajax.responseText; //Se carga en el contenido HTML del div destino el resultado del Ajax.
 							}
 					}
      
