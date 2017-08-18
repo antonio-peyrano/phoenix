@@ -67,7 +67,7 @@ $(document).ready(function() {
 						}
     			if(document.getElementById('Reactivos').value.toString()==document.getElementById('Contestados').value.toString())
     				{
-    					cargar('./php/backend/foda/usrevafoda/Guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
+    					cargar('./php/backend/foda/usrevafoda/guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
     					}
     			else
     				{
@@ -106,7 +106,7 @@ $(document).ready(function() {
 						}
     			if(document.getElementById('Reactivos').value.toString()==document.getElementById('Contestados').value.toString())
     				{
-    					cargar('./php/backend/foda/usrevafoda/Guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
+    					cargar('./php/backend/foda/usrevafoda/guardar.php','?idevaluacion='+document.getElementById('idEvaluacion').value.toString()+'&idfactor='+idfactores+'&idescala='+idescalas+'&status='+document.getElementById('Status').value.toString(),'sandbox');
     					}
     			else
     				{

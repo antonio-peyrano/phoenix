@@ -45,7 +45,14 @@
             $consulta = "SELECT *FROM opResParFoda WHERE idEvaluacion=".$idEvaluacion." AND idFactor=".$idFactor;
             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             
-            return mysqli_num_rows($dataset);
+            if($dataset)
+                {
+                    return mysqli_num_rows($dataset);
+                }
+            else
+                {
+                    return 0;
+                    }
             }
             
     if($cntrlVar==1)
