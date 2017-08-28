@@ -305,9 +305,13 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                    
+                                    if($dsCampos)
+                                        {
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }                                    
+                                                            
                                     $rowdata='<tr><td class="dgTD-Planeacion">Programaci�n</td>';
                                     $count=1;
                                     $totEficacia=0.00;
@@ -346,8 +350,12 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                    
+                                    if($dsCampos)
+                                        {
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }                                                                        
                         
                                     $rowdata='<tr><td class="dgTD-Planeacion">Ejecuci�n</td>';
                                     $count=1;
@@ -385,11 +393,15 @@
                                     //Se procede con la carga de la eficacia que corresponde al programa.
                                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
-                                    $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
+                                    $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.                                                                               
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                                                        
+                                    
+                                    if($dsCampos)
+                                        {
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }                        
+                                            
                                     $rowdata='<tr><td class="dgTD-Planeacion">Eficacia</td>';
                                     $count=1;
                                     $totEficacia=0;

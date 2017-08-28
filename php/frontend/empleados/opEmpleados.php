@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,21 +10,30 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            }
+            
     $imgTitleURL = './img/menu/empleados.png';
     $Title = 'Empleados';    
+    $Sufijo = "emp_";
     $habcampos = 'disabled= "disabled"';
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
 
+    
     function cargarPuestos($parametro)
         {
             /*
-             * Esta función establece la carga del conjunto de registros de Puestos.
+             * Esta funcion establece la carga del conjunto de registros de Puestos.
              */
             global $username, $password, $servername, $dbname;
     
@@ -37,8 +46,8 @@
     function constructorcbPuesto($parametro)
         {
             /*
-             * Esta función establece los parametros de carga del combobox de Puesto cuando
-             * se ejecuta un proceso de edición.
+             * Esta funcion establece los parametros de carga del combobox de Puesto cuando
+             * se ejecuta un proceso de edicion.
              */
             global $habcampos, $Registro;
     
@@ -70,7 +79,7 @@
     function cargarColonias()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de colonias.
+             * Esta funcion establece la carga del conjunto de registros de colonias.
              */
             global $username, $password, $servername, $dbname;
     
@@ -83,7 +92,7 @@
     function cargarEntidades()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de entidades.
+             * Esta funcion establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
             
@@ -96,7 +105,7 @@
     function cargarUsuarios()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de entidades.
+             * Esta funcion establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
             
@@ -109,7 +118,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -121,34 +130,67 @@
             
     $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
 
-    function controlVisual($idRegistro)
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta funci�n controla los botones que deberan verse en la pantalla deacuerdo con la acci�n solicitada por el
-             * usuario en la ventana previa. Si es una edici�n, los botones borrar y guardar deben verse. Si es una creaci�n
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
+            global $Sufijo;
             
-            if($idRegistro == -1)
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';            
+            
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acci�n corresponda a la creaci�n de un nuevo registro.
-                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/empleados/busEmpleados.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEmpleado(\'./php/backend/empleados/guardar.php\',\'?id=\'+document.getElementById(\'idEmpleado\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&identemp=\'+document.getElementById(\'idEntEmp\').value.toString()+\'&idpuesto=\'+document.getElementById(\'idPuesto\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&idusuario=\'+document.getElementById(\'idUsuario\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acci�n de visualizaci�n.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/empleados/busEmpleados.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/empleados/borrar.php\',\'?id=\'+document.getElementById(\'idEmpleado\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEmpleado(\'./php/backend/empleados/guardar.php\',\'?id=\'+document.getElementById(\'idEmpleado\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&identemp=\'+document.getElementById(\'idEntEmp\').value.toString()+\'&idpuesto=\'+document.getElementById(\'idPuesto\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&idusuario=\'+document.getElementById(\'idUsuario\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEmpleado();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            //En caso que la acci�n corresponda a la edici�n de un registro.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/empleados/busEmpleados.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEmpleado(\'./php/backend/empleados/guardar.php\',\'?id=\'+document.getElementById(\'idEmpleado\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&identemp=\'+document.getElementById(\'idEntEmp\').value.toString()+\'&idpuesto=\'+document.getElementById(\'idPuesto\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&idusuario=\'+document.getElementById(\'idUsuario\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEmpleado();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
+                            }                            
+                    }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
                             }
                     }
-            }
+    
+            return $botonera;
+            }        
             
     function constructor()
         {
@@ -158,6 +200,7 @@
              */
             global $Registro, $parametro, $clavecod;
             global $imgTitleURL, $Title;
+            global $cntview;
             
             $habcampos = 'disabled= "disabled"';
             
@@ -172,112 +215,115 @@
                         <head>
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
-                        <body>
-                            <div id="cntOperativo" class="cnt-operativo">                
+                        <body>                
                             <div style=display:none>
                                 <input type= "text" id= "idEmpleado" value="'.$Registro['idEmpleado'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>                                
-                                <div id="infoRegistro" class="operativo">
-                                    <div id="cabecera" class="cabecera-operativo">'
-                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
-                                    <div id="cuerpo" class="cuerpo-operativo">                                
-                                        <table>
-                                <tr><td width="100px" class="td-panel">Nombre:</td><td><input type= "text" required= "required" id= "Nombre" '.$habcampos.' value= "'.$Registro['Nombre'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Paterno:</td><td><input type= "text" required= "required" id= "Paterno" '.$habcampos.' value= "'.$Registro['Paterno'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Materno:</td><td><input type= "text" required= "required" id= "Materno" '.$habcampos.' value= "'.$Registro['Materno'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Calle:</td><td><input type= "text" required= "required" id= "Calle" '.$habcampos.' value= "'.$Registro['Calle'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Interior:</td><td><input type= "text" required= "required" id= "Nint" '.$habcampos.' value= "'.$Registro['Nint'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Exterior:</td><td><input type= "text" required= "required" id= "Next" '.$habcampos.' value= "'.$Registro['Next'].'"></td></tr>';                                        
-            echo'               <tr><td width="100px" class="td-panel">Colonia:</td><td><select name= "idColonia" id= "idColonia" '.$habcampos.' value= "'.$Registro['idColonia'].'">\'';
-                                $subconsulta = cargarColonias();
-            echo'                              <option value=-1>Seleccione</option>';
-                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                while ($RegNiveles)
-                                    {
-                                        if($RegNiveles['idColonia']==$Registro['idColonia'])
-                                            {
-                                                //En caso que el valor almacenado coincida con uno de los existentes en lista.
-            echo'                              <option value='.$RegNiveles['idColonia'].' selected="selected">'.$RegNiveles['Colonia'].'</option>';
-                                                }
-                                        else
-                                            {
-                                                //En caso contrario se carga la etiqueta por default.
-            echo'                              <option value='.$RegNiveles['idColonia'].'>'.$RegNiveles['Colonia'].'</option>';                                                
-                                                }
+                            <div id="infoRegistro" class="operativo">
+                                <div id="cabecera" class="cabecera-operativo">'.
+                                    '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
+                                <div id="cuerpo" class="cuerpo-operativo">                                
+                                    <table>
+                                        <tr><td class="td-panel">Nombre: <input class="inputform" type= "text" required= "required" id= "Nombre" '.$habcampos.' value= "'.$Registro['Nombre'].'"></td><td class="td-panel">Paterno: <input class="inputform" type= "text" required= "required" id= "Paterno" '.$habcampos.' value= "'.$Registro['Paterno'].'"></td><td class="td-panel">Materno: <input class="inputform" type= "text" required= "required" id= "Materno" '.$habcampos.' value= "'.$Registro['Materno'].'"></td></tr>
+                                        <tr><td colspan=3 class="td-panel">Calle: <input style="width:800px;" class="inputform" type= "text" required= "required" id= "Calle" '.$habcampos.' value= "'.$Registro['Calle'].'"></td></tr>';                                        
+            echo'                       <tr>
+                                            <td class="td-panel">Interior: <input style="width:100px;" class="inputform" type= "text" required= "required" id= "Nint" '.$habcampos.' value= "'.$Registro['Nint'].'"></td>
+                                            <td class="td-panel">Exterior: <input style="width:100px;" class="inputform" type= "text" required= "required" id= "Next" '.$habcampos.' value= "'.$Registro['Next'].'"></td>
+                                            <td class="td-panel">Colonia: <select class="inputform" name= "idColonia" id= "idColonia" '.$habcampos.' value= "'.$Registro['idColonia'].'">\'';
+                                        $subconsulta = cargarColonias();
+            echo'                           <option value=-1>Seleccione</option>';
                                         $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                        }
+                                        while ($RegNiveles)
+                                            {
+                                                if($RegNiveles['idColonia']==$Registro['idColonia'])
+                                                    {
+                                                        //En caso que el valor almacenado coincida con uno de los existentes en lista.
+            echo'                           <option value='.$RegNiveles['idColonia'].' selected="selected">'.$RegNiveles['Colonia'].'</option>';
+                                                        }
+                                                else
+                                                    {
+                                                        //En caso contrario se carga la etiqueta por default.
+            echo'                           <option value='.$RegNiveles['idColonia'].'>'.$RegNiveles['Colonia'].'</option>';                                                
+                                                        }
+                                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                                }
                                 
-            echo'               </select></td></tr>';
+            echo'                           </select></td>
+                                        </tr>';
             
-            echo'               <tr><td width="100px" class="td-panel">Entidad:</td><td><select name= "idEntEmp" id= "idEntEmp" '.$habcampos.' value= "'.$Registro['idEntidad'].'">\'';
-                                $subconsulta = cargarEntidades();
-            echo'                              <option value=-1>Seleccione</option>';
-                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                while ($RegNiveles)
-                                    {
-                                        if($RegNiveles['idEntidad']==$Registro['idEntidad'])
-                                            {
-                                               //En caso que el valor almacenado coincida con uno de los existentes en lista.
-            echo'                              <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
-                                                }
-                                        else
-                                            {
-                                                //En caso contrario se carga la etiqueta por default.
-                    echo'                       <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
-                                                }
+            echo'                       <tr><td class="td-panel">Entidad: <select class="inputform" name= "idEntEmp" id= "idEntEmp" '.$habcampos.' value= "'.$Registro['idEntidad'].'">\'';
+                                        $subconsulta = cargarEntidades();
+            echo'                           <option value=-1>Seleccione</option>';
                                         $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                        }
-            
-            echo'               </select></td></tr>';
-                        
-            echo'               <tr><td width="100px" class="td-panel">Puesto:</td><td><div id="cbPuesto" border:none>';
-                                if($parametro=="-1")
-                                    {
-                                        /*
-                                         * Si la acción corresponde a la creacion de un registro nuevo,
-                                         * se establece el codigo actual.
-                                         */
-            echo'                       <select id= "idPuesto" '.$habcampos.' ><option value=-1>Seleccione</option></select></div></td></tr>';
-                                        }
-                                else
-                                    {
-                                        /*
-                                         * Si la acción ocurre para un registro existente,
-                                         * se preserva el codigo almacenado.
-                                         */
-            echo                        constructorcbPuesto($Registro['idEntidad']).'</div></td></tr>';
-                                        }
-                                                    
-            echo'               <tr><td width="150px" class="td-panel">RFC:</td><td><input type= "text" required= "required" id= "RFC" '.$habcampos.' value= "'.$Registro['RFC'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">CURP:</td><td><input type= "text" required= "required" id= "CURP" '.$habcampos.' value= "'.$Registro['CURP'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Telefono particular:</td><td><input type= "text" required= "required" id= "TelFijo" '.$habcampos.' value= "'.$Registro['TelFijo'].'"></td></tr>
-                                <tr><td width="100px" class="td-panel">Telefono celular:</td><td><input type= "text" required= "required" id= "TelCel" '.$habcampos.' value= "'.$Registro['TelCel'].'"></td></tr>';
-            echo'               <tr><td width="100px" class="td-panel">Usuario:</td><td><select name= "idUsuario" id= "idUsuario" '.$habcampos.' value= "'.$Registro['idUsuario'].'">\'';
-                        
-                                $subconsulta = cargarUsuarios();
-            echo'                              <option value=-1>Seleccione</option>';
-                                $RegUsuarios = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                while ($RegUsuarios)
-                                    {
-                                        if($RegUsuarios['idUsuario']==$Registro['idUsuario'])
+                                        while ($RegNiveles)
                                             {
-                                                //En caso que el valor almacenado coincida con uno de los existentes en lista.
-            echo'                              <option value='.$RegUsuarios['idUsuario'].' selected="selected">'.$RegUsuarios['Usuario'].'</option>';
+                                                if($RegNiveles['idEntidad']==$Registro['idEntidad'])
+                                                    {
+                                                        //En caso que el valor almacenado coincida con uno de los existentes en lista.
+            echo'                           <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
+                                                }
+                                                else
+                                                    {
+                                                        //En caso contrario se carga la etiqueta por default.
+            echo'                           <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
+                                                        }
+                                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                                }
+            
+            echo'                           </select></td>';
+                        
+            echo'                       <td class="td-panel">Puesto: <div id="cbPuesto" border:none>';
+                                        if($parametro == "-1")
+                                            {
+                                                /*
+                                                 * Si la accion corresponde a la creacion de un registro nuevo,
+                                                 * se establece el codigo actual.
+                                                 */
+            echo'                           <select class="inputform" id= "idPuesto" '.$habcampos.' ><option value=-1>Seleccione</option></select></div></td></tr>';
                                                 }
                                         else
                                             {
-                                                //En caso contrario se carga la etiqueta por default.
-            echo'                               <option value='.$RegUsuarios['idUsuario'].'>'.$RegUsuarios['Usuario'].'</option>';
+                                                /*
+                                                 * Si la accion ocurre para un registro existente,
+                                                 * se preserva el codigo almacenado.
+                                                 */
+            echo                                constructorcbPuesto($Registro['idEntidad']).'</div></td></tr>';
                                                 }
+                                                    
+            echo'                       <tr>
+                                            <td class="td-panel">RFC: <input class="inputform" type= "text" required= "required" id= "RFC" '.$habcampos.' value= "'.$Registro['RFC'].'"></td>
+                                            <td class="td-panel">CURP: <input class="inputform" type= "text" required= "required" id= "CURP" '.$habcampos.' value= "'.$Registro['CURP'].'"></td>
+                                            <td class="td-panel">Telefono particular: <input class="inputform" type= "text" required= "required" id= "TelFijo" '.$habcampos.' value= "'.$Registro['TelFijo'].'"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="td-panel">Telefono celular: <input class="inputform" type= "text" required= "required" id= "TelCel" '.$habcampos.' value= "'.$Registro['TelCel'].'"></td>';
+            echo'                           <td class="td-panel">Usuario: <select class="inputform" name= "idUsuario" id= "idUsuario" '.$habcampos.' value= "'.$Registro['idUsuario'].'">\'';
+                        
+                                        $subconsulta = cargarUsuarios();
+            echo'                           <option value=-1>Seleccione</option>';
                                         $RegUsuarios = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                        }
+                                        while ($RegUsuarios)
+                                            {
+                                                if($RegUsuarios['idUsuario'] == $Registro['idUsuario'])
+                                                    {
+                                                        //En caso que el valor almacenado coincida con uno de los existentes en lista.
+            echo'                           <option value='.$RegUsuarios['idUsuario'].' selected="selected">'.$RegUsuarios['Usuario'].'</option>';
+                                                        }
+                                                else
+                                                    {
+                                                        //En caso contrario se carga la etiqueta por default.
+            echo'                           <option value='.$RegUsuarios['idUsuario'].'>'.$RegUsuarios['Usuario'].'</option>';
+                                                        }
+                                                $RegUsuarios = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                                }
             
-            echo'               </select></td></tr>';            
-                                controlVisual($parametro);
-            echo'           </table>
-                                    </div>
+            echo'                           </select></td></tr>
+                                    </table>
                                 </div>
+                                <div id="pie" class="pie-operativo">'.
+                                    controlBotones("32", "32", $cntview).                
+                                '</div>    
                             </div>  
                         </body>
                     </html>

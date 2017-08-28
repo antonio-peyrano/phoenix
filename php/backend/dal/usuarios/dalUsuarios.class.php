@@ -188,11 +188,21 @@
                                             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                                             $Registro = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                                     
-                                            //Se crean los elementos de la relacion.
-                                            for($conteo=1; $conteo < count($Mod); $conteo++)
+                                            if($this->cntView == 9)
                                                 {
-                                                    $consulta = 'INSERT INTO opRelPerUsr (idUsuario, idModulo) VALUES ('.'\''.$Registro['idUsuario'].'\',\''.$Mod[$conteo].'\')'; //Se establece el modelo de consulta de datos.
+                                                    //Si el usuario se crea por medio de invitado, se establece los permisos minimos.
+                                                    $consulta = 'INSERT INTO opRelPerUsr (idUsuario, idModulo) VALUES ('.'\''.$Registro['idUsuario'].'\',\'23\')'; //Se establece el modelo de consulta de datos.
                                                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+                                                    }
+                                            else
+                                                {
+                                                    //Si el usuario se crea por medio del modulo principal del sistema, se cargan los permisos gestionados.
+                                                    //Se crean los elementos de la relacion.
+                                                    for($conteo=1; $conteo < count($Mod); $conteo++)
+                                                        {
+                                                            $consulta = 'INSERT INTO opRelPerUsr (idUsuario, idModulo) VALUES ('.'\''.$RegUsuario['idUsuario'].'\',\''.$Mod[$conteo].'\')'; //Se establece el modelo de consulta de datos.
+                                                            $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
+                                                            }
                                                     }
                                             }
                                             
