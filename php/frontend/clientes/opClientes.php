@@ -15,8 +15,16 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            }  
+    
     $imgTitleURL = './img/menu/clientes.png';
     $Title = 'Clientes';
+    $Sufijo = "cli_";
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     
@@ -46,52 +54,100 @@
             return $dataset;        
             }   
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
 
-    function controlVisual($idRegistro)
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta funci�n controla los botones que deberan verse en la pantalla deacuerdo con la acci�n solicitada por el
-             * usuario en la ventana previa. Si es una edici�n, los botones borrar y guardar deben verse. Si es una creaci�n
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
-            
-            if($idRegistro == -1)
+            global $Sufijo;
+    
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acci�n corresponda a la creaci�n de un nuevo registro.
-                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acci�n de visualizaci�n.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/clientes/borrar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habCliente();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            //En caso que la acci�n corresponda a la edici�n de un registro.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/clientes/busClientes.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarCliente(\'./php/backend/clientes/guardar.php\',\'?id=\'+document.getElementById(\'idCliente\').value.toString()+\'&nombre=\'+document.getElementById(\'Nombre\').value.toString()+\'&paterno=\'+document.getElementById(\'Paterno\').value.toString()+\'&materno=\'+document.getElementById(\'Materno\').value.toString()+\'&calle=\'+document.getElementById(\'Calle\').value.toString()+\'&nint=\'+document.getElementById(\'Nint\').value.toString()+\'&next=\'+document.getElementById(\'Next\').value.toString()+\'&idcolonia=\'+document.getElementById(\'idColonia\').value.toString()+\'&rfc=\'+document.getElementById(\'RFC\').value.toString()+\'&curp=\'+document.getElementById(\'CURP\').value.toString()+\'&telfijo=\'+document.getElementById(\'TelFijo\').value.toString()+\'&telcel=\'+document.getElementById(\'TelCel\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habCliente();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
                             }
                     }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
             }
-            
+                
     function constructor()
         {
             /*
-             * Esta funci�n establece el contenido HTML del formulario
+             * Esta funcion establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
             global $imgTitleURL, $Title;
+            global $cntview;
             
             $habcampos = 'disabled= "disabled"';
             
-            if($Registro['idCliente'] == null)
+            if(!empty($Registro['idCliente']))
                 {
-                    //En caso que el registro sea de nueva creacion.
-                    $habcampos='';        
+                    //CASO: VISUALIZACION DE REGISTRO PARA SU EDICION O BORRADO.
+                    if($cntview == 1)
+                        {
+                            //VISUALIZAR.
+                            $habcampos = 'disabled= "disabled"';
+                            }
+                    else
+                        {
+                            //EDICION.
+                            $habcampos = '';
+                            }                                                                
+                    }
+            else
+                {
+                    //CASO: CREACION DE NUEVO REGISTRO.
+                    $habcampos = '';
                     }
 
             echo'
@@ -99,8 +155,7 @@
                         <head>
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
-                        <body>
-                            <div id="cntOperativo" class="cnt-operativo">                
+                        <body>                                            
                             <div style=display:none>
                                 <input type= "text" id= "idCliente" value="'.$Registro['idCliente'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
@@ -141,11 +196,12 @@
                                 <tr><td class="td-panel" width="100px">Telefono particular:</td><td><input type= "text" required= "required" id= "TelFijo" '.$habcampos.' value= "'.$Registro['TelFijo'].'"></td></tr>
                                 <tr><td class="td-panel" width="100px">Telefono celular:</td><td><input type= "text" required= "required" id= "TelCel" '.$habcampos.' value= "'.$Registro['TelCel'].'"></td></tr>                                                                                                            
                 ';
-                                controlVisual($parametro);
+
             echo'           </table>
                                     </div>
-                                </div>
-                            </div>                    
+                                    <div id="pie" class="pie-operativo">'.
+                                        controlBotones("32", "32", $cntview).                
+                                '   </div>                      
                         </body>
                     </html>
                     ';            

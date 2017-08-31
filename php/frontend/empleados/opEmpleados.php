@@ -204,10 +204,24 @@
             
             $habcampos = 'disabled= "disabled"';
             
-            if($Registro['idEmpleado'] == null)
+            if(!empty($Registro['idEmpleado']))
                 {
-                    //En caso que el registro sea de nueva creacion.
-                    $habcampos='';        
+                    //CASO: VISUALIZACION DE REGISTRO PARA SU EDICION O BORRADO.
+                    if($cntview == 1)
+                        {
+                            //VISUALIZAR.
+                            $habcampos = 'disabled= "disabled"';
+                            }
+                    else
+                        {
+                            //EDICION.
+                            $habcampos = '';
+                            }                                                                
+                    }
+            else
+                {
+                    //CASO: CREACION DE NUEVO REGISTRO.
+                    $habcampos = '';
                     }
 
             echo'

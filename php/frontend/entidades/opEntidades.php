@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,20 +10,28 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            } 
     
     $imgTitleURL = './img/menu/entidades.png';
     $Title = 'Entidades';
+    $Sufijo = "ent_";
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
 
     function cargarTipos()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de tipos de entidades.
+             * Esta funcion establece la carga del conjunto de registros de tipos de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -36,7 +44,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -46,52 +54,100 @@
             return $dataset;        
             }   
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
-
-    function controlVisual($idRegistro)
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
+    
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta función controla los botones que deberan verse en la pantalla deacuerdo con la acción solicitada por el
-             * usuario en la ventana previa. Si es una edición, los botones borrar y guardar deben verse. Si es una creación
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
-            
-            if($idRegistro == -1)
+            global $Sufijo;
+    
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/entidades/busEntidades.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEntidad(\'./php/backend/entidades/guardar.php\',\'?id=\'+document.getElementById(\'idEntidad\').value.toString()+\'&entidad=\'+document.getElementById(\'Entidad\').value.toString()+\'&idtentidad=\'+document.getElementById(\'idTEntidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acción de visualización.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/entidades/busEntidades.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/entidades/borrar.php\',\'?id=\'+document.getElementById(\'idEntidad\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEntidad(\'./php/backend/entidades/guardar.php\',\'?id=\'+document.getElementById(\'idEntidad\').value.toString()+\'&entidad=\'+document.getElementById(\'Entidad\').value.toString()+\'&idtentidad=\'+document.getElementById(\'idTEntidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());""><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEntidad();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/entidades/busEntidades.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEntidad(\'./php/backend/entidades/guardar.php\',\'?id=\'+document.getElementById(\'idEntidad\').value.toString()+\'&entidad=\'+document.getElementById(\'Entidad\').value.toString()+\'&idtentidad=\'+document.getElementById(\'idTEntidad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEntidad();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
                             }
                     }
-            }
-            
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
+            } 
+                
     function constructor()
         {
             /*
-             * Esta función establece el contenido HTML del formulario
+             * Esta funcion establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
             global $imgTitleURL, $Title;
+            global $cntview;
             
             $habcampos = 'disabled= "disabled"';
             
-            if($Registro['idEntidad'] == null)
+            if(!empty($Registro['idEntidad']))
                 {
-                    //En caso que el registro sea de nueva creacion.
-                    $habcampos='';        
+                    //CASO: VISUALIZACION DE REGISTRO PARA SU EDICION O BORRADO.
+                    if($cntview == 1)
+                        {
+                            //VISUALIZAR.
+                            $habcampos = 'disabled= "disabled"';
+                            }
+                    else
+                        {
+                            //EDICION.
+                            $habcampos = '';
+                            }                                                                
+                    }
+            else
+                {
+                    //CASO: CREACION DE NUEVO REGISTRO.
+                    $habcampos = '';
                     }
 
             echo'
@@ -99,8 +155,7 @@
                         <head>
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
-                        <body>
-                            <div id="cntOperativo" class="cnt-operativo">                
+                        <body>                
                             <div style=display:none>
                                 <input type= "text" id= "idEntidad" value="'.$Registro['idEntidad'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
@@ -133,12 +188,13 @@
                                         }
             
             echo'               </select></td></tr>';            
-                                controlVisual($parametro);
+
             echo'           </table>
                                     </div>
-                                </div>
-                            </div>   
-                        </body>
+                                    <div id="pie" class="pie-operativo">'.
+                                        controlBotones("32", "32", $cntview).                
+                                '   </div>
+                            </div>
                     </html>
                     ';            
         } 

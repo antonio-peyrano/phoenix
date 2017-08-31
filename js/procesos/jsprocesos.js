@@ -14,6 +14,12 @@ function guardarProceso(url,parametro){
 			//En caso de no ocurrir un error de validación, se asigna el valor de paso.
 			error= error+1;
 			}
+	
+	if(procesosSeleccionados() == 0)
+		{
+			//En caso de no ocurrir un error de validación, se asigna el valor de paso.
+			error= error+1;		
+			}
 
 	if(error > 0)
 		{
@@ -44,7 +50,30 @@ function habProceso()
 				}
 		
 		document.getElementById('Proceso').disabled = false;
+		document.getElementById('pro_Guardar').style.display="block";
+		document.getElementById('pro_Borrar').style.display="none";
+		document.getElementById('pro_Editar').style.display="none";
 		}
+
+function procesosSeleccionados()
+{
+	/*
+	 * Esta función obtiene los elementos seleccionados
+	 * para la validacion.
+	 */
+	var checkboxes = $('.check');
+	var temp = 0; 
+ 
+	for (var x=0; x < checkboxes.length; x++) 
+		{
+			if (checkboxes[x].checked) 
+				{
+					temp += 1;
+					}
+			}
+			
+	return temp;
+	}
 
 function vectorizacion()
 {
@@ -223,3 +252,120 @@ $(document).ready(function() {
 							}
 					});                 
 			});
+	
+	//DECLARACION DE ACCIONES A EJECUTARSE SOBRE FORMULARIO OPERATIVO.
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de retorno
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    		     	e.stopPropagation();
+	    		        if(e.target.id == "pro_Volver")
+	    		        	{
+	    		            	//En caso de coincidir el id con la accion volver.
+	    		        		cargar('./php/frontend/procesos/busProcesos.php','','sandbox');
+	    		            	}
+	    				});                 
+				});
+	    		
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de borrado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    			 	e.stopPropagation();
+	    			    if(e.target.id == "pro_Borrar")
+	    			    	{
+	    			         	//En caso de coincidir el id con la accion borrar.
+	    			            bootbox.confirm(
+	    			            	{
+	    				            	message: "¿Confirma que desea borrar el registro?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+	    				            					cargar('./php/backend/procesos/borrar.php','?id='+document.getElementById('idProceso').value.toString(),'sandbox');
+	    				            					}			            					
+	    				            			}
+	    			            		});
+	    			    		}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de guardado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "pro_Guardar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion guardar.
+	    				        bootbox.confirm(
+	    				        	{
+	    				            	message: "¿Confirma que desea almacenar los cambios?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
+	    				            					guardarProceso('./php/backend/procesos/guardar.php','?id='+document.getElementById('idProceso').value.toString()+'&proceso='+document.getElementById('Proceso').value.toString()+'&identidad='+vectorizacion()+'&nonidentidad='+nonvectorizacion()+'&status='+document.getElementById('Status').value.toString());
+	    				            					}			            					
+	    				            			}
+	    				        		});			        		
+	    						}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de edicion
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "pro_Editar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion edicion.
+	    						habProceso();
+	    						}
+	    				});                 
+				});	

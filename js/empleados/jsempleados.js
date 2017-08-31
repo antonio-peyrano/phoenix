@@ -121,7 +121,10 @@ function habEmpleado(){
 	document.getElementById('CURP').disabled = false;
 	document.getElementById('TelFijo').disabled = false;
 	document.getElementById('TelCel').disabled = false;
-	document.getElementById('idUsuario').disabled = false;	
+	document.getElementById('idUsuario').disabled = false;
+	document.getElementById('emp_Guardar').style.display="block";
+	document.getElementById('emp_Borrar').style.display="none";
+	document.getElementById('emp_Editar').style.display="none";	
 	}
 
 /*

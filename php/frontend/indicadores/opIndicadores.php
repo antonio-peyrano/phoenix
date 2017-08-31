@@ -15,8 +15,16 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
     
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            } 
+        
     $imgTitleURL = './img/menu/indicadores.png';
     $Title = 'Indicadores';
+    $Sufijo = "ind_";
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $habcampos = 'disabled= "disabled"';
@@ -128,33 +136,66 @@
                         
     $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
 
-    function controlVisual($idRegistro)
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta función controla los botones que deberan verse en la pantalla deacuerdo con la acción solicitada por el
-             * usuario en la ventana previa. Si es una edición, los botones borrar y guardar deben verse. Si es una creación
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
-            
-            if($idRegistro == -1)
+            global $Sufijo;
+    
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acción de visualización.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/indicadores/borrar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habIndicador();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/indicadores/busIndicadores.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarIndicador(\'./php/backend/indicadores/guardar.php\',\'?id=\'+document.getElementById(\'idIndicador\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&indicador=\'+document.getElementById(\'Indicador\').value.toString()+\'&percentil=\'+document.getElementById(\'Percentil\').value.toString()+\'&idproceso=\'+getidsprocesos()+\'&nonidproceso=\'+getnonidprocesos()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habIndicador();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
                             }
                     }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
             }
             
     function constructor()
@@ -165,11 +206,26 @@
              */
             global $Registro, $parametro, $clavecod, $habcampos;
             global $imgTitleURL, $Title;
+            global $cntview;
             
-            if($Registro['idIndicador'] == null)
+            if(!empty($Registro['idIndicador']))
                 {
-                    //En caso que el registro sea de nueva creacion.
-                    $habcampos='';        
+                    //CASO: VISUALIZACION DE REGISTRO PARA SU EDICION O BORRADO.
+                    if($cntview == 1)
+                        {
+                            //VISUALIZAR.
+                            $habcampos = 'disabled= "disabled"';
+                            }
+                    else
+                        {
+                            //EDICION.
+                            $habcampos = '';
+                            }                                                                
+                    }
+            else
+                {
+                    //CASO: CREACION DE NUEVO REGISTRO.
+                    $habcampos = '';
                     }
 
             echo'
@@ -177,8 +233,7 @@
                         <head>
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                         </head>
-                        <body>
-                            <div id="cntOperativo" class="cnt-operativo">                
+                        <body>                
                             <div style=display:none>
                                 <input type= "text" id= "idIndicador" value="'.$Registro['idIndicador'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
@@ -193,12 +248,12 @@
                                 <tr><td class="td-panel" width="100px">Percentil:</td><td><input type= "text" required= "required" id= "Percentil" '.$habcampos.' value= "'.$Registro['Percentil'].'"></td></tr>';
             
                                 cargarProcesos($parametro, $Registro['idIndicador']);
-                                controlVisual($parametro);
                                 
             echo'           </table>
                                     </div>
-                                </div>
-                            </div>   
+                                    <div id="pie" class="pie-operativo">'.
+                                        controlBotones("32", "32", $cntview).                
+                                '   </div>     
                         </body>
                     </html>
                     ';            
