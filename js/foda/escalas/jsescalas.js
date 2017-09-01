@@ -52,6 +52,9 @@ function habEscala()
 		document.getElementById('Escala').disabled = false;
 		document.getElementById('Ponderacion').disabled = false;
 		document.getElementById('idCedula').disabled = false;
+		document.getElementById('fes_Guardar').style.display="block";
+		document.getElementById('fes_Borrar').style.display="none";
+		document.getElementById('fes_Editar').style.display="none";
 		}
 
 /*
@@ -273,7 +276,7 @@ $(document).ready(function() {
 	    		        if(e.target.id == "fes_Volver")
 	    		        	{
 	    		            	//En caso de coincidir el id con la accion volver.
-	    		        		cargar('./php/frontend/configuracion/busConfiguraciones.php','','sandbox');
+	    		        		cargar('./php/frontend/foda/escalas/busEscalas.php','','sandbox');
 	    		            	}
 	    				});                 
 				});
@@ -311,7 +314,7 @@ $(document).ready(function() {
 	    				            			if(result)
 	    				            				{
 	    				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
-	    				            					cargar('./php/backend/configuracion/borrar.php','?id='+document.getElementById('idConfiguracion').value.toString(),'sandbox');
+	    				            					cargar('./php/backend/foda/escalas/borrar.php','?id='+document.getElementById('idEscala').value.toString(),'sandbox');
 	    				            					}			            					
 	    				            			}
 	    			            		});
@@ -352,7 +355,7 @@ $(document).ready(function() {
 	    				            			if(result)
 	    				            				{
 	    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
-	    				            					guardarConfiguracion('./php/backend/configuracion/guardar.php','?id='+document.getElementById('idConfiguracion').value.toString()+'&optimo='+document.getElementById('Optimo').value.toString()+'&tolerable='+document.getElementById('Tolerable').value.toString()+'&periodo='+document.getElementById('Periodo').value.toString()+'&status='+document.getElementById('Status').value.toString());
+	    				            					guardarEscala('./php/backend/foda/escalas/guardar.php','?id='+document.getElementById('idEscala').value.toString()+'&escala='+document.getElementById('Escala').value.toString()+'&ponderacion='+document.getElementById('Ponderacion').value.toString()+'&idcedula='+document.getElementById('idCedula').value.toString()+'&status='+document.getElementById('Status').value.toString());
 	    				            					}			            					
 	    				            			}
 	    				        		});			        		
@@ -372,7 +375,7 @@ $(document).ready(function() {
 	    				if(e.target.id == "fes_Editar")
 	    					{
 	    				     	//En caso de coincidir el id con la accion edicion.
-	    				        habConfiguracion();
+	    						habEscala();
 	    						}
 	    				});                 
 				});

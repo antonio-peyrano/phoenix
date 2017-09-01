@@ -59,6 +59,9 @@ function habEvaluacion()
 		document.getElementById('idCedula').disabled = false;
 		document.getElementById('idEntfoda').disabled = false;
 		document.getElementById('fevempleado').disabled = false;
+		document.getElementById('fev_Guardar').style.display="block";
+		document.getElementById('fev_Borrar').style.display="none";
+		document.getElementById('fev_Editar').style.display="none";
 		}
 
 /*
@@ -247,3 +250,120 @@ $(document).ready(function() {
 							}
 					});                 
 			});
+	
+	//DECLARACION DE ACCIONES A EJECUTARSE SOBRE FORMULARIO OPERATIVO.
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de retorno
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    		     	e.stopPropagation();
+	    		        if(e.target.id == "fev_Volver")
+	    		        	{
+	    		            	//En caso de coincidir el id con la accion volver.
+	    		        		cargar('./php/frontend/foda/evaluaciones/busEvaluaciones.php','','sandbox');
+	    		            	}
+	    				});                 
+				});
+	    		
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de borrado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    			 	e.stopPropagation();
+	    			    if(e.target.id == "fev_Borrar")
+	    			    	{
+	    			         	//En caso de coincidir el id con la accion borrar.
+	    			            bootbox.confirm(
+	    			            	{
+	    				            	message: "¿Confirma que desea borrar el registro?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+	    				            					cargar('./php/backend/foda/evaluaciones/borrar.php','?id='+document.getElementById('idEvaluacion').value.toString(),'sandbox');
+	    				            					}			            					
+	    				            			}
+	    			            		});
+	    			    		}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de guardado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "fev_Guardar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion guardar.
+	    				        bootbox.confirm(
+	    				        	{
+	    				            	message: "¿Confirma que desea almacenar los cambios?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
+	    				            					guardarEvaluacion('./php/backend/foda/evaluaciones/guardar.php','?id='+document.getElementById('idEvaluacion').value.toString()+'&idcedula='+document.getElementById('idCedula').value.toString()+'&folio='+document.getElementById('Folio').value.toString()+'&idempleado='+document.getElementById('fevempleado').value.toString()+'&fecha='+document.getElementById('Fecha').value.toString()+'&status='+document.getElementById('Status').value.toString());
+	    				            					}			            					
+	    				            			}
+	    				        		});			        		
+	    						}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de edicion
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "fev_Editar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion edicion.
+	    						habEvaluacion();
+	    						}
+	    				});                 
+				});	

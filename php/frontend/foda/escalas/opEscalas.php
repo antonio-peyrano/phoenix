@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,10 +10,10 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
     if(!isset($_SESSION))
         {
@@ -31,7 +31,7 @@
     function cargarCedulas()
         {
             /*
-             * Esta función establece la carga del conjunto de registros de entidades.
+             * Esta funcion establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -44,7 +44,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -54,7 +54,7 @@
             return $dataset;        
             }   
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
 
     function controlBotones($Width, $Height, $cntView)
         {
@@ -121,7 +121,7 @@
     function constructor()
         {
             /*
-             * Esta función establece el contenido HTML del formulario
+             * Esta funcion establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
