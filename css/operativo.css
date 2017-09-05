@@ -94,11 +94,13 @@
             font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
   			font-size: 10px;
         	width:60px;
+        	height:20px;
 			}
 
 	.dgHeader-Planeacion
 		{
-    		padding:15px;
+			height:10px;
+    		padding:2px;
     		color:#fff;
     		text-shadow:1px 1px 1px #216292;
     		border:1px solid #FFBF00;
@@ -107,9 +109,9 @@
 
 	.dgDH-Planeacion
 		{
-    		padding:15px;
+    		padding:2px;
 			width:60px;
-			height:15px;
+			height:10px;
   			font-size: 12px;				
     		color:#000000;
     		text-shadow:1px 1px 1px #216292;

@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeaci�n operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,13 +10,23 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificaci�n a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
 
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            } 
+        
     $parametro = $_GET['id'];
 
+    $imgTitleURL = './img/menu/programas.png';
+    $Title = 'Programacion';
+    $Sufijo = "prg_";
     $Optimo = 0; //El valor de limite superior para la eficacia.
     $Tolerable = 0; //El valor de limite inferior para la eficacia.
     $Periodo = ''; //El valor del periodo a visualizar.
@@ -25,8 +35,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta funci�n obtiene el perfil del sistema activo para el despliegue de la
-             * informaci�n de la planeaci�n.
+             * Esta funcion obtiene el perfil del sistema activo para el despliegue de la
+             * informacion de la planeacion.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -38,7 +48,7 @@
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuraci�n valida.
+                    //Si ha sido localizada una configuracion valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -48,13 +58,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*
-             * Esta funci�n carga la parte grafica que corresponde a las banderas de desempeño.
+             * Esta funcion carga la parte grafica que corresponde a las banderas de desempeño.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
             
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medici�n optima.
+                    //Si el parametro recibido esta en el rango de medicion optima.
                     $rowBanderas.='<td><center><img id="optimo_'.$mes.'"align= "middle" src= "./img/banderas/optimo.png" width= "25" height= "25" alt= "Optimo" data-toggle="tooltip" title="Eficacia >='.$Optimo.'%"/></center></td>';
                     } 
                     
@@ -74,7 +84,7 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualizaci�n.
+             * Si se declaro en la url el control de visualizacion.
              */
             $cntview = $_GET['view'];
             }
@@ -86,7 +96,7 @@
     function obtenerMes($Mes)
         {
             /*
-             * Esta funci�n obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funcion obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -141,7 +151,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta funci�n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */
             global $username, $password, $servername, $dbname;
     
@@ -151,44 +161,74 @@
             return $dataset;
             }
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
 
-    function controlVisual($idRegistro)
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta funci�n controla los botones que deberan verse en la pantalla deacuerdo con la acci�n solicitada por el
-             * usuario en la ventana previa. Si es una edici�n, los botones borrar y guardar deben verse. Si es una creaci�n
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
+            global $Sufijo;
     
-            if($idRegistro == -1)
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acci�n corresponda a la creaci�n de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else
-                {
-                    if(($cntview == 1)||($cntview == 3))
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acci�n de visualizaci�n.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/programa/borrar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habPrograma();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            if($cntview == 0)
+                            if($_SESSION['nivel'] == "Administrador")
                                 {
-                                    //En caso que la acci�n corresponda a la edici�n de un registro.
-                                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/programa/busPrograma.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarPrograma(\'./php/backend/programa/guardar.php\',\'?id=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idobjest=\'+document.getElementById(\'idObjEst\').value.toString()+\'&idobjope=\'+document.getElementById(\'idObjOpe\').value.toString()+\'&idestope=\'+document.getElementById(\'idEstOpe\').value.toString()+\'&nomenclatura=\'+document.getElementById(\'Nomenclatura\').value.toString()+\'&programa=\'+document.getElementById(\'Programa\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&idresponsable=\'+document.getElementById(\'idResponsable\').value.toString()+\'&idsubalterno=\'+document.getElementById(\'idSubalterno\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habPrograma();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
                                     }
                             }
                     }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
             }
-        
+                
     function cargarObjEst()
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de ObjEst.
+             * Esta funcion establece la carga del conjunto de registros de ObjEst.
              */
             global $username, $password, $servername, $dbname;
     
@@ -201,7 +241,7 @@
     function cargarObjOpe($parametro)
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de ObjOpe.
+             * Esta funcion establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
     
@@ -214,14 +254,14 @@
     function constructorcb($parametro)
         {
             /*
-             * Esta funci�n establece los parametros de carga del combobox de obj ope cuando
-             * se ejecuta un proceso de edici�n.
+             * Esta funcion establece los parametros de carga del combobox de obj ope cuando
+             * se ejecuta un proceso de edicion.
              */
             global $habcampos, $Registro;
     
             $subconsulta = cargarObjOpe($parametro);
     
-            echo' <select name= "idObjOpe" id= "idObjOpe" '.$habcampos.' value= "'.$Registro['idObjOpe'].'">
+            echo' <select style="width:300px;" class="inputform" name= "idObjOpe" id= "idObjOpe" '.$habcampos.' value= "'.$Registro['idObjOpe'].'">
                   <option value=-1>Seleccione</option>';
             
             $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
@@ -247,7 +287,7 @@
     function cargarEstOpe($parametro)
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de ObjOpe.
+             * Esta funcion establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
             
@@ -260,14 +300,14 @@
     function constructorcbEstOpe($parametro)
         {
             /*
-             * Esta funci�n establece los parametros de carga del combobox de Est ope cuando
-             * se ejecuta un proceso de edici�n.
+             * Esta funcion establece los parametros de carga del combobox de Est ope cuando
+             * se ejecuta un proceso de edicion.
              */
             global $habcampos, $Registro;
             
             $subconsulta = cargarEstOpe($parametro);
             
-            echo' <select name= "idEstOpe" id= "idEstOpe" '.$habcampos.' value= "'.$Registro['idEstOpe'].'">
+            echo' <select style="width:300px;" class="inputform" name= "idEstOpe" id= "idEstOpe" '.$habcampos.' value= "'.$Registro['idEstOpe'].'">
                   <option value=-1>Seleccione</option>';
             
             $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
@@ -293,7 +333,7 @@
     function cargarEmpleado($parametro)
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de Empleados.
+             * Esta funcion establece la carga del conjunto de registros de Empleados.
              */
             global $username, $password, $servername, $dbname;
             
@@ -306,14 +346,14 @@
     function constructorcbResponsable($parametro)
         {
             /*
-             * Esta funci�n establece los parametros de carga del combobox de Responsable cuando
-             * se ejecuta un proceso de edici�n.
+             * Esta funcion establece los parametros de carga del combobox de Responsable cuando
+             * se ejecuta un proceso de edicion.
              */
              global $habcampos, $Registro;
             
              $subconsulta = cargarEmpleado($parametro);
             
-             echo' <select name= "idResponsable" id= "idResponsable" '.$habcampos.' value= "'.$Registro['idResponsable'].'">
+             echo' <select style="width:300px;" class="inputform" name= "idResponsable" id= "idResponsable" '.$habcampos.' value= "'.$Registro['idResponsable'].'">
                    <option value=-1>Seleccione</option>';
              
                 $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
@@ -338,14 +378,14 @@
     function constructorcbSubalterno($parametro)
         {
             /*
-             * Esta funci�n establece los parametros de carga del combobox de Subalterno cuando
-             * se ejecuta un proceso de edici�n.
+             * Esta funcion establece los parametros de carga del combobox de Subalterno cuando
+             * se ejecuta un proceso de edicion.
              */
              global $habcampos, $Registro;
             
              $subconsulta = cargarEmpleado($parametro);
             
-             echo' <select name= "idSubalterno" id= "idSubalterno" '.$habcampos.' value= "'.$Registro['idSubalterno'].'">
+             echo' <select style="width:300px;" class="inputform" name= "idSubalterno" id= "idSubalterno" '.$habcampos.' value= "'.$Registro['idSubalterno'].'">
              <option value=-1>Seleccione</option>';
              
              $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
@@ -371,7 +411,7 @@
     function cargarEntidades()
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de entidades.
+             * Esta funcion establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
             
@@ -384,7 +424,7 @@
     function cargarProcesos($idRegistro, $idEntidad)
         {
             /*
-             * Esta funci�n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */
              global $username, $password, $servername, $dbname, $habcampos;
             
@@ -395,18 +435,18 @@
              if($idRegistro == -1)
                 {
                     /*
-                     * Si la operaci�n solicitada es para la creaci�n de un registro,
+                     * Si la operacion solicitada es para la creacion de un registro,
                      * se carga el listado sin marcar.
                      */
-                    echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="chkProcesos">';
+                    echo '<tr><td class="td-panel" colspan="3">Procesos: <div id="chkProcesos">';
                     }
              else
                 {
                     /*
-                     * Si la operaci�n solicitada es para editar el registro,
+                     * Si la operacion solicitada es para editar el registro,
                      * se carga el listado con los elementos previamente marcados.
                      */
-                    echo '<tr><td class="dgRowsaltTR" width="100px">Procesos:</td><td class="dgRowsnormTR"><div id="chkProcesos">';
+                    echo '<tr><td class="td-panel" width="100px">Procesos: <div id="chkProcesos">';
                     $subconsulta = 'SELECT *FROM relProgPro WHERE idPrograma='.$idRegistro.' AND Status=0'; //Se establece el modelo de consulta de datos.
                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                     $vector = "";
@@ -440,13 +480,13 @@
                     while($RegNiveles)
                         {
                             /*
-                             * Mientras no se llegue al final de la colecci�n, se procede a la lectura
-                             * y generaci�n del listado.
+                             * Mientras no se llegue al final de la coleccion, se procede a la lectura
+                             * y generacion del listado.
                              */
                             if(in_array($RegNiveles['idProceso'], $tmparray,true))
                                 {
                                     /*
-                                     * En caso de tratarse de una opci�n previamente seleccionada por el usuario.
+                                     * En caso de tratarse de una opcion previamente seleccionada por el usuario.
                                      */
                                     echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habcampos.' value='.$RegNiveles['idProceso'].' checked>'.$RegNiveles['Proceso'];
                                     }
@@ -468,11 +508,13 @@
     function constructor()
         {
             /*
-             * Esta funci�n establece los parametros para la creaci�n de la interfaz de usuario.
+             * Esta funcion establece los parametros para la creacion de la interfaz de usuario.
              */
             
             global $Registro, $parametro, $clavecod, $habcampos, $periodo, $cntview;            
             global $username, $password, $servername, $dbname, $rowBanderas;
+            global $imgTitleURL, $Title;
+            global $cntview;
             
             if($Registro['idPrograma'] == null)
                 {
@@ -484,7 +526,6 @@
                         <head>
                             <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
                             <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
-                            <script type="text/javascript" src= "./js/programas/jsprogramas.js"></script>
                         </head>
                         <body>
                             <div style="display:none">
@@ -492,149 +533,152 @@
                                 <input type= "text" id= "idPrograma" value="'.$Registro['idPrograma'].'">
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>                 
-                            <div id= "infoProg" style= "width: 400px; "class="dgMainDiv">
-                                <table class="dgTable">
-                                    <tr><th colspan= "4" class= "dgHeader">Datos del Programa</th><tr>';
+                            <div id="infoRegistro" class="operativo" style="top:80%; left:50%;">
+                                <div id="cabecera" class="cabecera-operativo">'.
+                                    '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.
+                                '</div>
+                                <div id="cuerpo" class="cuerpo-operativo">
+                                    <center><table>';
 
-                                    $subconsulta = cargarObjEst();
+                                        $subconsulta = cargarObjEst();
                                     
-            echo '                  <tr><td class="dgRowsaltTR" width="100px">Objetivo Estrategico:</td><td class="dgRowsnormTR"><select name= "idObjEst" id= "idObjEst" '.$habcampos.' value= "'.$Registro['idObjEst'].'">
-                                    <option value=-1>Seleccione</option>';
+            echo '                      <tr><td class="td-panel" width="100px">Objetivo Estrategico: <select style="width:300px;" class="inputform" name= "idObjEst" id= "idObjEst" '.$habcampos.' value= "'.$Registro['idObjEst'].'">
+                                            <option value=-1>Seleccione</option>';
             
-                                    $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                            $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                     
-                                    while($RegNiveles)
-                                        {
-                                            if($RegNiveles['idObjEst']==$Registro['idObjEst'])
+                                            while($RegNiveles)
                                                 {
-                                                    //En caso que el valor almacenado coincida con uno de los existentes en lista.
-            echo '                                  <option value='.$RegNiveles['idObjEst'].' selected="selected">'.$RegNiveles['CObjEst'].'</option>';
-                                                    }
-                                            else
-                                                {
-                                                    //En caso contrario se carga la etiqueta por default.
-            echo '                                  <option value='.$RegNiveles['idObjEst'].'>'.$RegNiveles['CObjEst'].'</option>';
+                                                    if($RegNiveles['idObjEst']==$Registro['idObjEst'])
+                                                        {
+                                                            //En caso que el valor almacenado coincida con uno de los existentes en lista.
+            echo '                          <option value='.$RegNiveles['idObjEst'].' selected="selected">'.$RegNiveles['CObjEst'].'</option>';
+                                                            }
+                                                    else
+                                                        {
+                                                            //En caso contrario se carga la etiqueta por default.
+            echo '                          <option value='.$RegNiveles['idObjEst'].'>'.$RegNiveles['CObjEst'].'</option>';
                                                     }
                                             $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                             }
             
-            echo'               </select></td></tr>            
-                                <tr><td class="dgRowsaltTR">Objetivo Operativo:</td><td class= "dgRowsnormTR"><div id="cbObjOpe" border:none>';
+            echo'                           </select></td>            
+                                        <td class="td-panel" width="100px">Objetivo Operativo: <div id="cbObjOpe" border:none>';
             
-                                    if($parametro=="-1")
-                                        {
-                                            /*
-                                             * Si la acci�n corresponde a la creacion de un registro nuevo,
-                                             * se establece el codigo actual.
-                                             */
-                                            echo'<select id= "idObjOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
-                                            }
-                                    else
-                                        {
-                                            /*
-                                             * Si la acci�n ocurre para un registro existente,
-                                             * se preserva el codigo almacenado.
-                                             */
-                                            echo constructorcb($Registro['idObjEst']).'</div></td></tr>';
-                                            }
+                                            if($parametro=="-1")
+                                                {
+                                                    /*
+                                                     * Si la accion corresponde a la creacion de un registro nuevo,
+                                                     * se establece el codigo actual.
+                                                     */
+            echo'                           <select style="width:300px;" class="inputform" id= "idObjOpe"><option value=-1>Seleccione</option></select></div></td>';
+                                                    }
+                                            else
+                                                {
+                                                    /*
+                                                     * Si la accion ocurre para un registro existente,
+                                                     * se preserva el codigo almacenado.
+                                                     */
+                                            echo constructorcb($Registro['idObjEst']).'</div></td>';
+                                                    }
                                                         
-            echo'                   <tr><td class="dgRowsaltTR">Est. Operativa:</td><td class= "dgRowsnormTR"><div id="cbEstOpe" border:none>';
+            echo'                       <td class="td-panel" width="100px">Est. Operativa: <div id="cbEstOpe" border:none>';
             
-                                    if($parametro=="-1")
-                                        {
-                                            /*
-                                             * Si la acci�n corresponde a la creacion de un registro nuevo,
-                                             * se establece el codigo actual.
-                                             */
-                                            echo'<select id= "idEstOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
-                                            }
-                                    else
-                                        {
-                                            /*
-                                             * Si la acci�n ocurre para un registro existente,
-                                             * se preserva el codigo almacenado.
-                                             */
-                                            echo constructorcbEstOpe($Registro['idObjOpe']).'</div></td></tr>';
-                                            }
-                        
-                                    if($parametro=="-1")
-                                        {
-                                            /*
-                                             * Si la acci�n corresponde a la creacion de un registro nuevo,
-                                             * se establece el codigo actual.
-                                             */
-                                            echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= ""></td></tr>';
-                                            }
-                                    else
-                                        {
-                                            /*
-                                             * Si la acci�n ocurre para un registro existente,
-                                             * se preserva el codigo almacenado.
-                                             */
-                                             echo'<tr><td class="dgRowsaltTR" width="100px">Nomenclatura:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td></tr>';
-                                            }
-                                            
-            echo'                   <tr><td class= "dgRowsaltTR">Programa:</td><td class= "dgRowsnormTR"><input type= "text" id= "Programa" '.$habcampos.' value= "'.$Registro['Programa'].'"><td></tr>
-                                    <tr><td class= "dgRowsaltTR">Monto: $</td><td class= "dgRowsnormTR"><input type= "text" id= "Monto" '.$habcampos.' value= "'.$Registro['Monto'].'"><td></tr>';
-            
-            echo'                   <tr><td class= "dgRowsaltTR" width="100px">Entidades:</td><td class= "dgRowsnormTR"><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "'.$Registro['idEntidad'].'">\'';
-            
-                                    $subconsulta = cargarEntidades();
-                                    
-            echo'                   <option value=-1>Seleccione</option>';
-            
-                                    $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                    
-                                    while($RegNiveles)
-                                        {
-                                            if($RegNiveles['idEntidad']==$Registro['idEntidad'])
+                                            if($parametro=="-1")
                                                 {
-                                                    //En caso que el valor almacenado coincida con uno de los existentes en lista.
-            echo'                                   <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
+                                                    /*
+                                                     * Si la accion corresponde a la creacion de un registro nuevo,
+                                                     * se establece el codigo actual.
+                                                     */
+            echo'                           <select style="width:300px;" class="inputform" id= "idEstOpe"><option value=-1>Seleccione</option></select></div></td></tr>';
                                                     }
                                             else
                                                 {
-                                                    //En caso contrario se carga la etiqueta por default.
-            echo'                                   <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
+                                                    /*
+                                                     * Si la accion ocurre para un registro existente,
+                                                     * se preserva el codigo almacenado.
+                                                     */
+                                            echo constructorcbEstOpe($Registro['idObjOpe']).'</div></td></tr>';
                                                     }
+                        
+                                            if($parametro=="-1")
+                                                {
+                                                     /*
+                                                      * Si la accion corresponde a la creacion de un registro nuevo,
+                                                      * se establece el codigo actual.
+                                                      */
+            echo'                       <tr><td class="td-panel" width="100px">Nomenclatura: <input  style="width:80px;" class="inputform" type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= ""></td>';
+                                                    }
+                                            else
+                                                {
+                                                    /*
+                                                     * Si la accion ocurre para un registro existente,
+                                                     * se preserva el codigo almacenado.
+                                                     */
+            echo'                       <tr><td class="td-panel" width="100px">Nomenclatura: <input  style="width:100px;" class="inputform" type= "text" required= "required" id= "Nomenclatura" '.$habcampos.' value= "'.$Registro['Nomenclatura'].'"></td>';
+                                                    }
+                                            
+            echo'                       <td class="td-panel" width="100px">Programa: <input style="width:300px;" class="inputform" type= "text" id= "Programa" '.$habcampos.' value= "'.$Registro['Programa'].'"></td>
+                                        <td class="td-panel" width="100px">Monto: $ <input style="width:200px;" class="inputform" type= "text" id= "Monto" '.$habcampos.' value= "'.$Registro['Monto'].'"></td></tr>';
+            
+            echo'                       <tr><td class="td-panel" width="100px">Entidades: <select style="width:300px;" class="inputform" name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "'.$Registro['idEntidad'].'">\'';
+            
+                                            $subconsulta = cargarEntidades();
+                                    
+            echo'                           <option value=-1>Seleccione</option>';
+            
                                             $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                            }
+                                    
+                                            while($RegNiveles)
+                                                {
+                                                    if($RegNiveles['idEntidad']==$Registro['idEntidad'])
+                                                        {
+                                                            //En caso que el valor almacenado coincida con uno de los existentes en lista.
+            echo'                           <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
+                                                            }
+                                                    else
+                                                        {
+                                                            //En caso contrario se carga la etiqueta por default.
+            echo'                           <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
+                                                            }
+                                                    $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                                    }
             
-            echo'                   </select></td></tr>';
+            echo'                           </select></td>';
             
-            echo'                   <tr><td class="dgRowsaltTR">Responsable:</td><td class= "dgRowsnormTR"><div id="cbResponsable" border:none>';
+            echo'                       <td class="td-panel" width="100px">Responsable: <div id="cbResponsable" border:none>';
             
-                                    if($parametro=="-1")
-                                        {
-                                            /*
-                                             * Si la acci�n corresponde a la creacion de un registro nuevo,
-                                             * se establece el codigo actual.
-                                             */
-                                            echo'<select id= "idResponsable"><option value=-1>Seleccione</option></select></div></td></tr>';
-                                            }
-                                    else
-                                        {
-                                            /*
-                                             * Si la acci�n ocurre para un registro existente,
-                                             * se preserva el codigo almacenado.
-                                             */
-                                            echo constructorcbResponsable($Registro['idEntidad']).'</div></td></tr>';
-                                            }            
+                                        if($parametro=="-1")
+                                            {
+                                                /*
+                                                 * Si la accion corresponde a la creacion de un registro nuevo,
+                                                 * se establece el codigo actual.
+                                                 */
+            echo'                           <select style="width:300px;" class="inputform" id= "idResponsable"><option value=-1>Seleccione</option></select></div></td>';
+                                                }
+                                        else
+                                            {
+                                                /*
+                                                 * Si la accion ocurre para un registro existente,
+                                                 * se preserva el codigo almacenado.
+                                                 */
+                                            echo constructorcbResponsable($Registro['idEntidad']).'</div></td>';
+                                                }            
 
-            echo'                   <tr><td class="dgRowsaltTR">Auxiliar:</td><td class= "dgRowsnormTR"><div id="cbSubalterno" border:none>';
+            echo'                       <td class="td-panel" width="100px">Auxiliar: <div id="cbSubalterno" border:none>';
                                             
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci�n corresponde a la creacion de un registro nuevo,
+                                             * Si la accion corresponde a la creacion de un registro nuevo,
                                              * se establece el codigo actual.
                                              */
-                                             echo'<select id= "idSubalterno"><option value=-1>Seleccione</option></select></div></td></tr>';
+                                             echo'<select style="width:300px;" class="inputform" id= "idSubalterno"><option value=-1>Seleccione</option></select></div></td></tr>';
                                             }
                                     else
                                         {
                                             /*
-                                             * Si la acci�n ocurre para un registro existente,
+                                             * Si la accion ocurre para un registro existente,
                                              * se preserva el codigo almacenado.
                                              */
                                              echo constructorcbSubalterno($Registro['idEntidad']).'</div></td></tr>';
@@ -646,33 +690,30 @@
                                     if($parametro=="-1")
                                         {
                                             /*
-                                             * Si la acci�n corresponde a la creacion de un registro nuevo,
-                                             * se establece el año actual.
+                                             * Si la accion corresponde a la creacion de un registro nuevo,
+                                             * se establece el periodo actual.
                                              */
-                                            echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
+                                            echo '<tr><td class="td-panel" width="100px">Periodo: <input style="width:100px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
                                             }
                                     else
                                         {
                                             /*
-                                             * Si la acci�n ocurre para un registro existente,
-                                             * se preserva el año almacenado.
+                                             * Si la accion ocurre para un registro existente,
+                                             * se preserva el periodo almacenado.
                                              */
-                                            echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
-                                            }
-                        
-                                    controlVisual($parametro);
+                                            echo '<tr><td class="td-panel" width="100px">Periodo: <input style="width:100px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
+                                            }                        
                                                                                     
-            echo'                   </table>
-                            </div>
+            echo'                   </table></center>
                             <br>
                             <br>';
             
                             $nonhabilitado = 'disabled= "disabled"';
                             
-            echo'           <div id= "dataprog" class="dgDivMain">
-                                <table class= "queryTable">
-                                    <tr><th colspan= "14" class= "queryHeader">Datos del Programa</th></tr>
-                                    <tr><td></td><td class= "queryTitles">Enero</td><td class= "queryTitles">Febrero</td><td class= "queryTitles">Marzo</td><td class= "queryTitles">Abril</td><td class= "queryTitles">Mayo</td><td class= "queryTitles">Junio</td><td class= "queryTitles">Julio</td><td class= "queryTitles">Agosto</td><td class= "queryTitles">Septiembre</td><td class= "queryTitles">Octubre</td><td class= "queryTitles">Noviembre</td><td class= "queryTitles">Diciembre</td><td class= "queryTitles">Total</td></tr>';
+            echo'           <div id="dataprog">
+                                <table>
+                                    <tr><th class="dgHeader-Planeacion" colspan= "14">Datos del Programa</th></tr>
+                                    <tr><td></td><td class="dgDH-Planeacion">Enero</td><td class="dgDH-Planeacion">Febrero</td><td class="dgDH-Planeacion">Marzo</td><td class="dgDH-Planeacion">Abril</td><td class="dgDH-Planeacion">Mayo</td><td class="dgDH-Planeacion">Junio</td><td class="dgDH-Planeacion">Julio</td><td class="dgDH-Planeacion">Agosto</td><td class="dgDH-Planeacion">Septiembre</td><td class="dgDH-Planeacion">Octubre</td><td class="dgDH-Planeacion">Noviembre</td><td class="dgDH-Planeacion">Diciembre</td><td class="dgDH-Planeacion">Total</td></tr>';
                                     
                                     //Se procede con la carga de la programacion que corresponde al programa.
                                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
@@ -686,7 +727,7 @@
                                             $field = mysqli_fetch_field($dsCampos);
                                             }
                                             
-                                    $rowdata='<tr><td class= "queryTitles">Programacion</td>';
+                                    $rowdata='<tr><td class="dgDH-Planeacion">Programacion</td>';
                                     $count=1;
                                     $totEficacia=0.00;
                                     
@@ -695,26 +736,26 @@
                                             //Para el caso de una consulta de datos.
                                             while($field)
                                                 {
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="pr_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="pr_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
                                                     $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="pr_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="pr_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci�n de registro.
+                                            //Para el caso de una creacion de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
                                                 {
                                                     //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="pr_'.$counter.'" size="4" value="0.00"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="pr_'.$counter.'" size="4" value="0.00"></input></td>';
                                                     $counter += 1;
                                                     }
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="pr_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="pr_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
                                             }
                                             
                                     echo $rowdata;
@@ -731,7 +772,7 @@
                                             $field = mysqli_fetch_field($dsCampos);
                                             }
                                             
-                                    $rowdata='<tr><td class= "queryTitles">Ejecucion</td>';
+                                    $rowdata='<tr><td class="dgDH-Planeacion">Ejecucion</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -740,26 +781,26 @@
                                             //Para el caso de una consulta de datos.
                                             while($field)
                                                 {
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="ej_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="ej_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     $totEficacia += $RegAux[$field->name];
                                                     $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
                                                     }
                             
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="ej_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                            
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="ej_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                            
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci�n de registro.
+                                            //Para el caso de una creacion de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
                                                 {
                                                     //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="ej_'.$counter.'" size="4" value="0.00"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="ej_'.$counter.'" size="4" value="0.00"></input></td>';
                                                     $counter += 1;
                                                     }
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="ej_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="ej_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
                                             }                    
 
                                     echo $rowdata;
@@ -776,7 +817,7 @@
                                             $field = mysqli_fetch_field($dsCampos);
                                             }
                                             
-                                    $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
+                                    $rowdata='<tr><td class="dgDH-Planeacion">Eficacia</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -785,32 +826,33 @@
                                             //Para el caso de una consulta de datos.
                                             while($field)
                                                 {
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                                     cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.                                                    
                                                     $totEficacia += $RegAux[$field->name];
                                                     $field = mysqli_fetch_field($dsCampos);
                                                     $count += 1;
-                                                    }
+                                                    }                                            
                                             $totEficacia = $totEficacia/12.00;
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="efic_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                            
+                                            cargarBanderas($totEficacia, $count);//Se genera la fila de banderas.
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="efic_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                            
                                             }
                                     else
                                         {
-                                            //Para el caso de una creaci�n de registro.
+                                            //Para el caso de una creacion de registro.
                                             $counter=1;
                                             
                                             while($counter <= 12)
                                                 {
                                                     //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="efic_'.$counter.'" size="4" value="0.00"></input></td>';
+                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="efic_'.$counter.'" size="4" value="0.00"></input></td>';
                                                     cargarBanderas(0.00, $counter);//Se genera la fila de banderas.
                                                     $counter += 1;
                                                     }
-                                            $rowdata.='<td class="dgRowsnormTR"><input type="text" id="efic_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                            $rowdata.='<td><input class="input-planeacion" type="text" id="efic_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';                                                    
                                             }                    
                                             
                                     echo $rowdata;
-                                    echo '<tr><td class= "queryTitles">Estado</td>'.$rowBanderas.'</tr>';
+                                    echo '<tr><td class="dgDH-Planeacion">Estado</td>'.$rowBanderas.'</tr>';
                                                             
             echo'                   </table>
                             </div>';
@@ -834,6 +876,11 @@
                                     include_once("../actividad/catActividad.php");
                                     }
             echo'           </div>
+
+                                </div>
+                                <div id="pie" class="pie-operativo">'.
+                                    controlBotones("32", "32", $cntview).                
+                                '</div>                
                         </body>                
                     </html>';
             }

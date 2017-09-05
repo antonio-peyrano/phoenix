@@ -369,10 +369,14 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgAct WHERE status= 0 AND idActividad= '.$Registro['idActividad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
-                                    $rowdata='<tr><td class= "queryTitles">Programación</td>';
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                    
+                                    if($dsCampos)
+                                        {                                    
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }
+                                            
+                                    $rowdata='<tr><td class= "queryTitles">Programacion</td>';
                                     $count=1;
                                     $totEficacia=0.00;
                                     
@@ -410,10 +414,14 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecAct WHERE status= 0 AND idActividad= '.$Registro['idActividad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                    
+                                    if($dsCampos)
+                                        {                                    
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }
                         
-                                    $rowdata='<tr><td class= "queryTitles">Ejecución</td>';
+                                    $rowdata='<tr><td class= "queryTitles">Ejecucion</td>';
                                     $count=1;
                                     $totEficacia=0;
                                     
@@ -451,9 +459,12 @@
                                     $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficAct WHERE status= 0 AND idActividad= '.$Registro['idActividad'];
                                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                                     $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                    
-                                    $field = mysqli_fetch_field($dsCampos);
-                        
+                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                    
+                                    if($dsCampos)
+                                        {                                    
+                                            $field = mysqli_fetch_field($dsCampos);
+                                            }
                                     $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
                                     $count=1;
                                     $totEficacia=0;

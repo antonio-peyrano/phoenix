@@ -111,6 +111,15 @@
             background-repeat: repeat; /*Condicional para repetición del fondo*/
             overflow:scroll;			            
             }
+/*
+    #sandbox
+        {
+    		position: relative;
+    		width: 800px;
+    		height: 600px;
+        	top:50%;
+        	left:50%;
+            }*/
                         
 /*
  * FIN DEL CODIGO DE FORMATO GENERAL.

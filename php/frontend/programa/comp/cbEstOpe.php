@@ -37,7 +37,7 @@
     
     $subconsulta = cargarEstOpe($idObjEst);
     
-    echo' <select name= "idEstOpe" id= "idEstOpe" '.$habcampos.' value= "'.$Registro['idEstOpe'].'">
+    echo' <select style="width:300px;" class="inputform" name= "idEstOpe" id= "idEstOpe" '.$habcampos.' value= "'.$Registro['idEstOpe'].'">
                 <option value=-1>Seleccione</option>';
     
                                 $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);

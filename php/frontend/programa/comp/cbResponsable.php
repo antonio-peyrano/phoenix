@@ -37,7 +37,7 @@
     
     $subconsulta = cargarResponsable($idEntidad);
     
-    echo' <select name= "idResponsable" id= "idResponsable" '.$habcampos.' value= "'.$Registro['idResponsable'].'">
+    echo' <select style="width:300px;" class="inputform" name= "idResponsable" id= "idResponsable" '.$habcampos.' value= "'.$Registro['idResponsable'].'">
                 <option value=-1>Seleccione</option>';
     
                                 $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);

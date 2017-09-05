@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeaci�n operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,13 +10,21 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificaci�n a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+    
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            } 
     
     $imgTitleURL = './img/menu/gasolina.png';
     $Title = 'Gasolina';
+    $Sufijo = "gas_";
     $parametro = $_GET['id'];
     $cntview = $_GET['view'];
     $clavecod = '';   
@@ -29,8 +37,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta funci�n obtiene el perfil del sistema activo para el despliegue de la
-             * informaci�n de la planeaci�n.
+             * Esta funcion obtiene el perfil del sistema activo para el despliegue de la
+             * informacion de la planeacion.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -42,7 +50,7 @@
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuraci�n valida.
+                    //Si ha sido localizada una configuracion valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -52,13 +60,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*
-             * Esta funci�n carga la parte grafica que corresponde a las banderas de consumo.
+             * Esta funcion carga la parte grafica que corresponde a las banderas de consumo.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
             
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medici�n optima.
+                    //Si el parametro recibido esta en el rango de medicion optima.
                     $rowBanderas.='<td><center><img id="falla_'.$mes.'"align= "middle" src= "./img/banderas/falla.png" width= "25" height= "25" alt= "Falla" data-toggle="tooltip" title="Consumo critico"/></center></td>';
                     } 
                     
@@ -78,7 +86,7 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualizaci�n.
+             * Si se declaro en la url el control de visualizacion.
              */
             $cntview = $_GET['view'];
             }
@@ -89,7 +97,7 @@
     function getMes($Mes)
         {
             /*
-             * Esta funci�n obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funcion obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -144,7 +152,7 @@
     function cargarEntidades()
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de entidades.
+             * Esta funcion establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -157,7 +165,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta funci�n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -167,32 +175,94 @@
             return $dataset;        
             }   
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
 
+    function controlBotones($Width, $Height, $cntView)
+        {
+            /*
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
+             */
+            global $Sufijo;
+    
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
+                {
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
+                        {
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
+                            }
+                    else
+                        {
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
+                            }
+                    }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
+            }
+    
     function controlVisual($idRegistro)
         {
             /*
-             * Esta funci�n controla los botones que deberan verse en la pantalla deacuerdo con la acci�n solicitada por el
-             * usuario en la ventana previa. Si es una edici�n, los botones borrar y guardar deben verse. Si es una creaci�n
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa. Si es una edicion, los botones borrar y guardar deben verse. Si es una creacion
              * solo el boton guardar debe visualizarse.
              */
             global $cntview;
             
             if($idRegistro == -1)
                 {
-                    //En caso que la acci�n corresponda a la creaci�n de un nuevo registro.
+                    //En caso que la accion corresponda a la creacion de un nuevo registro.
                     echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
                     }
             else 
                 {
                     if($cntview == 1)
                         {
-                            //En caso de procesarse como una acci�n de visualizaci�n.
+                            //En caso de procesarse como una accion de visualizacion.
                             echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/gasolina/borrar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     else
                         {
-                            //En caso que la acci�n corresponda a la edici�n de un registro.
+                            //En caso que la accion corresponda a la edicion de un registro.
                             echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
                             }
                     }
@@ -201,27 +271,38 @@
     function constructor()
         {
             /*
-             * Esta funci�n establece el contenido HTML del formulario
+             * Esta funcion establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
             global $username, $password, $servername, $dbname, $cntview;           
             global $idPrograma, $periodo,$rowBanderas;
             global $imgTitleURL, $Title;
+            global $cntview;
             
             $habcampos = 'disabled= "disabled"';
             
-            if($Registro['idProgGas'] == null)
+            if(!empty($Registro['idProgGas']))
                 {
-                    //En caso que el registro sea de nueva creacion.
-                    $habcampos='';        
-                    $activid= -1;
+                    //CASO: VISUALIZACION DE REGISTRO PARA SU EDICION O BORRADO.
+                    if($cntview == 1)
+                        {
+                            //VISUALIZAR.
+                            $habcampos = 'disabled= "disabled"';
+                            }
+                    else
+                        {
+                            //EDICION.
+                            $habcampos = '';
+                            }
+                    $activid= $Registro['idProgGas'];
                     }
             else
                 {
-                    //En caso contrario se asigan el id de la actividad al temporal.
-                    $activid= $Registro['idProgGas']; 
-                    }                    
+                    //CASO: CREACION DE NUEVO REGISTRO.
+                    $habcampos = '';
+                    $activid= -1;
+                    }                                            
                                
             echo'
                     <html>
@@ -230,222 +311,221 @@
                             <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
                         </head>
                         <body>
-                            <div id="cntOperativo" class="cnt-operativo">
                             <div style=display:none>
                                 <input type= "text" id= "idProgGas" value= "'.$Registro['idProgGas'].'">       
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                                <div id="infoRegistro" class="operativo">
-                                    <div id="cabecera" class="cabecera-operativo">'
-                                        .'<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.' </div>
-                                    <div id="cuerpo" class="cuerpo-operativo">                                
-                                        <table>
-                                            <tr><td class="td-panel" width="100px">Entidad:</td><td><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "-1">';
+                            <div id="infoRegistro" class="operativo">
+                                <div id="cabecera" class="cabecera-operativo">'.
+                                    '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.
+                                '</div>
+                                <div id="cuerpo" class="cuerpo-operativo">                                
+                                    <table>
+                                        <tr><td class="td-panel" width="100px">Entidad:</td><td><select name= "idEntidad" id= "idEntidad" '.$habcampos.' value= "-1">';
                                 
-                                $subconsulta = cargarEntidades();
+                                        $subconsulta = cargarEntidades();
                                 
-            echo '                              <option value=-1>Seleccione</option>';
+            echo '                          <option value=-1>Seleccione</option>';
             
-                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                        $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 
-                                while ($RegNiveles)
-                                    {
-                                        if($RegNiveles['idEntidad']==$Registro['idEntidad'])
+                                        while ($RegNiveles)
+                                            {
+                                                if($RegNiveles['idEntidad']==$Registro['idEntidad'])
+                                                    {
+                                                        /*
+                                                         * En caso que se ejecute una accion de consulta, se obtiene la referencia seleccionada
+                                                         * de la unidad.
+                                                         */
+            echo '                          <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
+                                                        }
+                                                else
+                                                    {
+                                                        /*
+                                                         * En caso que se ejecute una accion de creacion de registro.
+                                                         */
+            echo'                           <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
+                                                        }
+                                                
+                                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
+                                                }
+            
+            echo'                           </select></td></tr>';                                
+                                                
+                                        if($parametro=="-1")
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci�n de consulta, se obtiene la referencia seleccionada
-                                                 * de la unidad.
+                                                 * Si la accion corresponde a la creacion de un registro nuevo,
+                                                 * se establece el año actual.
                                                  */
-            echo '                              <option value='.$RegNiveles['idEntidad'].' selected="selected">'.$RegNiveles['Entidad'].'</option>';
+            echo '                      <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
                                                 }
                                         else
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci�n de creacion de registro.
+                                                 * Si la accion ocurre para un registro existente,
+                                                 * se preserva el año almacenado.
                                                  */
-            echo'                               <option value='.$RegNiveles['idEntidad'].'>'.$RegNiveles['Entidad'].'</option>';
-                                                }
-                                                
-                                                $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
-                                        }
-            
-            echo'                           </select></td></tr>';                                
-                                                
-                                if($parametro=="-1")
-                                    {
-                                        /*
-                                         * Si la acci�n corresponde a la creacion de un registro nuevo,
-                                         * se establece el año actual.
-                                         */
-            echo '                          <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
-                                        }
-                                else
-                                    {
-                                        /*
-                                         * Si la acci�n ocurre para un registro existente,
-                                         * se preserva el año almacenado.
-                                         */
-            echo '                          <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
-                                        }
-                                        
-                                controlVisual($parametro);
+            echo '                      <tr><td class="td-panel" width="100px">Periodo:</td><td><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
+                                                }                                        
                                                                                                         
-            echo'                       </table>
+            echo'                   </table>
                             <br>';
 
                             $nonhabilitado = 'disabled= "disabled"';
             
-            echo'           <div id= "dataact">
-                                <table>
-                                    <tr><th class="dgHeader-Planeacion" colspan= "14">Consumo Programado (En pesos)</th></tr>
-                                    <tr><td></td><td class="dgDH-Planeacion">Enero</td><td class="dgDH-Planeacion">Febrero</td><td class="dgDH-Planeacion">Marzo</td><td class="dgDH-Planeacion">Abril</td><td class="dgDH-Planeacion">Mayo</td><td class="dgDH-Planeacion">Junio</td><td class="dgDH-Planeacion">Julio</td><td class="dgDH-Planeacion">Agosto</td><td class="dgDH-Planeacion">Septiembre</td><td class="dgDH-Planeacion">Octubre</td><td class="dgDH-Planeacion">Noviembre</td><td class="dgDH-Planeacion">Diciembre</td><td class="dgDH-Planeacion">Total</td></tr>';
+            echo'               <div id= "dataact">
+                                    <table>
+                                        <tr><th class="dgHeader-Planeacion" colspan= "14">Consumo Programado (En pesos)</th></tr>
+                                        <tr><td></td><td class="dgDH-Planeacion">Enero</td><td class="dgDH-Planeacion">Febrero</td><td class="dgDH-Planeacion">Marzo</td><td class="dgDH-Planeacion">Abril</td><td class="dgDH-Planeacion">Mayo</td><td class="dgDH-Planeacion">Junio</td><td class="dgDH-Planeacion">Julio</td><td class="dgDH-Planeacion">Agosto</td><td class="dgDH-Planeacion">Septiembre</td><td class="dgDH-Planeacion">Octubre</td><td class="dgDH-Planeacion">Noviembre</td><td class="dgDH-Planeacion">Diciembre</td><td class="dgDH-Planeacion">Total</td></tr>';
             
-                                    //Se procede con la carga de la programacion que corresponde al programa.
-                                    $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                                    $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
-                                    $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
-                                    $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                        //Se procede con la carga de la programacion que corresponde al programa.
+                                        $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
+                                        $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opProgGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
+                                        $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
+                                        $dsCampos = $subdataset;                                    
+                                        $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
                                     
-                                    if($dsCampos)
-                                        {
-                                            $field = mysqli_fetch_field($dsCampos);
-                                            }                                    
+                                        if($dsCampos)
+                                            {
+                                                $field = mysqli_fetch_field($dsCampos);
+                                                }                                    
                                                             
-                                    $rowdata='<tr><td class="dgTD-Planeacion">Programaci�n</td>';
-                                    $count=1;
-                                    $totEficacia=0.00;
+                                        $rowdata='<tr><td class="dgTD-Planeacion">Programacion</td>';
+                                        $count=1;
+                                        $totEficacia=0.00;
                                     
-                                    if($RegAux)
-                                        {
-                                            //Para el caso de una consulta de datos.
-                                            while($field)
-                                                {
-                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
-                                                    $totEficacia += $RegAux[$field->name];
-                                                    $field = mysqli_fetch_field($dsCampos);
-                                                    $count += 1;
-                                                    }
+                                        if($RegAux)
+                                            {
+                                                //Para el caso de una consulta de datos.
+                                                while($field)
+                                                    {
+                                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
+                                                        $totEficacia += $RegAux[$field->name];
+                                                        $field = mysqli_fetch_field($dsCampos);
+                                                        $count += 1;
+                                                        }
                             
-                                            $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';
-                                            }
-                                    else
-                                        {
-                                            //Para el caso de una creaci�n de registro.
-                                            $counter=1;
+                                                $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';
+                                                }
+                                        else
+                                            {
+                                                //Para el caso de una creacion de registro.
+                                                $counter=1;
                                             
-                                            while($counter <= 12)
-                                                {
-                                                    //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$counter.'" value="0.00"></input></td>';
-                                                    $counter += 1;
-                                                    }
-                                            $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
-                                            }
+                                                while($counter <= 12)
+                                                    {
+                                                        //Mientras no se llegue al ciclo de doce meses.
+                                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$counter.'" value="0.00"></input></td>';
+                                                        $counter += 1;
+                                                        }
+                                                $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                                }
                                             
-                                    echo $rowdata;
+                                        echo $rowdata;
             
-                                    //Se procede con la carga de la ejecucion que corresponde al programa.
-                                    $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                                    $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
-                                    $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
-                                    $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
+                                        //Se procede con la carga de la ejecucion que corresponde al programa.
+                                        $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
+                                        $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEjecGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
+                                        $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
+                                        $dsCampos = $subdataset;                                    
+                                        $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);
                                     
-                                    if($dsCampos)
-                                        {
-                                            $field = mysqli_fetch_field($dsCampos);
-                                            }                                                                        
+                                        if($dsCampos)
+                                            {
+                                                $field = mysqli_fetch_field($dsCampos);
+                                                }                                                                        
                         
-                                    $rowdata='<tr><td class="dgTD-Planeacion">Ejecuci�n</td>';
-                                    $count=1;
-                                    $totEficacia=0;
+                                        $rowdata='<tr><td class="dgTD-Planeacion">Ejecucion</td>';
+                                        $count=1;
+                                        $totEficacia=0;
                                     
-                                    if($RegAux)
-                                        {
-                                            //Para el caso de una consulta de datos.
-                                            while($field)
-                                                {
-                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
-                                                    $totEficacia += $RegAux[$field->name];
-                                                    $field = mysqli_fetch_field($dsCampos);
-                                                    $count += 1;
-                                                    }
+                                        if($RegAux)
+                                            {
+                                                //Para el caso de una consulta de datos.
+                                                while($field)
+                                                    {
+                                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
+                                                        $totEficacia += $RegAux[$field->name];
+                                                        $field = mysqli_fetch_field($dsCampos);
+                                                        $count += 1;
+                                                        }
                             
-                                            $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';                                            
-                                            }
-                                    else
-                                        {
-                                            //Para el caso de una creaci�n de registro.
-                                            $counter=1;
+                                                $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';                                            
+                                                }
+                                        else
+                                            {
+                                                //Para el caso de una creacion de registro.
+                                                $counter=1;
                                             
-                                            while($counter <= 12)
-                                                {
-                                                    //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$counter.'" value="0.00"></input></td>';
-                                                    $counter += 1;
-                                                    }
-                                            $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
-                                            }                    
+                                                while($counter <= 12)
+                                                    {
+                                                        //Mientras no se llegue al ciclo de doce meses.
+                                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$counter.'" value="0.00"></input></td>';
+                                                        $counter += 1;
+                                                        }
+                                                $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                                }                    
 
-                                    echo $rowdata;
+                                        echo $rowdata;
             
-                                    //Se procede con la carga de la eficacia que corresponde al programa.
-                                    $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                                    $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
-                                    $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.                                                                               
-                                    $dsCampos = $subdataset;                                    
-                                    $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                                                        
+                                        //Se procede con la carga de la eficacia que corresponde al programa.
+                                        $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
+                                        $subconsulta='SELECT  Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre FROM opEficGas WHERE status= 0 AND idEntidad= '.$Registro['idEntidad'];
+                                        $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.                                                                               
+                                        $dsCampos = $subdataset;                                    
+                                        $RegAux = @mysqli_fetch_array($subdataset,MYSQLI_ASSOC);                                                                        
                                     
-                                    if($dsCampos)
-                                        {
-                                            $field = mysqli_fetch_field($dsCampos);
-                                            }                        
+                                        if($dsCampos)
+                                            {
+                                                $field = mysqli_fetch_field($dsCampos);
+                                                }                        
                                             
-                                    $rowdata='<tr><td class="dgTD-Planeacion">Eficacia</td>';
-                                    $count=1;
-                                    $totEficacia=0;
+                                        $rowdata='<tr><td class="dgTD-Planeacion">Eficacia</td>';
+                                        $count=1;
+                                        $totEficacia=0;
                                     
-                                    if($RegAux)
-                                        {
-                                            //Para el caso de una consulta de datos.
-                                            while($field)
-                                                {
-                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
-                                                    cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.
-                                                    $totEficacia += $RegAux[$field->name];
-                                                    $field = mysqli_fetch_field($dsCampos);
-                                                    $count += 1;
-                                                    }
-                                            $totEficacia = $totEficacia/12.00;
-                                            $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';                                            
-                                            }
-                                    else
-                                        {
-                                            //Para el caso de una creaci�n de registro.
-                                            $counter=1;
+                                        if($RegAux)
+                                            {
+                                                //Para el caso de una consulta de datos.
+                                                while($field)
+                                                    {
+                                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$count.'" value="'.$RegAux[$field->name].'"></input></td>';
+                                                        cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.
+                                                        $totEficacia += $RegAux[$field->name];
+                                                        $field = mysqli_fetch_field($dsCampos);
+                                                        $count += 1;
+                                                        }
+                                                $totEficacia = $totEficacia/12.00;
+                                                $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$count.'" value="'.$totEficacia.'"></input></td></tr>';                                            
+                                                }
+                                        else
+                                            {
+                                                //Para el caso de una creacion de registro.
+                                                $counter=1;
                                             
-                                            while($counter <= 12)
-                                                {
-                                                    //Mientras no se llegue al ciclo de doce meses.
-                                                    $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$counter.'" value="0.00"></input></td>';
-                                                    cargarBanderas(0.00, $counter);//Se genera la fila de banderas.
-                                                    $counter += 1;
-                                                    }
-                                            $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
-                                            }                    
+                                                while($counter <= 12)
+                                                    {
+                                                        //Mientras no se llegue al ciclo de doce meses.
+                                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$counter.'" value="0.00"></input></td>';
+                                                        cargarBanderas(0.00, $counter);//Se genera la fila de banderas.
+                                                        $counter += 1;
+                                                        }
+                                                $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$counter.'" value="'.$totEficacia.'"></input></td></tr>';                                                    
+                                                }                    
                                             
                                     echo $rowdata;
-                                    echo '<tr><td class="dgTD-Planeacion">Estado</td>'.$rowBanderas.'</tr>';
+            echo '                      <tr><td class="dgTD-Planeacion">Estado</td>'.$rowBanderas.'</tr>';
             
-            echo'               </table>
-                            </div>
-                                                    </div>
+            echo'                   </table>
                                 </div>
-                                            </div> 
+                                </div>
+                                <div id="pie" class="pie-operativo">'.
+                                    controlBotones("32", "32", $cntview).                
+                                '</div>                            
                         </body>                
                     </html>';           
-        } 
+            } 
 
         /*
          * Llamada a las funciones del constructor de interfaz. 

@@ -20,7 +20,7 @@
     $condicionales = ''; //Variable de control de condiciones de clausula select.
     $Inicio = 0;
     $Pagina = 0;
-    $DisplayRow = 10;
+    $DisplayRow = 4;
     
     if(isset($_GET['pagina']))
         {

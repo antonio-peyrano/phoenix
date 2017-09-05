@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -14,10 +14,10 @@
      * Este archivo contiene el constructor para el combobox de objetivos operativos a visualizar.
      */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
 
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
 
     $idEntidad = $_GET['identidad'];
     $idPrograma = $_GET['idprograma'];
@@ -27,7 +27,7 @@
     function cargarProcesos($idRegistro, $idEntidad)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */
             global $username, $password, $servername, $dbname;
 
@@ -39,7 +39,7 @@
             if($idRegistro == -1)
                 {
                     /*
-                     * Si la operación solicitada es para la creación de un registro,
+                     * Si la operacion solicitada es para la creacion de un registro,
                      * se carga el listado sin marcar.
                      */
                     $RegNiveles = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
@@ -53,7 +53,7 @@
             else
                 {
                     /*
-                     * Si la operación solicitada es para editar el registro,
+                     * Si la operacion solicitada es para editar el registro,
                      * se carga el listado con los elementos previamente marcados.
                      */
                     $subconsulta = 'SELECT *FROM relProgPro WHERE idPrograma='.$idRegistro.' AND Status=0'; //Se establece el modelo de consulta de datos.
@@ -89,13 +89,13 @@
                     while ($RegNiveles)
                         {
                             /*
-                             * Mientras no se llegue al final de la colección, se procede a la lectura
-                             * y generación del listado.
+                             * Mientras no se llegue al final de la coleccion, se procede a la lectura
+                             * y generacion del listado.
                              */
                             if(in_array($RegNiveles['idProceso'], $tmparray,true))
                                 {
                                     /*
-                                     * En caso de tratarse de una opción previamente seleccionada por el usuario.
+                                     * En caso de tratarse de una opcion previamente seleccionada por el usuario.
                                      */
                                     echo '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].' checked>'.$RegNiveles['Proceso'];
                                     }
