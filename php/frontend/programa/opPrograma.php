@@ -171,7 +171,7 @@
              * Si es una edicion, los botones borrar y guardar deben verse.
              * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $Sufijo;
+            global $Sufijo, $parametro;
     
             $botonera = '';
             $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
@@ -193,7 +193,7 @@
                             }
                     else
                         {
-                            if($_SESSION['nivel'] == "Administrador")
+                            if(($_SESSION['nivel'] == "Administrador") || (validarUsuario($_SESSION['idusuario'], $parametro) > 0))
                                 {
                                     $botonera .= $btnGuardar_V.$btnVolver_V;
                                     }
@@ -214,7 +214,7 @@
                                     }
                             else
                                 {
-                                    if($_SESSION['nivel'] == "Administrador")
+                                    if(($_SESSION['nivel'] == "Administrador") || (validarUsuario($_SESSION['idusuario'], $parametro) > 0))
                                         {
                                             $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
                                             }
@@ -224,6 +224,35 @@
     
             return $botonera;
             }
+
+    function validarUsuario($idUsuario, $idPrograma)
+        {
+            /*
+             * Esta funcion valida que el usuario este definido como responsable
+             * o auxiliar del proceso.
+             */
+            global $username, $password, $servername, $dbname;
+            $validacion = 0;
+            
+            $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
+            $conResponsable = 'SELECT * FROM (catUsuarios INNER JOIN relUsrEmp ON catUsuarios.idUsuario = relUsrEmp.idUsuario) INNER JOIN opProgramas ON opProgramas.idResponsable = relUsrEmp.idEmpleado WHERE catUsuarios.idUsuario ='.$idUsuario.' AND opProgramas.idPrograma='.$idPrograma; //Se establece el modelo de consulta de datos.
+            $dsResponsable = $objConexion -> conectar($conResponsable); //Se ejecuta la consulta.
+            
+            if(@mysqli_num_rows($dsResponsable)>0)
+                {
+                    $validacion +=1;
+                    }
+                    
+            $conSubAlterno = 'SELECT * FROM (catUsuarios INNER JOIN relUsrEmp ON catUsuarios.idUsuario = relUsrEmp.idUsuario) INNER JOIN opProgramas ON opProgramas.idSubalterno = relUsrEmp.idEmpleado WHERE catUsuarios.idUsuario ='.$idUsuario.' AND opProgramas.idPrograma='.$idPrograma; //Se establece el modelo de consulta de datos.
+            $dsSubAlterno = $objConexion -> conectar($conSubAlterno); //Se ejecuta la consulta.
+
+            if(@mysqli_num_rows($dsSubAlterno)>0)
+                {
+                    $validacion +=1;
+                    }
+                        
+            return $validacion;
+            } 
                 
     function cargarObjEst()
         {

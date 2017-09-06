@@ -85,15 +85,15 @@
                      * en el sistema.
                      */
                     if($condicionales=="")
-                    {
-                        //Cargar la cadena de consulta por default.
-                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
-                    }
+                        {
+                            //Cargar la cadena de consulta por default.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
+                            }
                     else
-                    {
-                        //En caso de contar con el criterio de filtrado.
-                        $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
-                    }                    
+                        {
+                            //En caso de contar con el criterio de filtrado.
+                            $consulta= "SELECT idPrograma, Nomenclatura, Programa, Entidad, opProgramas.Status FROM (opProgramas INNER JOIN catEntidades ON catEntidades.idEntidad = opProgramas.idEntidad) WHERE opProgramas.Status=0 AND " .$condicionales. " ORDER BY idPrograma"." limit ".$Inicio.",".$DisplayRow; //Se establece el modelo de consulta de datos.
+                            }                    
                     }
             else
                 {

@@ -25,7 +25,7 @@
     function cargarColor($parametro)
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de ObjOpe.
+             * Esta funcion establece la carga del conjunto de registros de ObjOpe.
              */
             global $username, $password, $servername, $dbname;
     
@@ -39,5 +39,5 @@
     
     $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 
-    echo '  <input type= "text" required= "required" id= "Modelo" '.$habcampos.' value= "'.$RegNiveles['Modelo'].'">';    
+    echo '  <input style="width:300px;" class="inputform" type= "text" required= "required" id= "Modelo" '.$habcampos.' value= "'.$RegNiveles['Modelo'].'">';    
 ?>

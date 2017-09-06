@@ -13,8 +13,19 @@
     header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuraci�n.
-    
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
+
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            }
+             
+    $imgTitleURL = './img/menu/vehconsumo.png';
+    $Title = 'Consumo de Combustible';
+    $Sufijo = "gas_";
+                
     $parametro = '';   
     $idVehiculo = '';
     $idEjecGas = '';
@@ -26,13 +37,13 @@
     function cargarBanderas($parametro, $mes)
         {
             /*               
-             *Esta funci�n carga la parte grafica que corresponde a las banderas de consumo.
+             *Esta funcion carga la parte grafica que corresponde a las banderas de consumo.
              */
             global $Periodo, $Optimo, $Tolerable, $rowBanderas;
     
             if($parametro>=$Optimo)
                 {
-                    //Si el parametro recibido esta en el rango de medici�n optima.
+                    //Si el parametro recibido esta en el rango de medicion optima.
                     $rowBanderas.='<td><center><img id="falla_'.$mes.'"align= "middle" src= "./img/banderas/falla.png" width= "25" height= "25" alt= "Falla" data-toggle="tooltip" title="Consumo critico"/></center></td>';
                     }
     
@@ -52,8 +63,8 @@
     function obtenerPerfilSys()
         {
             /*
-             * Esta funci�n obtiene el perfil del sistema activo para el despliegue de la
-             * informaci�n de la planeaci�n.
+             * Esta funcion obtiene el perfil del sistema activo para el despliegue de la
+             * informacion de la planeacion.
              */
              global $username, $password, $servername, $dbname;
              global $Periodo, $Optimo, $Tolerable;
@@ -65,7 +76,7 @@
              
              if($RegConfiguracion)
                 {
-                    //Si ha sido localizada una configuraci�n valida.
+                    //Si ha sido localizada una configuracion valida.
                     $Optimo = $RegConfiguracion['Optimo'];
                     $Tolerable = $RegConfiguracion['Tolerable'];
                     $Periodo = $RegConfiguracion['Periodo'];
@@ -75,12 +86,12 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualizaci�n.
+             * Si se declaro en la url el control de visualizacion.
              */
             $cntview = $_GET['view'];
             if(($cntview == '0')||($cntview == '3'))
                 {
-                    //Si la visualizaci�n esta por default, se asigna a parametro
+                    //Si la visualizacion esta por default, se asigna a parametro
                     //el id que corresponde.
                     $parametro = $_GET['idproggas'];
                     $idVehiculo = $_GET['idvehiculo'];
@@ -94,7 +105,7 @@
     function getMes($Mes)
         {
             /*
-             * Esta funci�n obtiene el nombre del mes apartir de su cardinal numerico.
+             * Esta funcion obtiene el nombre del mes apartir de su cardinal numerico.
              */
             if($Mes == "1")
                 {
@@ -149,7 +160,7 @@
     function cargarVehiculos()
         {
             /*
-             * Esta funci�n establece la carga del conjunto de registros de entidades.
+             * Esta funcion establece la carga del conjunto de registros de entidades.
              */
             global $username, $password, $servername, $dbname;
     
@@ -162,7 +173,7 @@
     function cargarVehiculo($idRegistro)
         {
             /*
-             * Esta funci�n carga la informaci�n del vehiculo consultado, apartir del ID.
+             * Esta funcion carga la informacion del vehiculo consultado, apartir del ID.
              */
             global $username, $password, $servername, $dbname;
             
@@ -172,12 +183,12 @@
             return $dataset;
             }
 
-    $RegVehiculo = @mysqli_fetch_array(cargarVehiculo($idVehiculo),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.            
+    $RegVehiculo = @mysqli_fetch_array(cargarVehiculo($idVehiculo),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.            
                         
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta funci�n establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -187,18 +198,19 @@
             return $dataset;        
             }   
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funci�n de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
             
-    function constructor()
+    function constructor($imgTitleURL, $Title)
         {
             /*
-             * Esta funci�n establece el contenido HTML del formulario
+             * Esta funcion establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $RegVehiculo, $parametro, $clavecod;
             global $username, $password, $servername, $dbname, $cntview;           
-            global $idEjecGas, $idVehiculo, $periodo,$rowBanderas;
-
+            global $idEjecGas, $idVehiculo, $rowBanderas, $Periodo;
+            global $cntview;
+            
             $idEntidad = $RegVehiculo['idEntidad'];
             $habcampos = 'disabled= "disabled"';
 
@@ -225,10 +237,13 @@
                                 <input type= "text" id= "idEjecGas" value= "'.$idEjecGas.'"><br>
                                 <input type= "text" id= "idVehicle" value= "'.$idVehiculo.'"><br>      
                             </div>                
-                            <div id= "infoact">                                        
-                            <table class= "dgTable">
-                                <tr><th class="dgHeader" colspan= "2">Informaci�n General</th></tr>
-                                <tr><td class="dgRowsaltTR"  width="100px">Numero de Placa:</td><td class="dgRowsnormTR" class= "queryRowsnormTR"><select name= "idVehiculo" id= "idVehiculo" value= "-1">';
+                            <div id="infoRegistro" class="operativo" style="top:80%; left:50%;">
+                                <div id="cabecera" class="cabecera-operativo">'.
+                                    '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.
+                                '</div>
+                                <div id="cuerpo" class="cuerpo-operativo">
+                                    <center><table>
+                                        <tr><td class="td-panel" width="100px">Numero de Placa: <select style="width:300px;" class="inputform" name= "idVehiculo" id= "idVehiculo" value= "-1">';
                                 
                                 $subconsulta = cargarVehiculos();
                                 
@@ -241,7 +256,7 @@
                                         if($RegNiveles['idVehiculo']==$idVehiculo)
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci�n de consulta, se obtiene la referencia seleccionada
+                                                 * En caso que se ejecute una accion de consulta, se obtiene la referencia seleccionada
                                                  * de la unidad.
                                                  */
             echo '                              <option value='.$RegNiveles['idVehiculo'].' selected="selected">'.$RegNiveles['NumPlaca'].'</option>';
@@ -249,7 +264,7 @@
                                         else
                                             {
                                                 /*
-                                                 * En caso que se ejecute una acci�n de creacion de registro.
+                                                 * En caso que se ejecute una accion de creacion de registro.
                                                  */
 
             echo'                               <option value='.$RegNiveles['idVehiculo'].'>'.$RegNiveles['NumPlaca'].'</option>';                                                        
@@ -258,27 +273,26 @@
                                                 $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                         }
             
-            echo'               </select></td></tr>';                                
+            echo'               </select></td>';                                
                                                 
 
-            echo'               <tr><td class="dgRowsaltTR" width="100px">Color:</td><td class="dgRowsnormTR"><div id="txtColor" border:none><input type= "text" required= "required" id= "Color" '.$habcampos.' value= "'.$RegVehiculo['Color'].'"></div></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Marca:</td><td class="dgRowsnormTR"><div id="txtMarca" border:none><input type= "text" required= "required" id= "Marca" '.$habcampos.' value= "'.$RegVehiculo['Marca'].'"></div></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Modelo:</td><td class="dgRowsnormTR"><div id="txtModelo" border:none><input type= "text" required= "required" id= "Modelo" '.$habcampos.' value= "'.$RegVehiculo['Modelo'].'"></div></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Entidad:</td><td class="dgRowsnormTR"><div id="txtEntidad" border:none><input type= "text" required= "required" id= "Entidad" '.$habcampos.' value= "'.$RegVehiculo['Entidad'].'"></div></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>
+            echo'                   <td class="td-panel" width="100px">Color: <div id="txtColor" border:none><input style="width:300px;" class="inputform" type= "text" required= "required" id= "Color" '.$habcampos.' value= "'.$RegVehiculo['Color'].'"></div></td></tr>
+                                <tr><td class="td-panel" width="100px">Marca: <div id="txtMarca" border:none><input style="width:300px;" class="inputform" type= "text" required= "required" id= "Marca" '.$habcampos.' value= "'.$RegVehiculo['Marca'].'"></div></td>
+                                    <td class="td-panel" width="100px">Modelo: <div id="txtModelo" border:none><input style="width:300px;" class="inputform" type= "text" required= "required" id= "Modelo" '.$habcampos.' value= "'.$RegVehiculo['Modelo'].'"></div></td></tr>
+                                <tr><td class="td-panel" width="100px">Entidad: <div id="txtEntidad" border:none><input style="width:300px;" class="inputform" type= "text" required= "required" id= "Entidad" '.$habcampos.' value= "'.$RegVehiculo['Entidad'].'"></div></td>
+                                    <td class="td-panel" width="100px">Periodo: <input style="width:80px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Periodo.'"></td></tr>
                                 ';
                                                                                                                                                 
-            echo'           </table>
-                            </div>
+            echo'           </table></center>
                             <br>';
 
                             $nonhabilitado = 'disabled= "disabled"';
             
             echo'           <div id= "dataproggas">';
             
-            echo'   <table class= "queryTable">
-                        <tr><th colspan= "14" class= "queryHeader">Consumo Programado (En pesos)</th></tr>
-                        <tr><td></td><td class= "queryTitles">Enero</td><td class= "queryTitles">Febrero</td><td class= "queryTitles">Marzo</td><td class= "queryTitles">Abril</td><td class= "queryTitles">Mayo</td><td class= "queryTitles">Junio</td><td class= "queryTitles">Julio</td><td class= "queryTitles">Agosto</td><td class= "queryTitles">Septiembre</td><td class= "queryTitles">Octubre</td><td class= "queryTitles">Noviembre</td><td class= "queryTitles">Diciembre</td><td class= "queryTitles">Total</td></tr>';
+            echo'   <table>
+                        <tr><th class="dgHeader-Planeacion" colspan= "14">Consumo Programado (En pesos)</th></tr>
+                        <tr><td></td><td class="dgDH-Planeacion">Enero</td><td class="dgDH-Planeacion">Febrero</td><td class="dgDH-Planeacion">Marzo</td><td class="dgDH-Planeacion">Abril</td><td class="dgDH-Planeacion">Mayo</td><td class="dgDH-Planeacion">Junio</td><td class="dgDH-Planeacion">Julio</td><td class="dgDH-Planeacion">Agosto</td><td class="dgDH-Planeacion">Septiembre</td><td class="dgDH-Planeacion">Octubre</td><td class="dgDH-Planeacion">Noviembre</td><td class="dgDH-Planeacion">Diciembre</td><td class="dgDH-Planeacion">Total</td></tr>';
             
                         //Se procede con la carga de la programacion que corresponde al programa.
                         $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
@@ -292,7 +306,7 @@
                                 $field = mysqli_fetch_field($dsCampos);
                                 }
                                 
-                        $rowdata= '<tr><td class= "queryTitles">Programacion</td>';
+                        $rowdata= '<tr><td class="dgDH-Planeacion">Programacion</td>';
                         $count=1;
                         $totEficacia=0.00;
             
@@ -301,26 +315,26 @@
                                 //Para el caso de una consulta de datos.
                                 while($field)
                                     {
-                                        $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$habcampos.' id="P_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                         $totEficacia += $RegAux[$field->name];
                                         $field = mysqli_fetch_field($dsCampos);
                                         $count += 1;
                                         }
             
-                                $rowdata.='<td class="dgRowsnormTR"><input type="text" id="P_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                 }
                         else
                             {
-                                //Para el caso de una creaci�n de registro.
+                                //Para el caso de una creacion de registro.
                                 $counter=1;
             
                                 while($counter <= 12)
                                     {
                                         //Mientras no se llegue al ciclo de doce meses.
-                                        $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$habcampos.' id="P_'.$counter.'" size="4" value="0.00"></input></td>';
+                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$habcampos.' id="P_'.$counter.'" size="4" value="0.00"></input></td>';
                                         $counter += 1;
                                         }
-                                $rowdata.='<td class="dgRowsnormTR"><input type="text" id="P_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                $rowdata.='<td><input class="input-planeacion" type="text" id="P_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                 }
             
             echo $rowdata;
@@ -337,7 +351,7 @@
                                 $field = mysqli_fetch_field($dsCampos);
                                 }
                                 
-                        $rowdata= '<tr><td class= "queryTitles">Ejecucion</td>';
+                        $rowdata= '<tr><td class="dgDH-Planeacion">Ejecucion</td>';
                         $count= 1;
                         $totEficacia= 0;
             
@@ -346,27 +360,27 @@
                                 //Para el caso de una consulta de datos.
                                 while($field)
                                     {
-                                        $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="E_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                         $totEficacia += $RegAux[$field->name];
                                         $field = mysqli_fetch_field($dsCampos);
                                         $count += 1;
                                         }
             
-                                $rowdata.='<td class="dgRowsnormTR"><input type="text" id="E_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                 }
                         else
                             {
-                                //Para el caso de una creaci�n de registro.
+                                //Para el caso de una creacion de registro.
                                 $counter= 1;
             
                                 while($counter <= 12)
                                     {
                                         //Mientras no se llegue al ciclo de doce meses.
-                                        $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="E_'.$counter.'" size="4" value="0.00"></input></td>';
+                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="E_'.$counter.'" size="4" value="0.00"></input></td>';
                                         $counter += 1;
                                         }
                                         
-                                $rowdata.='<td class="dgRowsnormTR"><input type="text" id="E_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                $rowdata.='<td><input class="input-planeacion" type="text" id="E_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                 }
             
             echo $rowdata;
@@ -383,7 +397,7 @@
                                 $field = mysqli_fetch_field($dsCampos);
                                 }
                                 
-                        $rowdata='<tr><td class= "queryTitles">Eficacia</td>';
+                        $rowdata='<tr><td class="dgDH-Planeacion">Eficacia</td>';
                         $count=1;
                         $totEficacia=0;
             
@@ -392,7 +406,7 @@
                                 //Para el caso de una consulta de datos.
                                 while($field)
                                     {
-                                        $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="Efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
+                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$count.'" size="4" value="'.$RegAux[$field->name].'"></input></td>';
                                         cargarBanderas($RegAux[$field->name], $count);//Se genera la fila de banderas.
                                         $totEficacia += $RegAux[$field->name];
                                         $field = mysqli_fetch_field($dsCampos);
@@ -400,26 +414,27 @@
                                         }
                                         
                                 $totEficacia = $totEficacia/12.00;
-                                $rowdata.='<td class="dgRowsnormTR"><input type="text" id="Efic_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                cargarBanderas($totEficacia, $count);//Se genera la fila de banderas.
+                                $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$count.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                 }
                         else
                             {
-                                //Para el caso de una creaci�n de registro.
+                                //Para el caso de una creacion de registro.
                                 $counter=1;
             
                                 while($counter <= 12)
                                     {
                                         //Mientras no se llegue al ciclo de doce meses.
-                                        $rowdata.= '<td class="dgRowsnormTR"><input type="text" '.$nonhabilitado.' id="Efic_'.$counter.'" size="4" value="0.00"></input></td>';
+                                        $rowdata.= '<td><input class="input-planeacion" type="text" '.$nonhabilitado.' id="Efic_'.$counter.'" size="4" value="0.00"></input></td>';
                                         cargarBanderas(0.00, $counter);//Se genera la fila de banderas.
                                         $counter += 1;
                                         }
                                         
-                                $rowdata.='<td class="dgRowsnormTR"><input type="text" id="Efic_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
+                                $rowdata.='<td><input class="input-planeacion" type="text" id="Efic_'.$counter.'" size="4" value="'.$totEficacia.'"></input></td></tr>';
                                 }
             
             echo $rowdata;
-            echo '      <tr><td class= "queryTitles">Estado</td>'.$rowBanderas.'</tr>
+            echo '      <tr><td class="dgDH-Planeacion">Estado</td>'.$rowBanderas.'</tr>
                     </table>';
             
             echo' </div>';
@@ -428,7 +443,8 @@
                             <br>
                             <div id= "divConsumos">';
                                 include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/gasconsumo/catEjecGas.php");
-            echo'           </div>              
+            echo'           </div>
+                        </div>              
                         </body>                
                     </html>';
         } 
@@ -437,5 +453,5 @@
          * Llamada a las funciones del constructor de interfaz. 
          */
         obtenerPerfilSys();
-        constructor();
+        constructor($imgTitleURL, $Title);
 ?>

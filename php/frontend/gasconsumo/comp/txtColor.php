@@ -39,5 +39,5 @@
     
     $RegNiveles = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                                 
-    echo '  <input type= "text" required= "required" id= "Color" '.$habcampos.' value= "'.$RegNiveles['Color'].'">';    
+    echo '  <input style="width:300px;" class="inputform" type= "text" required= "required" id= "Color" '.$habcampos.' value= "'.$RegNiveles['Color'].'">';    
 ?>

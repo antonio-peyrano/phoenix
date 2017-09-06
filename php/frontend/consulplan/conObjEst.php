@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -11,7 +11,7 @@
  */
 
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
 
     class conObjEst
         {
@@ -23,8 +23,8 @@
             function obtenerPerfilSys()
                 {
                     /*
-                     * Esta función obtiene el perfil del sistema activo para el despliegue de la
-                     * información de la planeación.
+                     * Esta funcion obtiene el perfil del sistema activo para el despliegue de la
+                     * informacion de la planeacion.
                      */
                     global $username, $password, $servername, $dbname;                    
          
@@ -35,7 +35,7 @@
          
                     if($RegConfiguracion)
                         {
-                            //Si ha sido localizada una configuración valida.
+                            //Si ha sido localizada una configuracion valida.
                             $this->Optimo = $RegConfiguracion['Optimo'];
                             $this->Tolerable = $RegConfiguracion['Tolerable'];
                             $this->Periodo = $RegConfiguracion['Periodo'];
@@ -49,7 +49,7 @@
                      * a partir de la configuracion por default.
                      */
                     global $username, $password, $servername, $dbname;
-                    $this->obtenerPerfilSys(); //Llamada a la función de obtención de parametros.
+                    $this->obtenerPerfilSys(); //Llamada a la funcion de obtencion de parametros.
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
                     $consulta = "SELECT idObjEst, Nomenclatura, ObjEst AS Objetivo, Periodo, Status FROM catObjEst WHERE Status=0 AND Periodo=".$this->Periodo; //Se establece el modelo de consulta de datos.
                     $dsObjEst = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
@@ -59,7 +59,7 @@
             function dgDatos($dataset)
                 {
                     /*
-                     * Esta función crea el codigo HTML correspondiente a la parte de información
+                     * Esta funcion crea el codigo HTML correspondiente a la parte de informacion
                      * obtenida en la consulta de datos en modo de una tabla.
                      */                    
         
@@ -68,7 +68,7 @@
         
                     while ($record) 
                         {
-                            //Mientras existan elementos en la colección de filas.
+                            //Mientras existan elementos en la coleccion de filas.
                 
                             /*Nota: El argumento MYSQL_ASSOC es necesario para visualizar unicamente un conjunto de elementos;
                              *de lo contrario, al ser omitido retornara valores duplicados.                
@@ -117,7 +117,7 @@
             function dgCabeceras($dataset,$titulo)
                 {
                     /*
-                     * Esta función crea el codigo HTML correspondiente a la parte de la cabecera de datos
+                     * Esta funcion crea el codigo HTML correspondiente a la parte de la cabecera de datos
                      * obtenida en la consulta de datos en modo de una tabla.
                      */
                     
@@ -130,7 +130,7 @@
         
                     while ($field) 
                         {                
-                            /*Para cada elemento de la colección de nombres de campos,
+                            /*Para cada elemento de la coleccion de nombres de campos,
                              *se crea la etiqueta correspondiente <TH> 
                              */
                             $columns = $columns. '<th>'.$field->name.'</th>';                                      
@@ -145,7 +145,7 @@
 
             function drawUI()
                 {        
-                    /* Esta función se encarga de crear el contenido HTML de la pagina
+                    /* Esta funcion se encarga de crear el contenido HTML de la pagina
                      * tal como lo visualizara el usuario en el navegador.
                      */
                     $this->obtenerPerfilSys();
