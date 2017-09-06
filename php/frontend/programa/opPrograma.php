@@ -438,7 +438,7 @@
                      * Si la operacion solicitada es para la creacion de un registro,
                      * se carga el listado sin marcar.
                      */
-                    echo '<tr><td class="td-panel" colspan="3">Procesos: <div id="chkProcesos">';
+                    echo '<tr><td class="td-panel" width="100px">Procesos: <div id="chkProcesos" style="height:100px; overflow:scroll;">';
                     }
              else
                 {
@@ -446,7 +446,7 @@
                      * Si la operacion solicitada es para editar el registro,
                      * se carga el listado con los elementos previamente marcados.
                      */
-                    echo '<tr><td class="td-panel" width="100px">Procesos: <div id="chkProcesos">';
+                    echo '<tr><td class="td-panel" width="100px">Procesos: <div id="chkProcesos" style="height:100px; overflow:scroll;">';
                     $subconsulta = 'SELECT *FROM relProgPro WHERE idPrograma='.$idRegistro.' AND Status=0'; //Se establece el modelo de consulta de datos.
                     $subdataset = $objConexion -> conectar($subconsulta); //Se ejecuta la consulta.
                     $vector = "";

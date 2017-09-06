@@ -46,7 +46,7 @@
 
                     while ($RegNiveles)
                         {
-                            echo '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
+                            echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
                             $RegNiveles = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                             }
                     }
@@ -97,21 +97,20 @@
                                     /*
                                      * En caso de tratarse de una opcion previamente seleccionada por el usuario.
                                      */
-                                    echo '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].' checked>'.$RegNiveles['Proceso'];
+                                    echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].' checked>'.$RegNiveles['Proceso'];
                                     }
                             else
                                 {
                                     /*
                                      * En caso contrario se agrega una entrada de formato convencional.
                                      */
-                                    echo '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
+                                    echo '<br><input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$RegNiveles['idProceso'].'>'.$RegNiveles['Proceso'];
                                     }
 
                             $RegNiveles = @mysqli_fetch_array($dataset,MYSQLI_ASSOC);
                             }
                     }
 
-            echo'</div></td></tr>';
             }
             
     cargarProcesos($idPrograma, $idEntidad);

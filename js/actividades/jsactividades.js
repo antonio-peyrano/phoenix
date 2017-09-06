@@ -107,7 +107,11 @@ function habActividad()
 		document.getElementById('E_9').disabled = false;
 		document.getElementById('E_10').disabled = false;
 		document.getElementById('E_11').disabled = false;
-		document.getElementById('E_12').disabled = false;*/	
+		document.getElementById('E_12').disabled = false;*/
+		
+		document.getElementById('act_Guardar').style.display="block";
+		document.getElementById('act_Borrar').style.display="none";
+		document.getElementById('act_Editar').style.display="none";
 		}
 
 /*
@@ -258,3 +262,120 @@ $(document).ready(function()
 							}
 					});                 
 			});
+	
+	//DECLARACION DE ACCIONES A EJECUTARSE SOBRE FORMULARIO OPERATIVO.
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de retorno
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    		     	e.stopPropagation();
+	    		        if(e.target.id == "act_Volver")
+	    		        	{
+	    		            	//En caso de coincidir el id con la accion volver.
+	    		        		cargar('./php/frontend/programa/opPrograma.php','?id='+document.getElementById('idPrograma').value.toString()+'&view=1','sandbox');
+	    		            	}
+	    				});                 
+				});
+	    		
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de borrado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    			 	e.stopPropagation();
+	    			    if(e.target.id == "act_Borrar")
+	    			    	{
+	    			         	//En caso de coincidir el id con la accion borrar.
+	    			            bootbox.confirm(
+	    			            	{
+	    				            	message: "¿Confirma que desea borrar el registro?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+	    				            					cargar('./php/backend/actividad/borrar.php','?id='+document.getElementById('idActividad').value.toString()+'&idprograma='+document.getElementById('idPrograma').value.toString()+'&view=3','sandbox');
+	    				            					}			            					
+	    				            			}
+	    			            		});
+	    			    		}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de guardado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "act_Guardar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion guardar.
+	    				        bootbox.confirm(
+	    				        	{
+	    				            	message: "¿Confirma que desea almacenar los cambios?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
+	    				            					guardarActividad('./php/backend/actividad/guardar.php','?id='+document.getElementById('idActividad').value.toString()+'&idprograma='+document.getElementById('idPrograma').value.toString()+'&idunidad='+document.getElementById('idUnidad').value.toString()+'&actividad='+document.getElementById('Actividad').value.toString()+'&monto='+document.getElementById('Monto').value.toString()+'&periodo='+document.getElementById('Periodo').value.toString()+'&p_1='+document.getElementById('P_1').value.toString()+'&p_2='+document.getElementById('P_2').value.toString()+'&p_3='+document.getElementById('P_3').value.toString()+'&p_4='+document.getElementById('P_4').value.toString()+'&p_5='+document.getElementById('P_5').value.toString()+'&p_6='+document.getElementById('P_6').value.toString()+'&p_7='+document.getElementById('P_7').value.toString()+'&p_8='+document.getElementById('P_8').value.toString()+'&p_9='+document.getElementById('P_9').value.toString()+'&p_10='+document.getElementById('P_10').value.toString()+'&p_11='+document.getElementById('P_11').value.toString()+'&p_12='+document.getElementById('P_12').value.toString()+'&status='+document.getElementById('Status').value.toString()+'&view=3');
+	    				            					}			            					
+	    				            			}
+	    				        		});			        		
+	    						}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de edicion
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "act_Editar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion edicion.
+	    						habActividad();
+	    						}
+	    				});                 
+				});	

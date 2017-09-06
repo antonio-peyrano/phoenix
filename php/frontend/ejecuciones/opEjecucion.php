@@ -1,6 +1,6 @@
 <?php
 /*
- * Micrositio-Phoenix v1.0 Software para gestion de la planeación operativa.
+ * Micrositio-Phoenix v1.0 Software para gestion de la planeacion operativa.
  * PHP v5
  * Autor: Prof. Jesus Antonio Peyrano Luna <antonio.peyrano@live.com.mx>
  * Nota aclaratoria: Este programa se distribuye bajo los terminos y disposiciones
@@ -10,11 +10,21 @@
  * Licencia: http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificación a ISO-8859-1.
+    header('Content-Type: text/html; charset=iso-8859-1'); //Forzar la codificacion a ISO-8859-1.
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
-    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+    include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            }
+              
+    $imgTitleURL = './img/menu/programas.png';
+    $Title = 'Ejecucion';
+    $Sufijo = "ejc_";
     $parametro = $_GET['id'];
     $idPrograma = $_GET['idprograma'];
     $idActividad = $_GET['idactividad'];
@@ -24,7 +34,7 @@
     if(isset($_GET['view']))
         {
             /*
-             * Si se declaro en la url el control de visualización.
+             * Si se declaro en la url el control de visualizacion.
              */
             $cntview = $_GET['view'];
             }
@@ -139,7 +149,7 @@
     function controlMonto()
         {
             /*
-             * Esta función obtiene el monto asignado a la actividad.
+             * Esta funcion obtiene el monto asignado a la actividad.
              */
             global $username, $password, $servername, $dbname;
             global $idActividad;
@@ -156,7 +166,7 @@
     function sigmaMontos($idActividad, $ejecid)
         {
             /*
-             * Esta función obtiene la suma acumulada de montos de las
+             * Esta funcion obtiene la suma acumulada de montos de las
              * actividades.
              */
             global $username, $password, $servername, $dbname;
@@ -167,7 +177,7 @@
             if($ejecid == -1)
                 {
                     /*
-                     * Si el proceso corresponde a un registro de nueva creación.
+                     * Si el proceso corresponde a un registro de nueva creacion.
                      */
                     $consulta = 'SELECT Monto FROM opEjecuciones WHERE idActividad='.$idActividad; //Se establece el modelo de consulta de datos.
                     }
@@ -198,7 +208,7 @@
     function cargarRegistro($idRegistro)
         {
             /*
-             * Esta función establece la carga de un registro a partir de su identificador en la base de datos.
+             * Esta funcion establece la carga de un registro a partir de su identificador en la base de datos.
              */            
             global $username, $password, $servername, $dbname;
             
@@ -208,46 +218,81 @@
             return $dataset;        
             }   
             
-    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
+    $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
 
-    function controlVisual($idRegistro)
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta función controla los botones que deberan verse en la pantalla deacuerdo con la acción solicitada por el
-             * usuario en la ventana previa. Si es una edición, los botones borrar y guardar deben verse. Si es una creación
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
-            
-            if($idRegistro == -1)
+            global $Sufijo;
+    
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acción corresponda a la creación de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/actividad/opActividad.php\',\'?id=\'+document.getElementById(\'idActividad\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&view=0\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarEjecucion(\'./php/backend/ejecuciones/guardar.php\',\'?id=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&idmes=\'+document.getElementById(\'idMes\').value.toString()+\'&cantidad=\'+document.getElementById(\'Cantidad\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acción de visualización.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/actividad/opActividad.php\',\'?id=\'+document.getElementById(\'idActividad\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&view=0\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/ejecuciones/borrar.php\',\'?id=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&view=3\',\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarEjecucion(\'./php/backend/ejecuciones/guardar.php\',\'?id=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&idmes=\'+document.getElementById(\'idMes\').value.toString()+\'&cantidad=\'+document.getElementById(\'Cantidad\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEjecucion();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            //En caso que la acción corresponda a la edición de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/actividad/opActividad.php\',\'?id=\'+document.getElementById(\'idActividad\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&view=0\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarEjecucion(\'./php/backend/ejecuciones/guardar.php\',\'?id=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&idmes=\'+document.getElementById(\'idMes\').value.toString()+\'&cantidad=\'+document.getElementById(\'Cantidad\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habEjecucion();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
                             }
                     }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
             }
             
     function constructor()
         {
             /*
-             * Esta función establece el contenido HTML del formulario
+             * Esta funcion establece el contenido HTML del formulario
              * en la carga del modulo.
              */
             global $Registro, $parametro, $clavecod;
             global $username, $password, $servername, $dbname, $cntview;           
             global $idActividad, $idPrograma, $periodo;
+            global $imgTitleURL, $Title;
+            global $cntview;
             
             $habcampos = 'disabled= "disabled"';
             $ejecid = 0;
@@ -275,6 +320,7 @@
                         </head>
                         <body>
                             <div style=display:none>
+                                <input type= "text" id= "pagina" value= "1">
                                 <input type= "text" id= "idEjecucion" value= "'.$Registro['idEjecucion'].'">
                                 <input type= "text" id= "idPrograma" value= "'.$idPrograma.'">
                                 <input type= "text" id= "idActividad" value= "'.$idActividad.'">
@@ -282,47 +328,46 @@
                                 <input type= "text" id= "MontoActividad" value= "'.$MontoActividad.'">        
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <div id= "infoact">                                        
-                            <table class= "dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Ejecucion de la Actividad</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Cantidad:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Cantidad" '.$habcampos.' value= "'.$Registro['Cantidad'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Monto:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Monto" '.$habcampos.' value= "'.$Registro['Monto'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR"  width="100px">Mes:</td><td class="dgRowsnormTR" class= "queryRowsnormTR"><select name= "idMes" id= "idMes" '.$habcampos.' value= "-1">';
+                            <div id="infoRegistro" class="operativo">
+                                <div id="cabecera" class="cabecera-operativo">'.
+                                    '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.
+                                '</div>
+                                <div id="cuerpo" class="cuerpo-operativo">
+                                    <center><table>
+                                        <tr><td class="td-panel" width="100px">Cantidad: <input style="width:100px;" class="inputform" type= "text" required= "required" id= "Cantidad" '.$habcampos.' value= "'.$Registro['Cantidad'].'"></td>
+                                            <td class="td-panel" width="100px">Monto: <input style="width:100px;" class="inputform" type= "text" required= "required" id= "Monto" '.$habcampos.' value= "'.$Registro['Monto'].'"></td>
+                                            <td class="td-panel" width="100px">Mes: <select style="width:200px;" class="inputform" name= "idMes" id= "idMes" '.$habcampos.' value= "-1">';
             
-                                cargarMeses($Registro['Mes']);
+                                        cargarMeses($Registro['Mes']);
                                             
-            echo'               </select></td></tr>';                                
+            echo'                       </select></td></tr>';                                
                                                 
-                                if($parametro=="-1")
-                                    {
-                                        /*
-                                         * Si la acción corresponde a la creacion de un registro nuevo,
-                                         * se establece el año actual.
-                                         */
-                                        echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
-                                        }
-                                else
-                                    {
-                                        /*
-                                         * Si la acción ocurre para un registro existente,
-                                         * se preserva el año almacenado.
-                                         */
-                                        echo '<tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
-                                        }
-                                        
-                                controlVisual($parametro);
+                                        if($parametro=="-1")
+                                            {
+                                                /*
+                                                 * Si la accion corresponde a la creacion de un registro nuevo,
+                                                 * se establece el año actual.
+                                                 */
+            echo '                      <tr><td class="td-panel" width="100px">Periodo: <input style="width:60px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>';
+                                                }
+                                        else
+                                            {
+                                                /*
+                                                 * Si la accion ocurre para un registro existente,
+                                                 * se preserva el año almacenado.
+                                                 */
+            echo '                      <tr><td class="td-panel" width="100px">Periodo: <input style="width:60px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>';
+                                                }                                        
                                                                                                         
-            echo'           </table>
-                            </div>';
+            echo'                   </table></center>';
 
             echo'       
                             <br>
-                            <div id= "dataevidencias">
-                                <table class="queryTable">
-                                    <tr><td class= "queryRowsnormTR">Ruta de evidencia: </td><td class= "queryRowsnormTR"><input type= "text" id= "RutaURL" value= ""></input></td><td><a href="#" onclick="guardarEvidencia(\'./php/backend/evidencias/guardar.php\',\'?idejecucion=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&rutaurl=\'+document.getElementById(\'RutaURL\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td><tr>
-                                </table>
-                                <br>
-                            ';
+                                <div id= "dataevidencias">
+                                    <table class="queryTable">
+                                        <tr><td class= "queryRowsnormTR">Ruta de evidencia: </td><td class= "queryRowsnormTR"><input type= "text" id= "RutaURL" value= ""></input></td><td><a href="#" onclick="guardarEvidencia(\'./php/backend/evidencias/guardar.php\',\'?idejecucion=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&rutaurl=\'+document.getElementById(\'RutaURL\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td><tr>
+                                    </table>
+                            <br>';
             
                             $_GET['idejecucion'] = $Registro['idEjecucion'];
 
@@ -341,13 +386,17 @@
                                     include_once("../evidencias/catEvidencias.php");                                   
                                     }
                                                                                         
-            echo'           </div>
+            echo'               </div>
                             <br>
-                            <div id="adjuntosServidor">
-                                <table class="queryTable">
-                                    <tr><td class= "queryRowsnormTR"><a href="#"id="verArchivos">VER ARCHIVOS ADJUNTOS</a></td></tr>
-                                </table>
-                            </div>     
+                                <div id="adjuntosServidor">
+                                    <table class="queryTable">
+                                        <tr><td class= "queryRowsnormTR"><a href="#"id="verArchivos">VER ARCHIVOS ADJUNTOS</a></td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                                <div id="pie" class="pie-operativo">'.
+                                    controlBotones("32", "32", $cntview).                
+                                '</div>                     
                         </body>                
                     </html>';           
         } 

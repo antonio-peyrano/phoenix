@@ -238,36 +238,7 @@
     
             return $botonera;
             }
-    
-    function controlVisual($idRegistro)
-        {
-            /*
-             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
-             * usuario en la ventana previa. Si es una edicion, los botones borrar y guardar deben verse. Si es una creacion
-             * solo el boton guardar debe visualizarse.
-             */
-            global $cntview;
-            
-            if($idRegistro == -1)
-                {
-                    //En caso que la accion corresponda a la creacion de un nuevo registro.
-                    echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
-                        {
-                            //En caso de procesarse como una accion de visualizacion.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/gasolina/borrar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
-                            }
-                    else
-                        {
-                            //En caso que la accion corresponda a la edicion de un registro.
-                            echo '<tr style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasolina/busGasolina.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarGasolina(\'./php/backend/gasolina/guardar.php\',\'?id=\'+document.getElementById(\'idProgGas\').value.toString()+\'&identidad=\'+document.getElementById(\'idEntidad\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&p_1=\'+document.getElementById(\'P_1\').value.toString()+\'&p_2=\'+document.getElementById(\'P_2\').value.toString()+\'&p_3=\'+document.getElementById(\'P_3\').value.toString()+\'&p_4=\'+document.getElementById(\'P_4\').value.toString()+\'&p_5=\'+document.getElementById(\'P_5\').value.toString()+\'&p_6=\'+document.getElementById(\'P_6\').value.toString()+\'&p_7=\'+document.getElementById(\'P_7\').value.toString()+\'&p_8=\'+document.getElementById(\'P_8\').value.toString()+\'&p_9=\'+document.getElementById(\'P_9\').value.toString()+\'&p_10=\'+document.getElementById(\'P_10\').value.toString()+\'&p_11=\'+document.getElementById(\'P_11\').value.toString()+\'&p_12=\'+document.getElementById(\'P_12\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habGasolina();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
-                            }
-                    }
-            }
-            
+                
     function constructor()
         {
             /*

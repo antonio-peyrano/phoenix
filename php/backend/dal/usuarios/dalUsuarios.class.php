@@ -200,7 +200,7 @@
                                                     //Se crean los elementos de la relacion.
                                                     for($conteo=1; $conteo < count($Mod); $conteo++)
                                                         {
-                                                            $consulta = 'INSERT INTO opRelPerUsr (idUsuario, idModulo) VALUES ('.'\''.$RegUsuario['idUsuario'].'\',\''.$Mod[$conteo].'\')'; //Se establece el modelo de consulta de datos.
+                                                            $consulta = 'INSERT INTO opRelPerUsr (idUsuario, idModulo) VALUES ('.'\''.$Registro['idUsuario'].'\',\''.$Mod[$conteo].'\')'; //Se establece el modelo de consulta de datos.
                                                             $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                                                             }
                                                     }
