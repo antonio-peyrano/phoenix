@@ -888,24 +888,11 @@
             echo'       
                             <br>
                             <div id= "datatareas">';
+            
                             $_GET['idprograma'] = $Registro['idPrograma'];
+                            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/actividad/catActividad.php");
 
-                            if($cntview == 3)
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de actividades.
-                                     */
-                                    include_once("../../frontend/actividad/catActividad.php");
-                                    }
-                            else
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de programa.
-                                     */
-                                    include_once("../actividad/catActividad.php");
-                                    }
             echo'           </div>
-
                                 </div>
                                 <div id="pie" class="pie-operativo">'.
                                     controlBotones("32", "32", $cntview).                

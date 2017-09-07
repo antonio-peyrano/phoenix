@@ -232,12 +232,15 @@
                             <link rel= "stylesheet" href= "./css/queryStyle.css"></style>
                         </head>
                         <body>
-                            <div id= "divParametrica" style=display:none>
+                            <div style="display:none;">
+                                <input type= "text" id= "pagina" value= "1">
+                            </div>
+                            <div id= "divParametrica" style=display:none>                                
                                 <input type= "text" id= "idProgGas" value= "'.$parametro.'"><br>
                                 <input type= "text" id= "idEjecGas" value= "'.$idEjecGas.'"><br>
                                 <input type= "text" id= "idVehicle" value= "'.$idVehiculo.'"><br>      
                             </div>                
-                            <div id="infoRegistro" class="operativo" style="top:80%; left:50%;">
+                            <div id="infoRegistro" class="operativo" style="top:70%; left:50%;">
                                 <div id="cabecera" class="cabecera-operativo">'.
                                     '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.
                                 '</div>

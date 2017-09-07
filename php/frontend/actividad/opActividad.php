@@ -554,22 +554,9 @@
                             <br>
                             <div id= "dataejecuciones">';
             
-                            $_GET['idactividad'] = $Registro['idActividad'];
-                            
-                            if($cntview == 3)
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de actividades.
-                                     */
-                                    include_once("../../frontend/ejecuciones/catEjecucion.php");
-                                    }
-                            else
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de programa.
-                                     */
-                                    include_once("../ejecuciones/catEjecucion.php");
-                                    }
+                                $_GET['idactividad'] = $Registro['idActividad'];                            
+                                include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/ejecuciones/catEjecucion.php");
+
             echo'           </div>
                                 </div>
                                 <div id="pie" class="pie-operativo">'.

@@ -365,7 +365,7 @@ $(document).ready(function() {
 	    				            			if(result)
 	    				            				{
 	    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
-	    				            					guardarEjecucion('./php/backend/ejecuciones/guardar.php','?id='+document.getElementById('idEjecucion').value.toString()+'&idactividad='+document.getElementById('idActividad').value.toString()+'&idmes='+document.getElementById('idMes').value.toString()+'&cantidad='+document.getElementById('Cantidad').value.toString()+'&monto='+document.getElementById('Monto').value.toString()+'&periodo='+document.getElementById('Periodo').value.toString()+'&status='+document.getElementById('Status').value.toString()+'&idprograma='+document.getElementById('idPrograma').value.toString()+'&view=3');
+	    				            					guardarEjecucion('./php/backend/ejecuciones/guardar.php','?id='+document.getElementById('idEjecucion').value.toString()+'&idactividad='+document.getElementById('idActividad').value.toString()+'&idmes='+document.getElementById('idMes').value.toString()+'&cantidad='+document.getElementById('Cantidad').value.toString()+'&monto='+document.getElementById('Monto').value.toString()+'&periodo='+document.getElementById('Periodo').value.toString()+'&status='+document.getElementById('Status').value.toString()+'&idprograma='+document.getElementById('idPrograma').value.toString()+'&view=1');
 	    				            					}			            					
 	    				            			}
 	    				        		});			        		

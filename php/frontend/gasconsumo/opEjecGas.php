@@ -14,7 +14,18 @@
     
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuración.
+
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            }  
     
+    $imgTitleURL = './img/menu/programas.png';
+    $Title = 'Consumo de Combustible';
+    $Sufijo = "mcs_";
+            
     $parametro = $_GET['id'];
     $idProgGas = $_GET['idproggas'];
     $idEjecGas = $_GET['idejecgas'];
@@ -197,35 +208,68 @@
             
     $Registro = @mysqli_fetch_array(cargarRegistro($parametro),MYSQLI_ASSOC);//Llamada a la función de carga de registro de usuario.
 
-    function controlVisual($idRegistro)
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
-             * Esta funci�n controla los botones que deberan verse en la pantalla deacuerdo con la acción solicitada por el
-             * usuario en la ventana previa. Si es una edici�n, los botones borrar y guardar deben verse. Si es una creaci�n
-             * solo el boton guardar debe visualizarse.
+             * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
-            
-            if($idRegistro == -1)
+            global $Sufijo, $parametro;
+    
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';
+    
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la acci�n corresponda a la creaci�n de un nuevo registro.
-                    echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'?id=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&idvehiculo=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&view=0\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarConsGas(\'./php/backend/gasconsumo/guardar.php\',\'?id=\'+document.getElementById(\'idMovGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idmes=\'+document.getElementById(\'idMes\').value.toString()+\'&tiempo=\'+document.getElementById(\'Tiempo\').value.toString()+\'&cantidad=\'+document.getElementById(\'Cantidad\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&idvehiculo=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else 
-                {
-                    if($cntview == 1)
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una acci�n de visualizaci�n.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'?id=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&idvehiculo=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&view=0\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/gasconsumo/borrar.php\',\'?id=\'+document.getElementById(\'idMovGas\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&view=3\',\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarConsGas(\'./php/backend/gasconsumo/guardar.php\',\'?id=\'+document.getElementById(\'idMovGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idmes=\'+document.getElementById(\'idMes\').value.toString()+\'&tiempo=\'+document.getElementById(\'Tiempo\').value.toString()+\'&cantidad=\'+document.getElementById(\'Cantidad\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&idvehiculo=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habConsumoGas();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*  
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            //En caso que la acci�n corresponda a la edici�n de un registro.
-                            echo '<tr class="dgHeader" style="text-align:right"><td colspan= "2"><a href="#" onclick="cargar(\'./php/frontend/gasconsumo/opGasConsumo.php\',\'?id=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&idvehiculo=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&view=0\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarConsGas(\'./php/backend/gasconsumo/guardar.php\',\'?id=\'+document.getElementById(\'idMovGas\').value.toString()+\'&idproggas=\'+document.getElementById(\'idProgGas\').value.toString()+\'&idejecgas=\'+document.getElementById(\'idEjecGas\').value.toString()+\'&idmes=\'+document.getElementById(\'idMes\').value.toString()+\'&tiempo=\'+document.getElementById(\'Tiempo\').value.toString()+\'&cantidad=\'+document.getElementById(\'Cantidad\').value.toString()+\'&monto=\'+document.getElementById(\'Monto\').value.toString()+\'&periodo=\'+document.getElementById(\'Periodo\').value.toString()+\'&idvehiculo=\'+document.getElementById(\'idVehiculo\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habConsumoGas();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            if($_SESSION['nivel'] == "Administrador")
+                                {
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
                             }
                     }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
+                                    }
+                            }
+                    }
+    
+            return $botonera;
             }
-            
+                    
     function constructor()
         {
             /*
@@ -235,6 +279,8 @@
             global $Registro, $parametro, $clavecod;
             global $username, $password, $servername, $dbname, $cntview;           
             global $idEjecGas, $idProgGas, $idVehiculo, $periodo, $tiempo;
+            global $imgTitleURL, $Title;
+            global $cntview;
             
             $habcampos = 'disabled= "disabled"';
             $ejecid = 0;
@@ -268,16 +314,19 @@
                                 <input type= "text" id= "MontoAcumulado" value= "'.$MontoAcumulado.'">        
                                 <input type= "text" id= "Status" value="'.$Registro['Status'].'">    
                             </div>
-                            <div id= "infoact">                                        
-                            <table class= "dgTable">
-                                <tr><th class="dgHeader" colspan= 2">Consumo efectuado</th></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Cantidad:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Cantidad" '.$habcampos.' value= "'.$Registro['Cantidad'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR" width="100px">Monto:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Monto" '.$habcampos.' value= "'.$Registro['Monto'].'"></td></tr>
-                                <tr><td class="dgRowsaltTR"  width="100px">Mes:</td><td class="dgRowsnormTR" class= "queryRowsnormTR"><select name= "idMes" id= "idMes" '.$habcampos.' value= "-1">';
+                            <div id="infoRegistro" class="operativo">
+                                <div id="cabecera" class="cabecera-operativo">'.
+                                    '<img align="middle" src="'.$imgTitleURL.'" width="32" height="32"/> '.$Title.
+                                '</div>
+                                <div id="cuerpo" class="cuerpo-operativo">
+                                    <center><table>
+                                        <tr><td class="td-panel" width="100px">Cantidad:</td><td><input style="width:100px; text-align:right;" class="inputform" type= "text" required= "required" id= "Cantidad" '.$habcampos.' value= "'.$Registro['Cantidad'].'"></td>
+                                            <td class="td-panel" width="100px">Monto $:</td><td><input style="width:100px; text-align:right;" class="inputform" type= "text" required= "required" id= "Monto" '.$habcampos.' value= "'.$Registro['Monto'].'"></td></tr>
+                                        <tr><td class="td-panel" width="100px">Mes:</td><td><select style="width:100px;" class="inputform" name= "idMes" id= "idMes" '.$habcampos.' value= "-1">';
             
-                                cargarMeses($Registro['Mes']);
+                                            cargarMeses($Registro['Mes']);
                                             
-            echo'               </select></td></tr>';                                
+            echo'                       </select></td></tr>';                                
                                                 
                                 if($parametro=="-1")
                                     {
@@ -285,8 +334,8 @@
                                          * Si la acci�n corresponde a la creacion de un registro nuevo,
                                          * se establece el a�o actual.
                                          */
-                                        echo '  <tr><td class="dgRowsaltTR" width="100px">Fecha/Hora:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Tiempo" '.$habcampos.' value= "'.$tiempo.'"></td></tr>
-                                                <tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>
+                                        echo '  <tr><td class="td-panel" width="100px">Fecha/Hora:</td><td><input style="width:200px;" class="inputform" type= "text" required= "required" id= "Tiempo" '.$habcampos.' value= "'.$tiempo.'"></td></tr>
+                                                <tr><td class="td-panel" width="100px">Periodo:</td><td><input style="width:80px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$periodo.'"></td></tr>
                                                 ';
                                         }
                                 else
@@ -295,43 +344,23 @@
                                          * Si la acci�n ocurre para un registro existente,
                                          * se preserva el a�o almacenado.
                                          */
-                                        echo '  <tr><td class="dgRowsaltTR" width="100px">Fecha/Hora:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Tiempo" '.$habcampos.' value= "'.$Registro['Tiempo'].'"></td></tr>
-                                                <tr><td class="dgRowsaltTR" width="100px">Periodo:</td><td class="dgRowsnormTR"><input type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>
+                                        echo '  <tr><td class="td-panel" width="100px">Fecha/Hora:</td><td><input style="width:200px;" class="inputform" type= "text" required= "required" id= "Tiempo" '.$habcampos.' value= "'.$Registro['Tiempo'].'"></td></tr>
+                                                <tr><td class="td-panel" width="100px">Periodo:</td><td><input style="width:80px;" class="inputform" type= "text" required= "required" id= "Periodo" '.$habcampos.' value= "'.$Registro['Periodo'].'"></td></tr>
                                                 ';
-                                        }
-                                        
-                                controlVisual($parametro);
+                                        }                                        
                                                                                                         
-            echo'           </table>
-                            </div>';
+            echo'           </table>';
 
-            echo'       
-                            <br>
-                            <div id= "dataevidencias">
-                                <table class="queryTable">
-                                    <tr><td class= "queryRowsnormTR">Ruta de evidencia: </td><td class= "queryRowsnormTR"><input type= "text" id= "RutaURL" value= ""></input></td><td><a href="#" onclick="guardarEvidencia(\'./php/backend/evidencias/guardar.php\',\'?idejecucion=\'+document.getElementById(\'idEjecucion\').value.toString()+\'&rutaurl=\'+document.getElementById(\'RutaURL\').value.toString()+\'&idprograma=\'+document.getElementById(\'idPrograma\').value.toString()+\'&idactividad=\'+document.getElementById(\'idActividad\').value.toString()+\'&status=\'+document.getElementById(\'Status\').value.toString()+\'&view=3\');"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td><tr>
-                                </table>
-                                <br>
-                            ';
-            
-                            //$_GET['idejecucion'] = $Registro['idEjecucion'];
-
-                            if($cntview == 3)
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de actividades.
-                                     */
-                                    include_once("../../frontend/evidencias/catEvidencias.php");
-                                    }
-                            else
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de programa.
-                                     */
-                                    include_once("../evidencias/catEvidencias.php");
-                                    }
-                                                                                        
-            echo'           </div>     
+            echo'
+                                <div id="adjuntosServidor">
+                                    <table class="queryTable">
+                                        <tr><td class= "queryRowsnormTR"><a href="#"id="verComprobantes">VER COMPROBANTES DE PAGO</a></td></tr>
+                                    </table>
+                                </div>                
+                        </div>
+                                <div id="pie" class="pie-operativo">'.
+                                    controlBotones("32", "32", $cntview).                
+                                '</div>                                     
                         </body>                
                     </html>';           
         } 

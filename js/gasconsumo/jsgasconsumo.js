@@ -77,7 +77,10 @@ function habConsumoGas(){
 	 */
 	document.getElementById('Cantidad').disabled = false;
 	document.getElementById('Monto').disabled = false;
-	document.getElementById('idMes').disabled = false;	
+	document.getElementById('idMes').disabled = false;
+	document.getElementById('mcs_Guardar').style.display="block";
+	document.getElementById('mcs_Borrar').style.display="none";
+	document.getElementById('mcs_Editar').style.display="none";
 	}
 	
 function habGasolina(){
@@ -284,3 +287,183 @@ $(document).ready(function() {
     			}
     });                 
 });
+
+//DECLARACION DE ACCIONES A EJECUTARSE SOBRE FORMULARIO OPERATIVO.
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de retorno
+ * pulsado sobre el formulario operativo.
+ */
+	$(document).ready(function()
+		{
+    		$("div").click(function(e)
+    			{
+    		     	e.stopPropagation();
+    		        if(e.target.id == "mcs_Volver")
+    		        	{
+    		            	//En caso de coincidir el id con la accion volver.
+    		        		cargar('./php/frontend/gasconsumo/opGasConsumo.php','?id='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString()+'&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&view=0','sandbox');
+    		            	}
+    				});                 
+			});
+    		
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de borrado
+ * pulsado sobre el formulario operativo.
+ */
+	$(document).ready(function()
+		{
+    		$("div").click(function(e)
+    			{
+    			 	e.stopPropagation();
+    			    if(e.target.id == "mcs_Borrar")
+    			    	{
+    			         	//En caso de coincidir el id con la accion borrar.
+    			            bootbox.confirm(
+    			            	{
+    				            	message: "¿Confirma que desea borrar el registro?",
+    				            	buttons: 
+    				            		{
+    				            			confirm: 
+    				            				{
+    				            					label: 'SI',
+    				            					className: 'btn-success'
+    				            					},
+    				            			cancel: 
+    				            				{
+    				            					label: 'NO',
+    				            					className: 'btn-danger'
+    				            					}
+    				            			},
+    				            	callback: function (result)
+    				            		{
+    				            			if(result)
+    				            				{
+    				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+    				            					cargar('./php/backend/gasconsumo/borrar.php','?id='+document.getElementById('idMovGas').value.toString()+'&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&view=3','sandbox');
+    				            					}			            					
+    				            			}
+    			            		});
+    			    		}
+    				});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de guardado
+ * pulsado sobre el formulario operativo.
+ */
+	$(document).ready(function()
+		{
+    		$("div").click(function(e)
+    			{
+    				e.stopPropagation();
+    				if(e.target.id == "mcs_Guardar")
+    					{
+    				     	//En caso de coincidir el id con la accion guardar.
+    				        bootbox.confirm(
+    				        	{
+    				            	message: "¿Confirma que desea almacenar los cambios?",
+    				            	buttons: 
+    				            		{
+    				            			confirm: 
+    				            				{
+    				            					label: 'SI',
+    				            					className: 'btn-success'
+    				            					},
+    				            			cancel: 
+    				            				{
+    				            					label: 'NO',
+    				            					className: 'btn-danger'
+    				            					}
+    				            			},
+    				            	callback: function (result)
+    				            		{
+    				            			if(result)
+    				            				{
+    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
+    				            					guardarConsGas('./php/backend/gasconsumo/guardar.php','?id='+document.getElementById('idMovGas').value.toString()+'&idproggas='+document.getElementById('idProgGas').value.toString()+'&idejecgas='+document.getElementById('idEjecGas').value.toString()+'&idmes='+document.getElementById('idMes').value.toString()+'&tiempo='+document.getElementById('Tiempo').value.toString()+'&cantidad='+document.getElementById('Cantidad').value.toString()+'&monto='+document.getElementById('Monto').value.toString()+'&periodo='+document.getElementById('Periodo').value.toString()+'&idvehiculo='+document.getElementById('idVehiculo').value.toString()+'&status='+document.getElementById('Status').value.toString()+'&view=0');
+    				            					}			            					
+    				            			}
+    				        		});			        		
+    						}
+    				});                 
+			});
+
+/*
+ * El presente segmento de codigo evalua la accion de click sobre el elemento de edicion
+ * pulsado sobre el formulario operativo.
+ */
+	$(document).ready(function()
+		{
+    		$("div").click(function(e)
+    			{
+    				e.stopPropagation();
+    				if(e.target.id == "mcs_Editar")
+    					{
+    				     	//En caso de coincidir el id con la accion edicion.
+    						habConsumoGas();
+    						}
+    				});                 
+			});
+	
+	$(document).ready(function() {
+	    $("div").click(function(e){
+	    	e.stopPropagation();
+	    	if(e.target.id == "verComprobantes")
+	    		{
+	    			//Se confirma la carga de actualizacion sobre archivos adjuntos.
+	    			var w = 200;
+	    			var h = 100;
+	    			
+	    			var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+	    			var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+	    			
+	    		    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+	    		    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+	    		    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+	    		    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+	    		    
+	    			window.open('./php/frontend/main/subirArchivos.php?rutaadjuntos=tickets_'+document.getElementById('idMovGas').value.toString()+'_'+document.getElementById('idVehiculo').value.toString()+'_'+document.getElementById('idMes').value.toString()+'_'+document.getElementById('Periodo').value.toString(), "Subir Archivos", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, toolbar=yes, tittlebar=no, width="+width.toString()+", height="+height.toString()+", top="+top.toString()+", left="+left.toString());
+	    			}
+	    });                 
+	});	
+	
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de retroceso de pagina
+	 * sobre el grid de datos.
+	 */
+		$(document).ready(function()
+			{
+				$("div").click(function(e)
+					{
+						e.stopPropagation();
+						if(e.target.id == "mcs_Previous_10")
+							{
+								//En caso de coincidir con el control de retroceso.
+								if((document.getElementById('pagina').value-1)!=0)
+									{
+										document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())-1;
+										}
+								cargar('./php/frontend/gasconsumo/catEjecGas.php','?idejecgas='+document.getElementById('idEjecGas').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'divConsumos');
+								//cargar('./php/frontend/ejecuciones/catEjecucion.php','?idactividad='+document.getElementById('idActividad').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'dataejecuciones');
+								}
+						});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de avance de pagina
+	 * sobre el grid de datos.
+	 */
+		$(document).ready(function()
+			{
+				$("div").click(function(e)
+					{
+						e.stopPropagation();
+						if(e.target.id == "mcs_Next_10")
+							{
+								//En caso de coincidir con el control de avance.
+								document.getElementById('pagina').value = parseInt(document.getElementById('pagina').value.toString())+1;							
+								cargar('./php/frontend/gasconsumo/catEjecGas.php','?idejecgas='+document.getElementById('idEjecGas').value.toString()+'&pagina='+document.getElementById('pagina').value.toString(),'divConsumos');
+								}
+						});                 
+				});

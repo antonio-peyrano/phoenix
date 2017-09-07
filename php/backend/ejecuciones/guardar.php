@@ -572,7 +572,7 @@
                     }                        
             }
             
-    $_GET['view'] = 3; //Se establece la variable de control de visualización.
+    $_GET['view'] = 1; //Se establece la variable de control de visualizacion.
     $_GET['id'] = $idActividad; //Se establece la variable de control del id del programa.
     
     include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/actividad/opActividad.php");    

@@ -543,10 +543,10 @@
                     $consulta = 'INSERT INTO opEficAct(idActividad, Periodo) VALUES ('.'\''.$Registro['idActividad'].'\',\''.$Periodo.'\')';
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
             
-                    updt_opEjecActAnual(); //Se llama a la función del calculo global.
+                    updt_opEjecActAnual(); //Se llama a la funcion del calculo global.
                     }
                     
-            $_GET['view'] = 3; //Se establece la variable de control de visualización.
+            $_GET['view'] = 1; //Se establece la variable de control de visualizacion.
             $_GET['id'] = $idPrograma; //Se establece la variable de control del id del programa.
                     
             include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/programa/opPrograma.php");                                

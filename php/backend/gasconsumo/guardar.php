@@ -212,7 +212,7 @@
                     updt_opEjecGasAnual();                        
                     }            
 
-            $_GET['view'] = 3; //Se establece la variable de control de visualizaci�n.
+            $_GET['view'] = 0; //Se establece la variable de control de visualizaci�n.
             $_GET['idvehiculo'] = $idVehiculo; //Se retorna el valor de referencia de id del vehiculo gestionado.
             $_GET['idproggas'] = $idProgGas; //Se retorna la referencia de programacion de gasto de combustible.
             $_GET['idejecgas']= $idEjecGas; //Se retorna la referencia de ejecucion de gasto de combustible.
