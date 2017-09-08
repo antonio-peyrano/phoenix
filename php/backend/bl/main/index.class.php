@@ -120,7 +120,6 @@
                                     '<ul class="subnavegador">'
                                         .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Consumo de Gasolina&lreq=1','escritorio');", "./img/menu/vehconsumo.png", "Consumo de Gasolina")
                                         .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Consulta de Planeacion&lreq=1','escritorio');", "./img/menu/planeacion.png", "Consulta de Planeacion")
-                                        .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Evaluacion FODA&lreq=1','escritorio');", "./img/menu/foda.gif", "Evaluacion FODA")
                                         .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Resultados FODA&lreq=1','escritorio');", "./img/menu/resfoda.png", "Resultados FODA").
                                         '</ul></li></ul>'.                                                                                                                    
                                     '<ul class="navegador">'.
@@ -206,11 +205,10 @@
                             <script type="text/javascript" src="./js/gasconsumo/jsgasconsumo.js"></script>
                             <script type="text/javascript" src="./js/graficas/jsgraficas.js"></script>
                             <script type="text/javascript" src="./js/fichas/jsfichas.js"></script>
-                            <script type="text/javascript" src="./js/foda/cedulas/jscedulas.js"></script>
-                            <script type="text/javascript" src="./js/foda/factores/jsfactores.js"></script>
-                            <script type="text/javascript" src="./js/foda/escalas/jsescalas.js"></script>
-                            <script type="text/javascript" src="./js/foda/evaluaciones/jsevaluaciones.js"></script>
-                            <script type="text/javascript" src="./js/usrevafoda/jsusrevafoda.js"></script>
+                            <script type="text/javascript" src="./js/instrumentos/cedulas/cedulas.js"></script>
+                            <script type="text/javascript" src="./js/instrumentos/factores/factores.js"></script>
+                            <script type="text/javascript" src="./js/instrumentos/escalas/escalas.js"></script>
+                            <script type="text/javascript" src="./js/instrumentos/evaluaciones/evaluaciones.js"></script>
                             <script type="text/javascript" src="./js/foda/resultados/jsresfoda.js"></script>';
                     return $head;
                     }                    

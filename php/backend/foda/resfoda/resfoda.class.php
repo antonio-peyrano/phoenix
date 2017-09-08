@@ -123,7 +123,7 @@
                     global $username, $password, $servername, $dbname;
                     
                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                    $consulta = 'SELECT idEvaluacion, opResParFoda.idFactor, Tipo, Ponderacion FROM ((opResParFoda INNER JOIN opFactores ON opResParFoda.idFactor = opFactores.idFactor) INNER JOIN opEscalas ON opEscalas.idEscala = opResParFoda.idEscala) WHERE opResParFoda.idEvaluacion='.$idEvaluacion;
+                    $consulta = 'SELECT idEvaluacion, opResParEva.idFactor, Tipo, Ponderacion FROM ((opResParEva INNER JOIN opFactores ON opResParEva.idFactor = opFactores.idFactor) INNER JOIN opEscalas ON opEscalas.idEscala = opResParEva.idEscala) WHERE opResParEva.idEvaluacion='.$idEvaluacion;
                     $dsResultados = $objConexion->conectar($consulta);
                     
                     /*
@@ -222,7 +222,7 @@
                                                             }
                                                     }
                                             }
-
+                                    else
                                     if($RegFactores['Tipo'] == 'Externo')
                                         {
                                             if(count($this->Resultados)>0)
