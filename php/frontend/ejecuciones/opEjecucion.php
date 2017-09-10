@@ -371,20 +371,7 @@
             
                             $_GET['idejecucion'] = $Registro['idEjecucion'];
 
-                            if($cntview == 3)
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de actividades.
-                                     */
-                                    include_once("../../frontend/evidencias/catEvidencias.php");
-                                    }
-                            else
-                                {
-                                    /*
-                                     * En caso que el invocador sea el formulario de programa.
-                                     */
-                                    include_once("../evidencias/catEvidencias.php");                                   
-                                    }
+                            include_once($_SERVER['DOCUMENT_ROOT']."/phoenix/php/frontend/evidencias/catEvidencias.php");
                                                                                         
             echo'               </div>
                             <br>

@@ -27,12 +27,13 @@
             private $totColumn = null;
             private $titulo = null; //Variable de gestion para el titulo a visualizar en la tabla.
             private $sufijo = null; //Variable de identificador auxiliar para el control de items manipulables por el usuario.
+            private $SFTB = NULL; //Variable de control para visualizacion de controles.
             
             private $dataset = null; //Objeto de gestion para la tupla de datos.
             private $idEntity = null; //Variable de gestion para el ID de control de los registros en la tupla.
             private $DisplayRow = 10; //Cantidad de registros a observar.
              
-            function __construct($dataset, $titulo, $sufijo, $idEntity)
+            function __construct($dataset, $titulo, $sufijo, $idEntity, $SFTB=true)
                 {
                     /*
                      * Definicion de constructor para la clase rejilla,
@@ -42,6 +43,7 @@
                     $this->titulo = $titulo;
                     $this->sufijo = $sufijo;
                     $this->idEntity = $idEntity;
+                    $this->SFTB = $SFTB;
                     }
                     
             function headerTable()
@@ -75,8 +77,18 @@
                      */       
                     $response = '<div id= "dgDiv" class= "dgMainDiv">';
                     $response = $response.'<table class="dgTable">';
+
                     $response = $response.'<tr align= "center"><td colspan= '.$this->totColumn.' class= "dgHeader">'.$this->titulo.'</td></tr>';
-                    $response = $response.'<tr class="dgTitles">'.$colHeader.'<th>Acciones<img id="'.$this->sufijo.'add" align= "right" src= "./img/grids/add.png" width= "25" height= "25" alt="Agregar"/></th></tr>';                            
+
+                    if($this->SFTB)
+                        {
+                            $response = $response.'<tr class="dgTitles">'.$colHeader.'<th>Acciones<img id="'.$this->sufijo.'add" align= "right" src= "./img/grids/add.png" width= "25" height= "25" alt="Agregar"/></th></tr>';
+                            }
+                    else                    
+                        {
+                            $response = $response.'<tr class="dgTitles">'.$colHeader.'<th>Acciones</th></tr>';
+                            }
+                    
                     return $response;                    
                     }
 
@@ -134,7 +146,15 @@
                                             }                                                 
                                     }
                         
-                            $response = $response.'<td id="reg_'.$tupla[$this->idEntity].'" width= "90"><img id="'.$this->sufijo.'visualizar_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/view.png" width= "25" height= "25" alt= "Visualizar"/><img id="'.$this->sufijo.'edit_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar"/><a class="borrar" id="'.$this->sufijo.'delete'.$tupla[$this->idEntity].'" href="#"><img id="'.$this->sufijo.'delete_'.$tupla[$this->idEntity].'" align= "middle" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar"/></a></td></tr>';
+                            if($this->SFTB)
+                                {
+                                    $response = $response.'<td id="reg_'.$tupla[$this->idEntity].'" width= "90"><img id="'.$this->sufijo.'visualizar_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/view.png" width= "25" height= "25" alt= "Visualizar"/><img id="'.$this->sufijo.'edit_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar"/><a class="borrar" id="'.$this->sufijo.'delete'.$tupla[$this->idEntity].'" href="#"><img id="'.$this->sufijo.'delete_'.$tupla[$this->idEntity].'" align= "middle" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar"/></a></td></tr>';
+                                    }
+                            else                    
+                                {
+                                    $response = $response.'<td id="reg_'.$tupla[$this->idEntity].'" width= "90"><img id="'.$this->sufijo.'visualizar_'.$tupla[$this->idEntity].'"align= "middle" src= "./img/grids/view.png" width= "25" height= "25" alt= "Visualizar"/></td></tr>';
+                                    }
+                            
                             $rowCount = $rowCount + 1; //Se incrementa el contador de filas.     
                             $tupla = @mysqli_fetch_array($this->dataset,MYSQLI_ASSOC); //Se organiza la tupla para su manipulacion, haciendo un corrimiento al siguiente elemento.
                             }
@@ -148,7 +168,15 @@
                      * Se concatenan los elementos restantes de la cadena de codigo para dar el formato a la
                      * tabla en pantalla.
                      */
-                    $response = $response.'<tr class= "dgTotRowsTR"><td alignt= "left" colspan= '.$this->totColumn.'"><img id="'.$this->sufijo.'add" align= "right" src= "./img/grids/add.png" width= "25" height= "25" alt= "Agregar"/></td></tr>';
+                    if($this->SFTB)
+                        {
+                            $response = $response.'<tr class= "dgTotRowsTR"><td alignt= "left" colspan= '.$this->totColumn.'"><img id="'.$this->sufijo.'add" align= "right" src= "./img/grids/add.png" width= "25" height= "25" alt= "Agregar"/></td></tr>';                            
+                            }
+                    else
+                        {
+                            $response = $response.'<tr class= "dgTotRowsTR"><td alignt= "left" colspan= '.$this->totColumn.'"></td></tr>';
+                            }
+                    
                     $response = $response.'<tr class= "dgPagRow"><td align= "left" colspan= "'.$this->totColumn.'">Visualizando ' .($rowCount-1). ' registros <img  align="right" id="'.$this->sufijo.'Previous_'.$this->DisplayRow.'" src="./img/grids/previous.png" width="25" height="25" title="Previos '.$this->DisplayRow.'"><img align="right" id="'.$this->sufijo.'Next_'.$this->DisplayRow.'"src="./img/grids/next.png" width="25" height="25" title="Siguientes '.$this->DisplayRow.'"></td></tr>';
                     $response = $response.'</table>';
                     $response = $response.'</div>';                                          
