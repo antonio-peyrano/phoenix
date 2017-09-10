@@ -124,6 +124,7 @@
                                         '</ul></li></ul>'.                                                                                                                    
                                     '<ul class="navegador">'.
                                         $this->headItem("item-cabecera-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Graficas&lreq=1','escritorio');", "./img/menu/graficas.png", "Graficas").
+                                        $this->headItem("item-cabecera-01", "window.open('./documentacion/Manual.pdf','Manual de Usuario', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, width=800, height=600, top=0, left=100')","./img/menu/manual.png", "Manual de Usuario").
                                         $this->headItem("item-cabecera-01", "", "./img/menu/contacto.png", "Contacto").
                                         $this->headItem("item-cabecera-03", "validarUsuario('./php/backend/bl/main/logout.php','','escritorio');", "./img/menu/logout.png", "Cerrar Sesion").                                        
                                     '</ul>

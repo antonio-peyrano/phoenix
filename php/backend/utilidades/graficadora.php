@@ -206,7 +206,7 @@
             $grafico->SetScale('textlin');
             $grafico->SetMargin(40,30,30,40);
             $grafico->xaxis->SetTickLabels($Leyendas); //Se establecen los rotulos para los elementos del eje X. (Ej. Ene, Feb, ...)
-            $grafico->xaxis->SetFont(FF_VERDANA,FS_NORMAL,12); //Se establece la fuente, tipo y tamaño.
+            $grafico->xaxis->SetFont(FF_FONT2,FS_NORMAL,12); //Se establece la fuente, tipo y tamaño.
             $grafico->SetBackgroundGradient('darkblue','silver',2,BGRAD_FRAME);           
             $bplot = new BarPlot($Eficacia); //Se crea la instancia del objeto manejador de datos y se envia el vector de informacion al constructor.                        
             $bplot->SetFillColor('#479CC9'); //Configuramos color de las barras (Este se anula cuando hay degradado).
@@ -220,10 +220,10 @@
             $grafico->xaxis->title->Set('Eficacia');
             $grafico->yaxis->title->Set('Porcentaje');
             
-            $grafico->title->SetFont(FF_VERDANA,FS_BOLD);
+            $grafico->title->SetFont(FF_FONT2,FS_BOLD);//(FF_VERDANA,FS_BOLD);
             $grafico->title->SetColor('white');
-            $grafico->yaxis->title->SetFont(FF_VERDANA,FS_BOLD);
-            $grafico->xaxis->title->SetFont(FF_VERDANA,FS_BOLD);
+            $grafico->yaxis->title->SetFont(FF_FONT2,FS_BOLD);//FF_VERDANA,FS_BOLD);
+            $grafico->xaxis->title->SetFont(FF_FONT2,FS_BOLD);//(FF_VERDANA,FS_BOLD);
                         
             $grafico->Stroke(); //Se muestra el grafico.            
             }
