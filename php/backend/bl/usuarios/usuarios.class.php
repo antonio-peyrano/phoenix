@@ -299,7 +299,7 @@
                                     $regPermisos = @mysqli_fetch_array($dsPermisos,MYSQLI_ASSOC);
                                     }
                                     
-                            $HTML .= '<input type="checkbox" class="check" id="modulos[]" name="modulos[]" '.$habCampos.' value="'.$regModulos['idModulo'].'" '.$checkState.'>'.$regModulos['Modulo'].' ';                                    
+                            $HTML .= '<input type="checkbox" class="check" id="modulos[]" name="modulos[]" '.$habCampos.' value="'.$regModulos['idModulo'].'" '.$checkState.'>'.$regModulos['Modulo'].' </br>';                                    
                             $regModulos = @mysqli_fetch_array($dsModulos,MYSQLI_ASSOC);
                             }
                             

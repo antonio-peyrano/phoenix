@@ -36,7 +36,7 @@
                     return $this->imgTitleURL;
                     }
                                         
-            public function cargarCedulas()
+            public function cargarCedulas($idUsuario)
                 {
                     /*
                      * Esta funcion establece la carga del conjunto de registros de cedulas.
@@ -44,7 +44,7 @@
                     global $username, $password, $servername, $dbname;
 
                     $objConexion = new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                    $consulta = 'SELECT idCedula, Folio, Descripcion FROM opCedulas WHERE Status=0'; //Se establece el modelo de consulta de datos.
+                    $consulta = 'SELECT idCedula, opCedulas.Folio, Descripcion FROM opCedulas WHERE NOT idCedula IN (SELECT idCedula FROM opEvaluaciones WHERE idUsuario='.$idUsuario.')'; //Se establece el modelo de consulta de datos.
                     $dataset = $objConexion -> conectar($consulta); //Se ejecuta la consulta.
                     return $dataset;
                     }
@@ -103,8 +103,9 @@
                      */
                     $HTML = '<tr><td class="td-panel" width="100px">Cedula: </td><td><select name= "eva_busidcedula" id= "eva_busidcedula" value= "-1">
                                 <option value=-1>Seleccione</option>';
-                                                            
-                    $subconsulta = $this->cargarCedulas();
+                    
+                    $objEvaluaciones = new evaluaciones();
+                    $subconsulta = $this->cargarCedulas($objEvaluaciones->getIDUsuario());
                     $RegCedulas = @mysqli_fetch_array($subconsulta,MYSQLI_ASSOC);
                     
                     while($RegCedulas)
