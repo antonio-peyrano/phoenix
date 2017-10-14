@@ -78,6 +78,12 @@ function guardarFicha(url,parametro)
 				error= error+1;
 				}
 		
+		if(indicadoresSeleccionados() == 0)
+			{
+				//En caso de no ocurrir un error de validación, se asigna el valor de paso.
+				error= error+1;
+				}
+		
 		if(error > 0)
 			{
 				/*
@@ -95,11 +101,37 @@ function guardarFicha(url,parametro)
 				}		
 		}
 
+function indicadoresSeleccionados()
+	{
+		/*
+		 * Esta función obtiene los procesos seleccionados.
+		 */
+		var checkboxes = $('.check');
+		var temp = 0; 
+ 
+		for (var x=0; x < checkboxes.length; x++) 
+			{
+				if (checkboxes[x].checked) 
+					{
+						temp += 1;
+						}
+				}
+			
+		return temp;
+		}
+
 function habFicha()
 	{
 		/*
 		 * Esta función habilita los controles del formulario de programa.
 		 */
+		var checkboxes = $('.check');
+	
+		for (var x=0; x < checkboxes.length; x++)
+			{
+				checkboxes[x].disabled = false;
+				}
+	
 		document.getElementById('idProceso').disabled = false;
 		document.getElementById('Clave').disabled = false;
 		document.getElementById('nEdicion').disabled = false;
@@ -112,7 +144,10 @@ function habFicha()
 		document.getElementById('relProcesos').disabled = false;
 		document.getElementById('necRecursos').disabled = false;
 		document.getElementById('regArchivos').disabled = false;
-		document.getElementById('docAplicables').disabled = false;	
+		document.getElementById('docAplicables').disabled = false;
+		document.getElementById('fsp_Guardar').style.display="block";
+		document.getElementById('fsp_Borrar').style.display="none";
+		document.getElementById('fsp_Editar').style.display="none";		
 		}
 
 function indicadoresid()
@@ -308,3 +343,121 @@ $(document).ready(function() {
 							}
 					});                 
 			});
+	
+	//DECLARACION DE ACCIONES A EJECUTARSE SOBRE FORMULARIO OPERATIVO.
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de retorno
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    		     	e.stopPropagation();
+	    		        if(e.target.id == "fsp_Volver")
+	    		        	{
+	    		            	//En caso de coincidir el id con la accion volver.
+	    		        		cargar('./php/frontend/fichas/busFichaProceso.php','','sandbox');	    		        		
+	    		            	}
+	    				});                 
+				});
+	    		
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de borrado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    			 	e.stopPropagation();
+	    			    if(e.target.id == "fsp_Borrar")
+	    			    	{
+	    			         	//En caso de coincidir el id con la accion borrar.
+	    			            bootbox.confirm(
+	    			            	{
+	    				            	message: "¿Confirma que desea borrar el registro?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE BORRAR EL REGISTRO.
+	    				            					cargar('./php/backend/fichas/borrar.php','?id='+document.getElementById('idEmpleado').value.toString(),'sandbox');
+	    				            					}			            					
+	    				            			}
+	    			            		});
+	    			    		}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de guardado
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "fsp_Guardar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion guardar.
+	    				        bootbox.confirm(
+	    				        	{
+	    				            	message: "¿Confirma que desea almacenar los cambios?",
+	    				            	buttons: 
+	    				            		{
+	    				            			confirm: 
+	    				            				{
+	    				            					label: 'SI',
+	    				            					className: 'btn-success'
+	    				            					},
+	    				            			cancel: 
+	    				            				{
+	    				            					label: 'NO',
+	    				            					className: 'btn-danger'
+	    				            					}
+	    				            			},
+	    				            	callback: function (result)
+	    				            		{
+	    				            			if(result)
+	    				            				{
+	    				            					//EL USUARIO DECIDE ALMACENAR LOS DATOS.
+	    				            					guardarFicha('./php/backend/fichas/guardar.php','?id='+document.getElementById('idFicha').value.toString()+'&idproceso='+document.getElementById('idProceso').value.toString()+'&clave='+document.getElementById('Clave').value.toString()+'&nedicion='+document.getElementById('nEdicion').value.toString()+'&fechaedicion='+document.getElementById('FechaEdicion').value.toString()+'&actividades='+document.getElementById('Actividades').value.toString()+'&responsable='+document.getElementById('Responsable').value.toString()+'&misionproceso='+document.getElementById('MisionProceso').value.toString()+'&entrada='+document.getElementById('Entrada').value.toString()+'&salida='+document.getElementById('Salida').value.toString()+'&relprocesos='+document.getElementById('relProcesos').value.toString()+'&idindicadores='+indicadoresid()+'&nonidindicadores='+nonindicadoresid()+'&necrecursos='+document.getElementById('necRecursos').value.toString()+'&regarchivos='+document.getElementById('regArchivos').value.toString()+'&docaplicables='+document.getElementById('docAplicables').value.toString()+'&status='+document.getElementById('Status').value.toString());
+	    				            					}			            					
+	    				            			}
+	    				        		});			        		
+	    						}
+	    				});                 
+				});
+
+	/*
+	 * El presente segmento de codigo evalua la accion de click sobre el elemento de edicion
+	 * pulsado sobre el formulario operativo.
+	 */
+		$(document).ready(function()
+			{
+	    		$("div").click(function(e)
+	    			{
+	    				e.stopPropagation();
+	    				if(e.target.id == "fsp_Editar")
+	    					{
+	    				     	//En caso de coincidir el id con la accion edicion.
+	    						document.getElementById("nEdicion").value = parseInt(document.getElementById("nEdicion").value.toString())+1;
+	    				        habFicha();
+	    						}
+	    				});                 
+				});	

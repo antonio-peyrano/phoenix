@@ -99,10 +99,14 @@
                                             .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Gasolina&lreq=1','escritorio');", "./img/menu/gasolina.png", "Gasolina").
                                     '</ul></li></ul>'.
                                     '<ul class="navegador">'.
+                                    $this->headItem("item-cabecera-01", "", "./img/menu/sgc.png", "Sistema para Gestion de Calidad").
+                                    '<ul class="subnavegador">'
+                                        .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Fichas de Proceso&lreq=1','escritorio');", "./img/menu/fproceso.png", "Fichas de Proceso")
+                                        .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Planes RSGR&lreq=1','escritorio');", "./img/menu/rsgr.png", "Planes RSGR").
+                                        '</ul></li></ul>'.                                    
+                                    '<ul class="navegador">'.
                                         $this->headItem("item-cabecera-01", "", "./img/menu/paramplan.png", "Parametros de planeacion").
                                         '<ul class="subnavegador">'
-                                            .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Fichas de Proceso&lreq=1','escritorio');", "./img/menu/sgc.png", "Fichas de Proceso")
-                                            .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Planes RSGR&lreq=1','escritorio');", "./img/menu/sgc.png", "Planes RSGR")
                                             .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Objetivo Estrategico&lreq=1','escritorio');", "./img/menu/objest.png", "Obj. Estrategico")
                                             .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Objetivo Operativo&lreq=1','escritorio');", "./img/menu/objope.png", "Obj. Operativo")
                                             .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Estrategia Operativa&lreq=1','escritorio');", "./img/menu/estope.png", "Est. Operativa")

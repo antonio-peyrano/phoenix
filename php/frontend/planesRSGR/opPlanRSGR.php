@@ -18,6 +18,15 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
 
+    $Sufijo = "psr_";
+        
+    if(!isset($_SESSION))
+        {
+            //En caso de no existir el array de variables, se infiere que la sesion no fue iniciada.
+            session_name('phoenix');
+            session_start();
+            }
+        
     if(isset($_GET['id']))
         {
             //Se recibe el parametro enviado por la consulta URL.
@@ -44,42 +53,69 @@
      $now = time(); //Se obtiene la referencia del tiempo actual del servidor.
      date_default_timezone_set("America/Mexico_City"); //Se establece el perfil del uso horario.     
      $FechaEdicion = date("d/m/Y",$now).' '.date("h:i:sa",$now); //Se obtiene la referencia compuesta de fecha y hora.
-                        
-    function controlVisual($idRegistro)
+
+    function controlBotones($Width, $Height, $cntView)
         {
             /*
              * Esta funcion controla los botones que deberan verse en la pantalla deacuerdo con la accion solicitada por el
-             * usuario en la ventana previa. Si es una edicion, los botones borrar y guardar deben verse. Si es una creacion
-             * solo el boton guardar debe visualizarse.
+             * usuario en la ventana previa.
+             * Si es una edicion, los botones borrar y guardar deben verse.
+             * Si es una creacion solo el boton guardar debe visualizarse.
              */
-            global $cntview;
-            $template = '';
+            global $Sufijo;
             
-            if($idRegistro == -1)
+            $botonera = '';
+            $btnVolver_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/volver.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Volver" id="'.$Sufijo.'Volver" title= "Volver"/>';
+            $btnBorrar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/erase.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Borrar" id="'.$Sufijo.'Borrar" title= "Borrar"/>';
+            $btnGuardar_V =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar"/>';
+            $btnGuardar_H =   '<img align= "right" class="btnConfirm" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/save.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Guardar" id="'.$Sufijo.'Guardar" title= "Guardar" style="display:none;"/>';
+            $btnEditar_V =    '<img align= "right" onmouseover="bigImg(this)" onmouseout="normalImg(this)" src= "./img/grids/edit.png" width= "'.$Width.'" height= "'.$Height.'" alt= "Editar" id="'.$Sufijo.'Editar" title= "Editar"/>';            
+            
+            if(($cntView == 0)||($cntView == 2)||($cntView == 9))
                 {
-                    //En caso que la accion corresponda a la creacion de un nuevo registro.
-                    $template = '<tr class="dgHeader" style="text-align:right"><td colspan= "3"><a href="#" onclick="cargar(\'./php/frontend/planesRSGR/busPlanRSGR.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="guardarRSGR(\'./php/backend/planesRSGR/guardar.php\',\'?id=\'+document.getElementById(\'idPlanRSGR\').value.toString()+\'&nivel=\'+document.getElementById(\'Nivel\').value.toString()+\'&clave=\'+document.getElementById(\'Clave\').value.toString()+\'&nedicion=\'+document.getElementById(\'nEdicion\').value.toString()+\'&fechaedicion=\'+document.getElementById(\'FechaEdicion\').value.toString()+\'&riesgo=\'+document.getElementById(\'Riesgo\').value.toString()+\'&supervisor=\'+document.getElementById(\'Supervisor\').value.toString()+\'&causa=\'+document.getElementById(\'Causa\').value.toString()+\'&efecto=\'+document.getElementById(\'Efecto\').value.toString()+\'&acciones=\'+document.getElementById(\'Acciones\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a></td></tr>';
-                    }
-            else
-                {
-                    if(($cntview == 1)||($cntview == 3))
+                    //CASO: CREACION O EDICION DE REGISTRO.
+                    if($_SESSION['nivel'] == "Lector")
                         {
-                            //En caso de procesarse como una accion de visualizacion.
-                            $template = '<tr class="dgHeader" style="text-align:right"><td colspan= "3"><a href="#" onclick="cargar(\'./php/frontend/planesRSGR/busPlanRSGR.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/></a><a href="#" onclick="cargar(\'./php/backend/planesRSGR/borrar.php\',\'?id=\'+document.getElementById(\'idPlanRSGR\').value.toString(),\'sandbox\');"><img align= "right" src= "./img/grids/erase.png" width= "25" height= "25" alt= "Borrar" id= "btnBorrar"/></a><a href="#" onclick="guardarRSGR(\'./php/backend/planesRSGR/guardar.php\',\'?id=\'+document.getElementById(\'idPlanRSGR\').value.toString()+\'&nivel=\'+document.getElementById(\'Nivel\').value.toString()+\'&clave=\'+document.getElementById(\'Clave\').value.toString()+\'&nedicion=\'+document.getElementById(\'nEdicion\').value.toString()+\'&fechaedicion=\'+document.getElementById(\'FechaEdicion\').value.toString()+\'&riesgo=\'+document.getElementById(\'Riesgo\').value.toString()+\'&supervisor=\'+document.getElementById(\'Supervisor\').value.toString()+\'&causa=\'+document.getElementById(\'Causa\').value.toString()+\'&efecto=\'+document.getElementById(\'Efecto\').value.toString()+\'&acciones=\'+document.getElementById(\'Acciones\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habRSGR();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                            /*
+                             * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                             * para el control de solo visualizacion.
+                             */
+                            $botonera .= $btnVolver_V;
                             }
                     else
                         {
-                            if($cntview == 0)
+                            if($_SESSION['nivel'] == "Administrador")
                                 {
-                                    //En caso que la accion corresponda a la edicion de un registro.
-                                    $template = '<tr class="dgHeader" style="text-align:right"><td colspan= "3"><a href="#" onclick="cargar(\'./php/frontend/planesRSGR/busPlanRSGR.php\',\'\',\'sandbox\');"><img align= "right" src= "./img/grids/volver.png" width= "25" height= "25" alt= "Volver" id= "btnVolver"/><a href="#" onclick="guardarRSGR(\'./php/backend/planesRSGR/guardar.php\',\'?id=\'+document.getElementById(\'idPlanRSGR\').value.toString()+\'&nivel=\'+document.getElementById(\'Nivel\').value.toString()+\'&clave=\'+document.getElementById(\'Clave\').value.toString()+\'&nedicion=\'+document.getElementById(\'nEdicion\').value.toString()+\'&fechaedicion=\'+document.getElementById(\'FechaEdicion\').value.toString()+\'&riesgo=\'+document.getElementById(\'Riesgo\').value.toString()+\'&supervisor=\'+document.getElementById(\'Supervisor\').value.toString()+\'&causa=\'+document.getElementById(\'Causa\').value.toString()+\'&efecto=\'+document.getElementById(\'Efecto\').value.toString()+\'&acciones=\'+document.getElementById(\'Acciones\').value.toString()+\'&idprocesos=\'+procesosid()+\'&nonidprocesos=\'+nonprocesosid()+\'&status=\'+document.getElementById(\'Status\').value.toString());"><img align= "right" src= "./img/grids/save.png" width= "25" height= "25" alt= "Guardar" id= "btnGuardar"/></a><a href="#" onclick="habRSGR();"><img align= "right" src= "./img/grids/edit.png" width= "25" height= "25" alt= "Editar" id= "btnEditar"/></a></td></tr>';
+                                    $botonera .= $btnGuardar_V.$btnVolver_V;
+                                    }
+                            }                            
+                    }
+            else
+                {
+                    if($cntView == 1)
+                        {
+                            //CASO: VISUALIZACION CON OPCION PARA EDICION O BORRADO.
+                            if($_SESSION['nivel'] == "Lector")
+                                {
+                                    /*
+                                     * Si el usuario cuenta con un perfil de lector, se crea la referencia
+                                     * para el control de solo visualizacion.
+                                     */
+                                    $botonera .= $btnVolver_V;
+                                    }
+                            else
+                                {
+                                    if($_SESSION['nivel'] == "Administrador")
+                                        {
+                                            $botonera .= $btnEditar_V.$btnBorrar_V.$btnGuardar_H.$btnVolver_V;
+                                            }
                                     }
                             }
                     }
-                    
-            return $template;
-            }
-                        
+    
+            return $botonera;
+            }         
+                                 
     function cargarRegistro($idRegistro)
         {
             /*
@@ -135,7 +171,7 @@
              * Esta funcion establece los parametros de carga del conjunto de checkbox asociados
              * al comportamiento de indicadores por proceso, en la interfaz del usuario.
              */
-             global $habcampos, $Registro;
+             global $habCampos, $Registro;
             
             if($idRegistro == -1)
                 {
@@ -151,7 +187,7 @@
                     while($regProcesos)
                         {
                             //Mientras existan elementos en al tupla de datos.
-                            $template.= '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$regProcesos['idProceso'].'>'.$regProcesos['Proceso'];
+                            $template.= '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habCampos.' value='.$regProcesos['idProceso'].'>'.$regProcesos['Proceso'];
                             $regProcesos = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Llamada a la funcion de carga de registros de procesos.
                             }
                     }
@@ -208,14 +244,14 @@
                                     /*
                                      * En caso de tratarse de una opcion previamente seleccionada por el usuario.
                                      */
-                                    $template.= '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$regProcesos['idProceso'].' checked>'.$regProcesos['Proceso'];
+                                    $template.= '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habCampos.' value='.$regProcesos['idProceso'].' checked>'.$regProcesos['Proceso'];
                                     }
                             else
                                 {
                                     /*
                                      * En caso contrario se agrega una entrada de formato convencional.
                                      */
-                                    $template.= '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" value='.$regProcesos['idProceso'].'>'.$regProcesos['Proceso'];
+                                    $template.= '<input type="checkbox" class="check" id="idProceso[]" name="idProceso[]" '.$habCampos.' value='.$regProcesos['idProceso'].'>'.$regProcesos['Proceso'];
                                     }
                     
                             $regProcesos = @mysqli_fetch_array($dataSet,MYSQLI_ASSOC); //Se ejecuta la lectura sobre la tupla de datos.
@@ -273,6 +309,12 @@
         {
             //En caso que el registro sea de nueva creacion.
             $habCampos='';
+            $nEdit=0;
+            }
+    else
+        {
+            //Para el caso de edicion.
+            $nEdit=$Registro['nEdicion'];            
             }
         
     function constructor($Registro)
@@ -281,8 +323,9 @@
              * Esta funcion carga la estructura de la interfaz de usuario, asi como ejecuta las llamadas
              * a funcion de sus respectivos componentes.
              */
-            global $habCampos, $parametro, $FechaEdicion;
-                        
+            global $habCampos, $parametro, $FechaEdicion, $nEdit;
+            global $cntview;
+            
             $template = '   <html>
                                 <head>
                                     <link rel= "stylesheet" href= "./css/dgstyle.css"></style>
@@ -295,9 +338,9 @@
                                     </div>
                                     <table class="dgTable">
                                         <tr><th colspan= "3">Ficha para la Planificacion RSGR (Reduccion Supervision y Gestion del Riesgo)</th></tr>
-                                        <tr><th colspan= "2" class="dgRowsaltTR">ESTRATEGIAS PARA LA GESTION DE RIESGO</th><th class="dgRowsaltTR">FICHA<center><input type= "text" name= "Clave" id= "Clave" value="'.$Registro['Clave'].'" '.$habCampos.'></center></th></tr>
+                                        <tr><th colspan= "2" class="dgRowsaltTR">ESTRATEGIAS PARA LA GESTION DE RIESGO</th><th class="dgRowsaltTR">FICHA<center><input type= "text" name= "Clave" id= "Clave" disabled= "disabled" value="'.$Registro['Clave'].'"></center></th></tr>
                                         <tr><th class= "dgRowsaltTR">Nivel de impacto</th><th class= "dgRowsaltTR">Edicion</th><th class="dgRowsaltTR">Revision</th></tr>
-                                        <tr><td class= "dgRowsnormTR"><center>'.getNiveles($habCampos, $Registro).'</center></td><td class= "dgRowsnormTR"><center><input type= "text" name= "nEdicion" id= "nEdicion" value="'.$Registro['nEdicion'].'" '.$habCampos.'></center></td><td class="dgRowsnormTR"><center><input type= "text" name= "FechaEdicion" id= "FechaEdicion" value="'.$FechaEdicion.'" '.$habCampos.'></center></td></tr>
+                                        <tr><td class= "dgRowsnormTR"><center>'.getNiveles($habCampos, $Registro).'</center></td><td class= "dgRowsnormTR"><center><input type= "text" name= "nEdicion" id= "nEdicion" disabled= "disabled" value="'.$nEdit.'"></center></td><td class="dgRowsnormTR"><center><input type= "text" name= "FechaEdicion" id= "FechaEdicion" value="'.$FechaEdicion.'" '.$habCampos.'></center></td></tr>
                                         <tr><th colspan= "3" class= "dgRowsaltTR">Riesgo</th></tr>
                                         <tr><td colspan= "3" class= "dgRowsnormTR"><center><textarea name="Riesgo" id="Riesgo" cols="137" rows="2"'.$habCampos.'>'.saltosLineaRev($Registro['Riesgo']).'</textarea></center></td></tr>
                                         <tr><th colspan= "3" class= "dgRowsaltTR">Supervisor(es)</th></tr>
@@ -308,9 +351,10 @@
                                         <tr><td colspan= "3" class= "dgRowsnormTR"><center><textarea name="Acciones" id="Acciones" cols="137" rows="3"'.$habCampos.'>'.saltosLineaRev($Registro['Acciones']).'</textarea></center></td></tr>
 
                                         <tr><th colspan= "3" class= "dgRowsaltTR">Procesos</th></tr>
-                                        <tr><td colspan= "3" class= "dgRowsnormTR"><div id="chkProcesos">'.constructorchkProcesos($parametro, cargarProcesos()).'</div></td></tr>'.
-                                    controlVisual($parametro)    
-                                    .'</table>
+                                        <tr><td colspan= "3" class= "dgRowsnormTR"><div id="chkProcesos">'.constructorchkProcesos($parametro, cargarProcesos()).'</div></td></tr>
+                                        <tr class="dgHeader" style="text-align:right"><td colspan= "3">'.
+                                    controlBotones("24", "24", $cntview)    
+                                    .'</td></tr></table>
                                 </body>
                             </html>';
             return $template;
