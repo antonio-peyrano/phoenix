@@ -12,55 +12,57 @@
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/dal/conectividad.class.php"); //Se carga la referencia a la clase de conectividad.
     include_once ($_SERVER['DOCUMENT_ROOT']."/phoenix/php/backend/config.php"); //Se carga la referencia de los atributos de configuracion.
     
-    class factores
+    class noConformidades
         {
             /*
              * Esta clase contiene los atributos y procedimientos vinculados con el comportamiento
-             * y funcionalidades de la interfaz del modulo de factores.
+             * y funcionalidades de la interfaz del modulo de cedulas.
              */
             
-            //ATRIBUTOS APLICABLES AL MODULO catFactores.php
+            //ATRIBUTOS APLICABLES AL MODULO catNoConformidades.php
             private $Condicionales = "";
-            private $Sufijo = "fac_";
-            private $idCedula = NULL;
-            private $Factor = "";
+            private $Sufijo = "noc_";
+            private $idProceso = NULL;
             private $Tipo = "";
-            private $Consulta = "SELECT idFactor, opCedulas.Folio AS Cedula, Factor, Tipo, opFactores.Status FROM (opFactores INNER JOIN opCedulas ON opFactores.idCedula = opCedulas.idCedula) WHERE opFactores.Status=0";
-            //FIN DE DECLARACION DE ATRIBUTOS APLICABLES AL MODULO catFactores.php
+            private $Fecha = "";
+            //private $Horizonte = "";
+            private $Consulta = "SELECT idNoConformidad, fEmision AS Fecha, Proceso, Auditor, Tipo, opNoConformidades.Status FROM (opNoConformidades INNER JOIN opFichasProcesos ON opNoConformidades.idFicha = opFichasProcesos.idFicha) INNER JOIN catProcesos ON catProcesos.idProceso = opFichasProcesos.idProceso WHERE opNoConformidades.Status=0";
+            //FIN DE DECLARACION DE ATRIBUTOS APLICABLES AL MODULO catNoConformidades.php
             
-            //ATRIBUTOS APLICABLES AL MODULO opFactores.php
-            private $idFactor = NULL;
+            //ATRIBUTOS APLICABLES AL MODULO opNoConformidades.php
+            private $idNoConformidad = NULL;
             private $cntView = 0;
-            //FIN DE DECLARACION DE ATRIBUTOS APLICABLES AL MODULO opFactores.php
+            //FIN DE DECLARACION DE ATRIBUTOS APLICABLES AL MODULO opNoConformidades.php
             
             public function __construct()
                 {
-                    //Declaracion de constructor (VACIO)                                        
+                    //Declaracion de constructor (VACIO)
+                    $this->setFechaRegistro(); //Se genera la fecha de registro.                    
                     }
 
-            //PROCEDIMIENTOS APLICABLES AL MODULO catFactores.php
-            public function getFactor()
-                {
-                    /*
-                     * Esta funcion retorna el valor del nombre de factor.
-                     */
-                    return $this->Factor;
-                    }
-
+            //PROCEDIMIENTOS APLICABLES AL MODULO catNoConformidades.php
             public function getTipo()
                 {
                     /*
-                     * Esta funcion retorna el valor de tipo de factor.
+                     * Esta funcion retorna el valor del folio de cedula.
                      */
                     return $this->Tipo;
                     }
 
-            public function getidCedula()
+            public function getFecha()
                 {
                     /*
-                     * Esta funcion retorna el valor de ID de la Cedula asociada.
+                     * Esta funcion retorna el valor de fecha.
                      */
-                    return $this->idCedula;
+                    return $this->Fecha;
+                    }
+
+            public function getidProceso()
+                {
+                    /*
+                     * Esta funcion retorna el valor de ID de la Entidad asociada.
+                     */
+                    return $this->idProceso;
                     }
                                         
             public function getConsulta()
@@ -79,15 +81,15 @@
                     return $this->Sufijo;
                     }
                                 
-            public function setCatParametros($Factor, $Tipo, $idCedula)
+            public function setCatParametros($Tipo, $Fecha, $idProceso)
                 {
                     /*
                      * Esta funcion obtiene de la interaccion del usuario, los parametros
                      * para establecer los criterios de busqueda.
                      */
-                    $this->Factor = $Factor;
                     $this->Tipo = $Tipo;
-                    $this->idCedula = $idCedula;
+                    $this->Fecha = $Fecha;
+                    $this->idProceso = $idProceso;
                     }  
 
             public function evaluaCondicion()
@@ -98,43 +100,53 @@
                      */
                     $this->Condicionales = "";
                     
-                    if(!empty($this->getFactor()))
-                        {
-                            $this->Condicionales = ' AND Factor LIKE \'%'.$this->getFactor().'%\'';
-                            }
-                            
                     if(!empty($this->getTipo()))
                         {
-                            $this->Condicionales .= ' AND Tipo = \''.$this->getTipo().'\'';
+                            $this->Condicionales = ' AND Tipo LIKE \'%'.$this->getTipo().'%\'';
+                            }
+                            
+                    if(!empty($this->getFecha()))
+                        {
+                            date_default_timezone_set("America/Mexico_City");
+                            $this->Condicionales .= ' AND fEmision = \''.date("Y/m/d",strtotime($this->getFecha())).'\'';
                             }
 
-                    if(!empty($this->getidCedula()))
+                    if(!empty($this->getidProceso()))
                         {
-                            if($this->getidCedula()!="-1")
+                            if($this->getIDProceso()!="-1")
                                 {                            
-                                    $this->Condicionales .= ' AND opFactores.idCedula LIKE \'%'.$this->getidCedula().'%\'';
+                                    $this->Condicionales .= ' AND opFichasProcesos.idProceso = \''.$this->getidProceso().'\'';
                                     }
                             }
                                                 
                     return $this->Condicionales;                            
                     }                    
-            //FIN DE DECLARACION DE PROCEDIMIENTOS APLICABLES AL MODULO catFactores.php
+            //FIN DE DECLARACION DE PROCEDIMIENTOS APLICABLES AL MODULO catNoConformidades.php
             
-            //PROCEDIMIENTOS APLICABLES AL MODULO opFactores.php.
+            //PROCEDIMIENTOS APLICABLES AL MODULO opNoConformidades.php.
+            public function setFechaRegistro()
+                {
+                    /*
+                     * Esta funcion calcula la fecha en la que se da de alta el registro
+                     */
+                    $now = time(); //Se obtiene la referencia del tiempo actual del servidor.
+                    date_default_timezone_set("America/Mexico_City"); //Se establece el perfil del uso horario.
+                    $this->Fecha = date("Y/m/d",$now); //Se obtiene la referencia compuesta de fecha y hora.
+                    }
                                 
             public function getRegistro($idRegistro)
                 {
                     /*
-                     * Esta funcion obtiene el dataset del registro de factores apartir del ID proporcionado.
+                     * Esta funcion obtiene el dataset del registro de cedula apartir del ID proporcionado.
                      */
                     global $username, $password, $servername, $dbname;
                     
                     $objConexion= new mySQL_conexion($username, $password, $servername, $dbname); //Se crea el objeto de la clase a instanciar.
-                    $Consulta= 'SELECT idFactor, idCedula, Factor, Tipo, Status FROM opFactores WHERE idFactor='.$idRegistro; //Se establece el modelo de consulta de datos.
-                    $dsFactor = $objConexion -> conectar($Consulta); //Se ejecuta la consulta.
+                    $Consulta= 'SELECT idNoConformidad, idFicha, fEmision, Auditor, Tipo, Observaciones, Recomendaciones, Status FROM opNoConformidades WHERE idNoConformidad='.$idRegistro; //Se establece el modelo de consulta de datos.
+                    $dsCedula = $objConexion -> conectar($Consulta); //Se ejecuta la consulta.
                     
-                    $RegFactor = @mysqli_fetch_array($dsFactor,MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
-                    return $RegFactor;
+                    $RegCedula = @mysqli_fetch_array($dsCedula,MYSQLI_ASSOC);//Llamada a la funcion de carga de registro de usuario.
+                    return $RegCedula;
                     }                    
                     
             public function controlBotones($Width, $Height, $cntView)
@@ -205,6 +217,6 @@
                     return $botonera;
                     }                                
 
-            //FIN DE DECLARACION DE PROCEDIMIENTOS APLICABLES AL MODULO opFactores.php            
+            //FIN DE DECLARACION DE PROCEDIMIENTOS APLICABLES AL MODULO opNoConformidades.php            
             }
 ?>

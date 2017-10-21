@@ -102,7 +102,8 @@
                                     $this->headItem("item-cabecera-01", "", "./img/menu/sgc.png", "Sistema para Gestion de Calidad").
                                     '<ul class="subnavegador">'
                                         .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Fichas de Proceso&lreq=1','escritorio');", "./img/menu/fproceso.png", "Fichas de Proceso")
-                                        .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Planes RSGR&lreq=1','escritorio');", "./img/menu/rsgr.png", "Planes RSGR").
+                                        .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=Planes RSGR&lreq=1','escritorio');", "./img/menu/rsgr.png", "Planes RSGR")
+                                        .$this->bodyItem("item-cuerpo-01", "cargar('./php/backend/bl/main/cargador.class.php','?modulo=No Conformidades&lreq=1','escritorio');", "./img/menu/noconforme.png", "No Conformidades").
                                         '</ul></li></ul>'.                                    
                                     '<ul class="navegador">'.
                                         $this->headItem("item-cabecera-01", "", "./img/menu/paramplan.png", "Parametros de planeacion").
@@ -212,6 +213,7 @@
                             <script type="text/javascript" src="./js/graficas/jsgraficas.js"></script>
                             <script type="text/javascript" src="./js/fichas/jsfichas.js"></script>
                             <script type="text/javascript" src="./js/planesRSGR/jsplanesRSGR.js"></script>
+                            <script type="text/javascript" src="./js/noconformidades/noconformidades.js"></script>
                             <script type="text/javascript" src="./js/instrumentos/cedulas/cedulas.js"></script>
                             <script type="text/javascript" src="./js/instrumentos/factores/factores.js"></script>
                             <script type="text/javascript" src="./js/instrumentos/escalas/escalas.js"></script>
