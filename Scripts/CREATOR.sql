@@ -8,904 +8,18 @@
  * de la base de datos.
  */
 
-CREATE TABLE opRelPerUsr (
-  idRelPerUsr int(11) NOT NULL,
-  idModulo int(11) NOT NULL,
-  idUsuario int(11) NOT NULL,
-  Status int(11) NOT NULL DEFAULT '0',
- Index idxRelPerUsr (idRelPerUsr),
- Primary Key (idRelPerUsr)) ENGINE = MyISAM;
-
-
-CREATE TABLE catModulos (
-  idModulo int(11) NOT NULL,
-  Modulo varchar(250) COLLATE utf8_bin NOT NULL,
-  URL varchar(250) COLLATE utf8_bin NOT NULL,
-  Status int(11) NOT NULL DEFAULT '0',
- Index idxModulo (idModulo),
- Primary Key (idModulo)) ENGINE = MyISAM;
-
-Create table catUsuarios (
-	idUsuario Int NOT NULL AUTO_INCREMENT,
-	idNivel Int NOT NULL,
-	Usuario Varchar(250) NOT NULL,
-	Clave Varchar(250) NOT NULL,
-	Correo Varchar(250) NOT NULL,
-	Pregunta Varchar(250) NOT NULL,
-	Respuesta Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxUsuario (idUsuario),
- Primary Key (idUsuario)) ENGINE = MyISAM;
-
-Create table catEstOpe (
-	idEstOpe Int NOT NULL AUTO_INCREMENT,
-	idObjOpe Int NOT NULL,
-	idObjEst Int NOT NULL,
-	Nomenclatura Varchar(250) NOT NULL,
-	EstOpe Varchar(250) NOT NULL,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEstOpe (idEstOpe),
- Primary Key (idEstOpe)) ENGINE = MyISAM;
-
-Create table catIndicadores (
-	idIndicador Int NOT NULL AUTO_INCREMENT,
-	Nomenclatura Varchar(250) NOT NULL,
-	Indicador Varchar(250) NOT NULL,
-	Percentil Float(4,2) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxIndicador (idIndicador),
- Primary Key (idIndicador)) ENGINE = MyISAM;
-
-Create table catProcesos (
-	idProceso Int NOT NULL AUTO_INCREMENT,
-	Proceso Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProceso (idProceso),
- Primary Key (idProceso)) ENGINE = MyISAM;
-
-Create table catTEntidades (
-	idTEntidad Int NOT NULL AUTO_INCREMENT,
-	TEntidad Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxTEntidad (idTEntidad),
- Primary Key (idTEntidad)) ENGINE = MyISAM;
-
-Create table catEntidades (
-	idEntidad Int NOT NULL AUTO_INCREMENT,
-	idTEntidad Int NOT NULL,
-	Entidad Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEntidad (idEntidad),
- Primary Key (idEntidad)) ENGINE = MyISAM;
-
-Create table opProgramas (
-	idPrograma Int NOT NULL AUTO_INCREMENT,
-	idEntidad Int NOT NULL,
-	idObjEst Int NOT NULL,
-	idObjOpe Int NOT NULL,
-	idEstOpe Int NOT NULL,
-	idResponsable Int NOT NULL,
-	idSubalterno Int NOT NULL,
-	Nomenclatura Varchar(250) NOT NULL,
-	Programa Varchar(250) NOT NULL,
-	Monto Double(18,2) NOT NULL DEFAULT 0.00,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxPrograma (idPrograma),
- Primary Key (idPrograma)) ENGINE = MyISAM;
-
-Create table relEntPro (
-	idRelEntPro Int NOT NULL AUTO_INCREMENT,
-	idProceso Int NOT NULL,
-	idEntidad Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxRelEntPro (idRelEntPro),
- Primary Key (idRelEntPro)) ENGINE = MyISAM;
-
-Create table relIndPro (
-	idRelIndPro Int NOT NULL AUTO_INCREMENT,
-	idIndicador Int NOT NULL,
-	idProceso Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxRelIndPro (idRelIndPro),
- Primary Key (idRelIndPro)) ENGINE = MyISAM;
-
-Create table opActividades (
-	idActividad Int NOT NULL AUTO_INCREMENT,
-	idPrograma Int NOT NULL,
-	idUnidad Int NOT NULL,
-	Actividad Varchar(250) NOT NULL,
-	Monto Double(18,2) NOT NULL DEFAULT 0.00,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxActividad (idActividad),
- Primary Key (idActividad)) ENGINE = MyISAM;
-
-Create table opEjecuciones (
-	idEjecucion Int NOT NULL AUTO_INCREMENT,
-	idActividad Int NOT NULL,
-	Cantidad Float(12,4) NOT NULL,
-	Mes Varchar(250) NOT NULL,
-	Monto Double(18,2) NOT NULL,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecucion (idEjecucion),
- Primary Key (idEjecucion)) ENGINE = MyISAM;
-
-Create table opProgAct (
-	idProgAct Int NOT NULL AUTO_INCREMENT,
-	idActividad Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProgAct (idProgAct),
- Primary Key (idProgAct)) ENGINE = MyISAM;
-
-Create table opEjecAct (
-	idEjecAct Int NOT NULL AUTO_INCREMENT,
-	idActividad Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecAct (idEjecAct),
- Primary Key (idEjecAct)) ENGINE = MyISAM;
-
-Create table opProgPro (
-	idProgPro Int NOT NULL AUTO_INCREMENT,
-	idPrograma Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProgPro (idProgPro),
- Primary Key (idProgPro)) ENGINE = MyISAM;
-
-Create table opEjecPro (
-	idEjecPro Int NOT NULL AUTO_INCREMENT,
-	idPrograma Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecPro (idEjecPro),
- Primary Key (idEjecPro)) ENGINE = MyISAM;
-
-Create table opProgEst (
-	idProgEst Int NOT NULL AUTO_INCREMENT,
-	idEstOpe Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProgEst (idProgEst),
- Primary Key (idProgEst)) ENGINE = MyISAM;
-
-Create table opEjecEst (
-	idEjecEst Int NOT NULL AUTO_INCREMENT,
-	idEstOpe Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecEst (idEjecEst),
- Primary Key (idEjecEst)) ENGINE = MyISAM;
-
-Create table catUnidades (
-	idUnidad Int NOT NULL AUTO_INCREMENT,
-	Nomenclatura Varchar(250) NOT NULL,
-	Unidad Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxUnidades (idUnidad),
- Primary Key (idUnidad)) ENGINE = MyISAM;
-
-Create table catNiveles (
-	idNivel Int NOT NULL AUTO_INCREMENT,
-	Nivel Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxNivel (idNivel),
- Primary Key (idNivel)) ENGINE = MyISAM;
-
-Create table opUsrTemp (
-	idUsrtmp Int NOT NULL AUTO_INCREMENT,
-	idNivel Int NOT NULL DEFAULT 3,
-	Usuario Varchar(250) NOT NULL,
-	Clave Varchar(250) NOT NULL,
-	Correo Varchar(250) NOT NULL,
-	Pregunta Varchar(250) NOT NULL,
-	Respuesta Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxUrstmp (idUsrtmp),
- Primary Key (idUsrtmp)) ENGINE = MyISAM;
-
-Create table opClientes (
-	idCliente Int NOT NULL AUTO_INCREMENT,
-	idColonia Int NOT NULL,
-	Paterno Varchar(250) NOT NULL,
-	Materno Varchar(250) NOT NULL,
-	Nombre Varchar(250) NOT NULL,
-	Calle Varchar(250) NOT NULL,
-	Nint Varchar(250),
-	Next Varchar(250) NOT NULL,
-	RFC Varchar(250) NOT NULL,
-	CURP Varchar(250) NOT NULL,
-	TelFijo Varchar(250) NOT NULL,
-	TelCel Varchar(250),
-	Status Int NOT NULL DEFAULT 0,
- Index idxCliente (idCliente),
- Primary Key (idCliente)) ENGINE = MyISAM;
-
-Create table catColonias (
-	idColonia Int NOT NULL AUTO_INCREMENT,
-	Colonia Varchar(250) NOT NULL,
-	CodigoPostal Varchar(250) NOT NULL,
-	Ciudad Varchar(250) NOT NULL,
-	Estado Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index IdxColonia (idColonia),
- Primary Key (idColonia)) ENGINE = MyISAM;
-
-Create table opAtenciones (
-	idAtencion Int NOT NULL AUTO_INCREMENT,
-	Tipo Varchar(250) NOT NULL,
-	Descripcion Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxAtencion (idAtencion),
- Primary Key (idAtencion)) ENGINE = MyISAM;
-
-Create table catObjEst (
-	idObjEst Int NOT NULL AUTO_INCREMENT,
-	Nomenclatura Varchar(250) NOT NULL,
-	ObjEst Varchar(250) NOT NULL,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxObjEst (idObjEst),
- Primary Key (idObjEst)) ENGINE = MyISAM;
-
-Create table catObjOpe (
-	idObjOpe Int NOT NULL AUTO_INCREMENT,
-	idObjEst Int NOT NULL,
-	Nomenclatura Varchar(250) NOT NULL,
-	ObjOpe Varchar(250) NOT NULL,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxObjOpe (idObjOpe),
- Primary Key (idObjOpe)) ENGINE = MyISAM;
-
-Create table opEmpleados (
-	idEmpleado Int NOT NULL AUTO_INCREMENT,
-	idColonia Int NOT NULL,
-	idEntidad Int NOT NULL,
-	Paterno Varchar(250) NOT NULL,
-	Materno Varchar(250) NOT NULL,
-	Nombre Varchar(250) NOT NULL,
-	Calle Varchar(250) NOT NULL,
-	Nint Varchar(250),
-	Next Varchar(250) NOT NULL,
-	RFC Varchar(250) NOT NULL,
-	CURP Varchar(250) NOT NULL,
-	TelFijo Varchar(250) NOT NULL,
-	TelCel Varchar(250),
-	Status Int NOT NULL DEFAULT 0,
- Index idxEmpleado (idEmpleado),
- Primary Key (idEmpleado)) ENGINE = MyISAM;
-
-Create table catPuestos (
-	idPuesto Int NOT NULL AUTO_INCREMENT,
-	Puesto Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxPuesto (idPuesto),
- Primary Key (idPuesto)) ENGINE = MyISAM;
-
-Create table relEntPuesto (
-	idRelEntPst Int NOT NULL AUTO_INCREMENT,
-	idPuesto Int NOT NULL,
-	idEntidad Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxRelEntPst (idRelEntPst),
- Primary Key (idRelEntPst)) ENGINE = MyISAM;
-
-Create table relProgPro (
-	idRelProgPro Int NOT NULL AUTO_INCREMENT,
-	idPrograma Int NOT NULL,
-	idProceso Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxRelProgPro (idRelProgPro),
- Primary Key (idRelProgPro)) ENGINE = MyISAM;
-
-Create table opProgOE (
-	idProgOE Int NOT NULL AUTO_INCREMENT,
-	idObjEst Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProgOE (idProgOE),
- Primary Key (idProgOE)) ENGINE = MyISAM;
-
-Create table opEjecOE (
-	idEjecOE Int NOT NULL AUTO_INCREMENT,
-	idObjEst Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecOE (idEjecOE),
- Primary Key (idEjecOE)) ENGINE = MyISAM;
-
-Create table opEjecOO (
-	idEjecOO Int NOT NULL AUTO_INCREMENT,
-	idObjOpe Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecOO (idEjecOO),
- Primary Key (idEjecOO)) ENGINE = MyISAM;
-
-Create table opProgOO (
-	idProgOO Int NOT NULL AUTO_INCREMENT,
-	idObjOpe Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProgOO (idProgOO),
- Primary Key (idProgOO)) ENGINE = MyISAM;
-
-Create table opEficAct (
-	idEficAct Int NOT NULL AUTO_INCREMENT,
-	idActividad Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEficAct (idEficAct),
- Primary Key (idEficAct)) ENGINE = MyISAM;
-
-Create table opEficPro (
-	idEficPro Int NOT NULL AUTO_INCREMENT,
-	idPrograma Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEficPro (idEficPro),
- Primary Key (idEficPro)) ENGINE = MyISAM;
-
-Create table opEficEst (
-	idEficEst Int NOT NULL AUTO_INCREMENT,
-	idEstOpe Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEficEst (idEficEst),
- Primary Key (idEficEst)) ENGINE = MyISAM;
-
-Create table opEficOE (
-	idEficOE Int NOT NULL AUTO_INCREMENT,
-	idObjEst Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEficOE (idEficOE),
- Primary Key (idEficOE)) ENGINE = MyISAM;
-
-Create table opEficOO (
-	idEficOO Int NOT NULL AUTO_INCREMENT,
-	idObjOpe Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEficOO (idEficOO),
- Primary Key (idEficOO)) ENGINE = MyISAM;
-
-Create table catConfiguraciones (
-	idConfiguracion Int NOT NULL AUTO_INCREMENT,
-	Optimo Double(8,2) NOT NULL DEFAULT 90.00,
-	Tolerable Double(8,2) NOT NULL DEFAULT 80.00,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxConfiguracion (idConfiguracion),
- Primary Key (idConfiguracion)) ENGINE = MyISAM;
-
-Create table opEvidencias (
-	idEvidencia Int NOT NULL AUTO_INCREMENT,
-	idEjecucion Int NOT NULL,
-	RutaURL Varchar(250) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEvidencia (idEvidencia),
- Primary Key (idEvidencia)) ENGINE = MyISAM;
-
-Create table catVehiculos (
-	idVehiculo Int NOT NULL AUTO_INCREMENT,
-	idEntidad Int NOT NULL,
-	NumEconomico Varchar(50) NOT NULL,
-	NumPlaca Varchar(50) NOT NULL,
-	Color Varchar(70) NOT NULL,
-	Marca Varchar(70) NOT NULL,
-	Modelo Varchar(70) NOT NULL,
-	TMotor Varchar(70) NOT NULL,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxVehiculo (idVehiculo),
- Primary Key (idVehiculo)) ENGINE = MyISAM;
-
-Create table opProgGas (
-	idProgGas Int NOT NULL AUTO_INCREMENT,
-	idEntidad Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxProgGas (idProgGas),
- Primary Key (idProgGas)) ENGINE = MyISAM;
-
-Create table opEjecGas (
-	idEjecGas Int NOT NULL AUTO_INCREMENT,
-	idEntidad Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEjecGas (idEjecGas),
- Primary Key (idEjecGas)) ENGINE = MyISAM;
-
-Create table opEficGas (
-	idEficGas Int NOT NULL AUTO_INCREMENT,
-	idEntidad Int NOT NULL,
-	Enero Float(18,4) NOT NULL DEFAULT 0,
-	Febrero Float(18,4) NOT NULL DEFAULT 0,
-	Marzo Float(18,4) NOT NULL DEFAULT 0,
-	Abril Float(18,4) NOT NULL DEFAULT 0,
-	Mayo Float(18,4) NOT NULL DEFAULT 0,
-	Junio Float(18,4) NOT NULL DEFAULT 0,
-	Julio Float(18,4) NOT NULL DEFAULT 0,
-	Agosto Float(18,4) NOT NULL DEFAULT 0,
-	Septiembre Float(18,4) NOT NULL DEFAULT 0,
-	Octubre Float(18,4) NOT NULL DEFAULT 0,
-	Noviembre Float(18,4) NOT NULL DEFAULT 0,
-	Diciembre Float(18,4) NOT NULL DEFAULT 0,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEficGas (idEficGas),
- Primary Key (idEficGas)) ENGINE = MyISAM;
-
-Create table opMovGas (
-	idMovGas Int NOT NULL AUTO_INCREMENT,
-	idEjecGas Int NOT NULL,
-	Cantidad Float(12,4) NOT NULL,
-	Tiempo Varchar(50) NOT NULL,
-	Mes Varchar(250) NOT NULL,
-	Monto Double(18,2) NOT NULL,
-	Periodo Varchar(4) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxMovGas (idMovGas),
- Primary Key (idMovGas)) ENGINE = MyISAM;
-
-Create table opFichasProcesos (
-	idFicha Int NOT NULL AUTO_INCREMENT,
-	idProceso Int NOT NULL,
-	Clave Varchar(250) NOT NULL,
-	nEdicion Int NOT NULL DEFAULT 0,
-	FechaCreacion Varchar(50) NOT NULL,
-	FechaEdicion Varchar(50),
-	Actividades Varchar(1500) NOT NULL,
-	Responsable Varchar(1500) NOT NULL,
-	MisionProceso Varchar(1500) NOT NULL,
-	Entrada Varchar(1500) NOT NULL,
-	Salida Varchar(1500) NOT NULL,
-	relProcesos Varchar(1500) NOT NULL,
-	necRecursos Varchar(1500) NOT NULL,
-	regArchivos Varchar(1500) NOT NULL,
-	docAplicables Varchar(1500) NOT NULL,
-	status Int NOT NULL DEFAULT 0,
- Index idxFichasProcesos (idFicha),
- Primary Key (idFicha)) ENGINE = MyISAM;
-
-Create table relIndFicha (
-	idRelIndFicha Int NOT NULL AUTO_INCREMENT,
-	idIndicador Int NOT NULL,
-	idFicha Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxRelIndFicha (idRelIndFicha),
- Primary Key (idRelIndFicha)) ENGINE = MyISAM;
-
-Create table relUsrEmp (
-	idRelUsrEmp Int NOT NULL AUTO_INCREMENT,
-	idEmpleado Int NOT NULL,
-	idUsuario Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxRelUsrEmp (idRelUsrEmp),
- Primary Key (idRelUsrEmp)) ENGINE = MyISAM;
-
-Create table opFactores (
-	idFactor Int NOT NULL AUTO_INCREMENT,
-	idCedula Int NOT NULL,
-	Factor Varchar(250) NOT NULL,
-	Tipo Varchar(50) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxFactor (idFactor),
- Primary Key (idFactor)) ENGINE = MyISAM;
-
-Create table opEscalas (
-	idEscala Int NOT NULL AUTO_INCREMENT,
-	idCedula Int NOT NULL,
-	Escala Varchar(50) NOT NULL,
-	Ponderacion Float(4,2) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEscala (idEscala),
- Primary Key (idEscala)) ENGINE = MyISAM;
-
-Create table opEvaluaciones (
-	idEvaluacion Int NOT NULL AUTO_INCREMENT,
-	idCedula Int NOT NULL,
-	idEmpleado Int NOT NULL,
-	Folio Varchar(50) NOT NULL,
-	Fecha Varchar(50) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxEvaluacion (idEvaluacion),
- Primary Key (idEvaluacion)) ENGINE = MyISAM;
-
-Create table opCedulas (
-	idCedula Int NOT NULL AUTO_INCREMENT,
-	idEntidad Int NOT NULL,
-	Folio Varchar(50) NOT NULL,
-	Fecha Varchar(50) NOT NULL,
-	Horizonte Float(4,2) NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxCedula (idCedula),
- Primary Key (idCedula)) ENGINE = MyISAM;
-
-Create table opResParFoda (
-	idResParFoda Int NOT NULL AUTO_INCREMENT,
-	idFactor Int NOT NULL,
-	idEscala Int NOT NULL,
-	idEvaluacion Int NOT NULL,
-	Status Int NOT NULL DEFAULT 0,
- Index idxResParFoda (idResParFoda),
- Primary Key (idResParFoda)) ENGINE = MyISAM;
-
-/*
- * Bloque de creación de datos basicos para la puesta en marcha del sistema.
- */
-
-
 --
--- Volcado de datos para la tabla `opRelPerUsr`
+-- Estructura de tabla para la tabla `catColonias`
 --
 
-INSERT INTO `opRelPerUsr` (`idRelPerUsr`, `idModulo`, `idUsuario`, `Status`) VALUES
-(1, 1, 1, 0),
-(2, 2, 1, 0),
-(3, 3, 1, 0),
-(4, 4, 1, 0),
-(5, 5, 1, 0),
-(6, 6, 1, 0),
-(7, 7, 1, 0),
-(8, 8, 1, 0),
-(9, 9, 1, 0),
-(10, 10, 1, 0),
-(11, 11, 1, 0),
-(12, 12, 1, 0),
-(13, 13, 1, 0),
-(14, 14, 1, 0),
-(15, 15, 1, 0),
-(16, 16, 1, 0),
-(17, 17, 1, 0),
-(18, 18, 1, 0),
-(19, 19, 1, 0),
-(20, 20, 1, 0),
-(21, 21, 1, 0),
-(22, 22, 1, 0),
-(23, 23, 1, 0),
-(24, 24, 1, 0),
-(25, 25, 1, 0),
-(26, 26, 1, 0),
-(27, 17, 2, 0),
-(28, 17, 3, 0),
-(29, 17, 4, 0),
-(30, 0, 0, 0),
-(31, 0, 0, 0);
-
---
--- AUTO_INCREMENT for table `opRelPerUsr`
---
-ALTER TABLE `opRelPerUsr`
-  MODIFY `idRelPerUsr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- Volcado de datos para la tabla `catModulos`
---
-
-INSERT INTO `catModulos` (`idModulo`, `Modulo`, `URL`, `Status`) VALUES
-(1, 'Usuarios', '/phoenix/php/frontend/usuarios/sysadmin/busUsuarios.php', 0),
-(2, 'Configuraciones', '/phoenix/php/frontend/configuracion/busConfiguraciones.php', 0),
-(3, 'Unidades', '/phoenix/php/frontend/unidades/busUnidades.php', 0),
-(4, 'Colonias', '/phoenix/php/frontend/colonias/busColonias.php', 0),
-(5, 'Empleados', '/phoenix/php/frontend/empleados/busEmpleados.php', 0),
-(6, 'Clientes', '/phoenix/php/frontend/clientes/busClientes.php', 0),
-(7, 'Entidades', '/phoenix/php/frontend/entidades/busEntidades.php', 0),
-(8, 'Vehiculos', '/phoenix/php/frontend/vehiculos/busVehiculos.php', 0),
-(9, 'Procesos', '/phoenix/php/frontend/procesos/busProcesos.php', 0),
-(10, 'Indicadores', '/phoenix/php/frontend/indicadores/busIndicadores.php', 0),
-(11, 'Puestos', '/phoenix/php/frontend/puestos/busPuestos.php', 0),
-(12, 'Gasolina', '/phoenix/php/frontend/gasolina/busGasolina.php', 0),
-(13, 'Fichas de Proceso', '/phoenix/php/frontend/fichas/busFichaProceso.php', 0),
-(14, 'Objetivo Estrategico', '/phoenix/php/frontend/objest/busObjEst.php', 0),
-(15, 'Objetivo Operativo', '/phoenix/php/frontend/objope/busObjOpe.php', 0),
-(16, 'Estrategia Operativa', '/phoenix/php/frontend/estope/busEstOpe.php', 0),
-(17, 'Programas', '/phoenix/php/frontend/programa/busPrograma.php', 0),
-(18, 'Cedulas', '/phoenix/php/frontend/foda/cedulas/busCedulas.php', 0),
-(19, 'Factores', '/phoenix/php/frontend/foda/factores/busFactores.php', 0),
-(20, 'Escalas', '/phoenix/php/frontend/foda/escalas/busEscalas.php', 0),
-(21, 'Evaluaciones', '/phoenix/php/frontend/foda/evaluaciones/busEvaluaciones.php', 0),
-(22, 'Consumo de Gasolina', '/phoenix/php/frontend/gasconsumo/opGasConsumo.php', 0),
-(23, 'Consulta de Planeacion', '/phoenix/php/frontend/consulplan/conObjEst.php', 0),
-(24, 'Evaluacion FODA', '/phoenix/php/frontend/foda/usrevafoda/opUsrFODA.php', 0),
-(25, 'Resultados FODA', '/phoenix/php/frontend/foda/resfoda/opResFODA.php', 0),
-(26, 'Graficas', '/phoenix/php/frontend/utilidades/graficos.php', 0);
-
---
--- AUTO_INCREMENT for table `catModulos`
---
-ALTER TABLE `catModulos`
-  MODIFY `idModulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
---
--- Volcado de datos para la tabla `catUsuarios`
--- 
-
- INSERT INTO `catUsuarios` (`idUsuario`, `idNivel`, `Usuario`, `Clave`, `Correo`, `Pregunta`, `Respuesta`, `Status`) VALUES
-(1, 1, 'root', '1OXW3t7Q', 'antonio.peyrano@live.com.mx', 'Su primera mascota', 'El motis', 0);
-
---
--- AUTO_INCREMENT de la tabla `catUsuarios`
---
-ALTER TABLE `catUsuarios`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-  
---
--- Volcado de datos para la tabla `catConfiguraciones`
---
-
-INSERT INTO `catConfiguraciones` (`idConfiguracion`, `Optimo`, `Tolerable`, `Periodo`, `Status`) VALUES
-(1, 90.00, 80.00, '2016', 0);
-
---
--- AUTO_INCREMENT de la tabla `catConfiguraciones`
---
-ALTER TABLE `catConfiguraciones`
-  MODIFY `idConfiguracion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-  
---
--- Volcado de datos para la tabla `catNiveles`
---
-
-INSERT INTO `catNiveles` (`idNivel`, `Nivel`, `Status`) VALUES
-(1, 'Administrador', 0),
-(2, 'Operador', 0),
-(3, 'Lector', 0);
-
---
--- AUTO_INCREMENT de la tabla `catNiveles`
---
-ALTER TABLE `catNiveles`
-  MODIFY `idNivel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-  
---
--- Volcado de datos para la tabla `catTEntidades`
---
-
-INSERT INTO `catTEntidades` (`idTEntidad`, `TEntidad`, `Status`) VALUES
-(1, 'Gerencia', 0),
-(2, 'Direccion', 0),
-(3, 'Departamento', 0),
-(4, 'Area', 0);
-
---
--- AUTO_INCREMENT de la tabla `catTEntidades`
---
-ALTER TABLE `catTEntidades`
-  MODIFY `idTEntidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-  
---
--- Volcado de datos para la tabla `catUnidades`
---
-
-INSERT INTO `catUnidades` (`idUnidad`, `Nomenclatura`, `Unidad`, `Status`) VALUES
-(1, 'Kg', 'Kilogramo', 0),
-(2, 'm', 'Metro', 1),
-(3, 'Km2', 'Kilometros cuadrados', 0),
-(4, 'm', 'Metros', 0),
-(5, 'Hr', 'Hora', 0),
-(6, 'l', 'Litros', 0),
-(7, 'gal', 'Galones', 0),
-(8, 'MXN', 'Peso', 0),
-(9, 'USD', 'Dolar', 0),
-(10, 'Doc', 'Documento', 0),
-(11, 'Vnt', 'Venta', 0);
-
---
--- AUTO_INCREMENT de la tabla `catUnidades`
---
-ALTER TABLE `catUnidades`
-  MODIFY `idUnidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+CREATE TABLE `catColonias` (
+  `idColonia` int(11) NOT NULL,
+  `Colonia` varchar(250) CHARACTER SET utf8 NOT NULL,
+  `CodigoPostal` varchar(250) CHARACTER SET utf8 NOT NULL,
+  `Ciudad` varchar(250) CHARACTER SET utf8 NOT NULL,
+  `Estado` varchar(250) CHARACTER SET utf8 NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Volcado de datos para la tabla `catColonias`
@@ -4051,8 +3165,1777 @@ INSERT INTO `catColonias` (`idColonia`, `Colonia`, `CodigoPostal`, `Ciudad`, `Es
 (3134, 'Nuevo Morelos', '89970', 'Nuevo Morelos', 'Tamaulipas', 0),
 (3135, 'Del Sol', '89970', 'Nuevo Morelos', 'Tamaulipas', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catConfiguraciones`
+--
+
+CREATE TABLE `catConfiguraciones` (
+  `idConfiguracion` int(11) NOT NULL,
+  `Optimo` double(8,2) NOT NULL DEFAULT '90.00',
+  `Tolerable` double(8,2) NOT NULL DEFAULT '80.00',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+--
+-- Estructura de tabla para la tabla `catEntidades`
+--
+
+CREATE TABLE `catEntidades` (
+  `idEntidad` int(11) NOT NULL,
+  `idTEntidad` int(11) NOT NULL,
+  `Entidad` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+--
+-- Estructura de tabla para la tabla `catEstOpe`
+--
+
+CREATE TABLE `catEstOpe` (
+  `idEstOpe` int(11) NOT NULL,
+  `idObjEst` int(11) NOT NULL,
+  `idObjOpe` int(11) NOT NULL,
+  `Nomenclatura` varchar(250) COLLATE utf8_bin NOT NULL,
+  `EstOpe` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `catIndicadores`
+--
+
+CREATE TABLE `catIndicadores` (
+  `idIndicador` int(11) NOT NULL,
+  `Nomenclatura` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Indicador` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Percentil` float(4,2) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `catModulos`
+--
+
+CREATE TABLE `catModulos` (
+  `idModulo` int(11) NOT NULL,
+  `Modulo` varchar(250) COLLATE utf8_bin NOT NULL,
+  `URL` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `catModulos`
+--
+
+INSERT INTO `catModulos` (`idModulo`, `Modulo`, `URL`, `Status`) VALUES
+(1, 'Usuarios', '/phoenix/php/frontend/usuarios/sysadmin/busUsuarios.php', 0),
+(2, 'Configuraciones', '/phoenix/php/frontend/configuracion/busConfiguraciones.php', 0),
+(3, 'Unidades', '/phoenix/php/frontend/unidades/busUnidades.php', 0),
+(4, 'Colonias', '/phoenix/php/frontend/colonias/busColonias.php', 0),
+(5, 'Empleados', '/phoenix/php/frontend/empleados/busEmpleados.php', 0),
+(6, 'Clientes', '/phoenix/php/frontend/clientes/busClientes.php', 0),
+(7, 'Entidades', '/phoenix/php/frontend/entidades/busEntidades.php', 0),
+(8, 'Vehiculos', '/phoenix/php/frontend/vehiculos/busVehiculos.php', 0),
+(9, 'Procesos', '/phoenix/php/frontend/procesos/busProcesos.php', 0),
+(10, 'Indicadores', '/phoenix/php/frontend/indicadores/busIndicadores.php', 0),
+(11, 'Puestos', '/phoenix/php/frontend/puestos/busPuestos.php', 0),
+(12, 'Gasolina', '/phoenix/php/frontend/gasolina/busGasolina.php', 0),
+(13, 'Fichas de Proceso', '/phoenix/php/frontend/fichas/busFichaProceso.php', 0),
+(14, 'Objetivo Estrategico', '/phoenix/php/frontend/objest/busObjEst.php', 0),
+(15, 'Objetivo Operativo', '/phoenix/php/frontend/objope/busObjOpe.php', 0),
+(16, 'Estrategia Operativa', '/phoenix/php/frontend/estope/busEstOpe.php', 0),
+(17, 'Programas', '/phoenix/php/frontend/programa/busPrograma.php', 0),
+(18, 'Cedulas', '/phoenix/php/frontend/instrumentos/cedulas/busCedulas.php', 0),
+(19, 'Factores', '/phoenix/php/frontend/instrumentos/factores/busFactores.php', 0),
+(20, 'Escalas', '/phoenix/php/frontend/instrumentos/escalas/busEscalas.php', 0),
+(21, 'Evaluaciones', '/phoenix/php/frontend/instrumentos/evaluaciones/busEvaluaciones.php', 0),
+(22, 'Consumo de Gasolina', '/phoenix/php/frontend/gasconsumo/opGasConsumo.php', 0),
+(23, 'Consulta de Planeacion', '/phoenix/php/frontend/consulplan/conObjEst.php', 0),
+(24, 'Resultados FODA', '/phoenix/php/frontend/foda/resfoda/opResFODA.php', 0),
+(25, 'Graficas', '/phoenix/php/frontend/utilidades/graficos.php', 0),
+(26, 'Manual', '/phoenix/php/frontend/utilidades/graficos.php', 0),
+(27, 'Planes RSGR', '/phoenix/php/frontend/planesRSGR/busPlanRSGR.php', 0),
+(28, 'No Conformidades', '/phoenix/php/frontend/noConformidades/busNoConformidad.php', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catNiveles`
+--
+
+CREATE TABLE `catNiveles` (
+  `idNivel` int(11) NOT NULL,
+  `Nivel` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `catNiveles`
+--
+
+INSERT INTO `catNiveles` (`idNivel`, `Nivel`, `Status`) VALUES
+(1, 'Administrador', 0),
+(2, 'Operador', 0),
+(3, 'Lector', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catObjEst`
+--
+
+CREATE TABLE `catObjEst` (
+  `idObjEst` int(11) NOT NULL,
+  `Nomenclatura` varchar(250) COLLATE utf8_bin NOT NULL,
+  `ObjEst` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `catObjOpe`
+--
+
+CREATE TABLE `catObjOpe` (
+  `idObjOpe` int(11) NOT NULL,
+  `idObjEst` int(11) NOT NULL,
+  `Nomenclatura` varchar(250) COLLATE utf8_bin NOT NULL,
+  `ObjOpe` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `catProcesos`
+--
+
+CREATE TABLE `catProcesos` (
+  `idProceso` int(11) NOT NULL,
+  `Proceso` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `catPuestos`
+--
+
+CREATE TABLE `catPuestos` (
+  `idPuesto` int(11) NOT NULL,
+  `Puesto` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `catTEntidades`
+--
+
+CREATE TABLE `catTEntidades` (
+  `idTEntidad` int(11) NOT NULL,
+  `TEntidad` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `catTEntidades`
+--
+
+INSERT INTO `catTEntidades` (`idTEntidad`, `TEntidad`, `Status`) VALUES
+(1, 'Gerencia', 0),
+(2, 'Direccion', 0),
+(3, 'Departamento', 0),
+(4, 'Area', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catUnidades`
+--
+
+CREATE TABLE `catUnidades` (
+  `idUnidad` int(11) NOT NULL,
+  `Nomenclatura` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Unidad` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `catUnidades`
+--
+
+INSERT INTO `catUnidades` (`idUnidad`, `Nomenclatura`, `Unidad`, `Status`) VALUES
+(1, 'Kg', 'Kilogramo', 0),
+(2, 'm', 'Metro', 1),
+(3, 'Km2', 'Kilometros cuadrados', 0),
+(4, 'm', 'Metros', 0),
+(5, 'Hr', 'Hora', 0),
+(6, 'l', 'Litros', 0),
+(7, 'gal', 'Galones', 0),
+(8, 'MXN', 'Peso', 0),
+(9, 'USD', 'Dolar', 0),
+(10, 'Doc', 'Documento', 0),
+(11, 'Vnt', 'Venta', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catUsuarios`
+--
+
+CREATE TABLE `catUsuarios` (
+  `idUsuario` int(11) NOT NULL,
+  `idNivel` int(11) NOT NULL,
+  `Usuario` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Clave` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Correo` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Pregunta` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Respuesta` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `catUsuarios`
+--
+
+INSERT INTO `catUsuarios` (`idUsuario`, `idNivel`, `Usuario`, `Clave`, `Correo`, `Pregunta`, `Respuesta`, `Status`) VALUES
+(1, 1, 'root', '1OXW3t7Q', 'antonio.peyrano@live.com.mx', 'Su primera mascota', 'El motis', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `catVehiculos`
+--
+
+CREATE TABLE `catVehiculos` (
+  `idVehiculo` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `NumEconomico` varchar(50) COLLATE utf8_bin NOT NULL,
+  `NumPlaca` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Color` varchar(70) COLLATE utf8_bin NOT NULL,
+  `Marca` varchar(70) COLLATE utf8_bin NOT NULL,
+  `Modelo` varchar(70) COLLATE utf8_bin NOT NULL,
+  `TMotor` varchar(70) COLLATE utf8_bin NOT NULL,
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opActividades`
+--
+
+CREATE TABLE `opActividades` (
+  `idActividad` int(11) NOT NULL,
+  `idPrograma` int(11) NOT NULL,
+  `idUnidad` int(11) NOT NULL,
+  `Actividad` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Monto` double(18,2) NOT NULL DEFAULT '0.00',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opCedulas`
+--
+
+CREATE TABLE `opCedulas` (
+  `idCedula` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `Folio` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Descripcion` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `Fecha` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Horizonte` float(4,2) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opClientes`
+--
+
+CREATE TABLE `opClientes` (
+  `idCliente` int(11) NOT NULL,
+  `idColonia` int(11) NOT NULL,
+  `Paterno` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Materno` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Nombre` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Calle` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Nint` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `Next` varchar(250) COLLATE utf8_bin NOT NULL,
+  `RFC` varchar(250) COLLATE utf8_bin NOT NULL,
+  `CURP` varchar(250) COLLATE utf8_bin NOT NULL,
+  `TelFijo` varchar(250) COLLATE utf8_bin NOT NULL,
+  `TelCel` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEficAct`
+--
+
+CREATE TABLE `opEficAct` (
+  `idEficAct` int(11) NOT NULL,
+  `idActividad` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEficEst`
+--
+
+CREATE TABLE `opEficEst` (
+  `idEficEst` int(11) NOT NULL,
+  `idEstOpe` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEficGas`
+--
+
+CREATE TABLE `opEficGas` (
+  `idEficGas` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEficOE`
+--
+
+CREATE TABLE `opEficOE` (
+  `idEficOE` int(11) NOT NULL,
+  `idObjEst` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEficOO`
+--
+
+CREATE TABLE `opEficOO` (
+  `idEficOO` int(11) NOT NULL,
+  `idObjOpe` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEficPro`
+--
+
+CREATE TABLE `opEficPro` (
+  `idEficPro` int(11) NOT NULL,
+  `idPrograma` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEjecAct`
+--
+
+CREATE TABLE `opEjecAct` (
+  `idEjecAct` int(11) NOT NULL,
+  `idActividad` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+--
+-- Estructura de tabla para la tabla `opEjecEst`
+--
+
+CREATE TABLE `opEjecEst` (
+  `idEjecEst` int(11) NOT NULL,
+  `idEstOpe` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEjecGas`
+--
+
+CREATE TABLE `opEjecGas` (
+  `idEjecGas` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEjecOE`
+--
+
+CREATE TABLE `opEjecOE` (
+  `idEjecOE` int(11) NOT NULL,
+  `idObjEst` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEjecOO`
+--
+
+CREATE TABLE `opEjecOO` (
+  `idEjecOO` int(11) NOT NULL,
+  `idObjOpe` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEjecPro`
+--
+
+CREATE TABLE `opEjecPro` (
+  `idEjecPro` int(11) NOT NULL,
+  `idPrograma` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEjecuciones`
+--
+
+CREATE TABLE `opEjecuciones` (
+  `idEjecucion` int(11) NOT NULL,
+  `idActividad` int(11) NOT NULL,
+  `Cantidad` float(12,4) NOT NULL,
+  `Mes` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Monto` double(18,2) NOT NULL,
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEmpleados`
+--
+
+CREATE TABLE `opEmpleados` (
+  `idEmpleado` int(11) NOT NULL,
+  `idColonia` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `idPuesto` int(11) NOT NULL,
+  `Paterno` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Materno` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Nombre` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Calle` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Nint` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `Next` varchar(250) COLLATE utf8_bin NOT NULL,
+  `RFC` varchar(250) COLLATE utf8_bin NOT NULL,
+  `CURP` varchar(250) COLLATE utf8_bin NOT NULL,
+  `TelFijo` varchar(250) COLLATE utf8_bin NOT NULL,
+  `TelCel` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEscalas`
+--
+
+CREATE TABLE `opEscalas` (
+  `idEscala` int(11) NOT NULL,
+  `idCedula` int(11) NOT NULL,
+  `Escala` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Ponderacion` float(4,2) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEvaluaciones`
+--
+
+CREATE TABLE `opEvaluaciones` (
+  `idEvaluacion` int(11) NOT NULL,
+  `idCedula` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Folio` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Fecha` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opEvidencias`
+--
+
+CREATE TABLE `opEvidencias` (
+  `idEvidencia` int(11) NOT NULL,
+  `idEjecucion` int(11) NOT NULL,
+  `RutaURL` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opFactores`
+--
+
+CREATE TABLE `opFactores` (
+  `idFactor` int(11) NOT NULL,
+  `idCedula` int(11) NOT NULL,
+  `Factor` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Tipo` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opFichasProcesos`
+--
+
+CREATE TABLE `opFichasProcesos` (
+  `idFicha` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
+  `Clave` varchar(250) COLLATE utf8_bin NOT NULL,
+  `nEdicion` int(11) NOT NULL DEFAULT '0',
+  `FechaCreacion` varchar(50) COLLATE utf8_bin NOT NULL,
+  `FechaEdicion` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `Actividades` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `Responsable` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `MisionProceso` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `Entrada` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `Salida` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `relProcesos` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `necRecursos` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `regArchivos` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `docAplicables` varchar(1500) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opMovGas`
+--
+
+CREATE TABLE `opMovGas` (
+  `idMovGas` int(11) NOT NULL,
+  `idEjecGas` int(11) NOT NULL,
+  `Cantidad` float(12,4) NOT NULL,
+  `Tiempo` varchar(50) COLLATE utf8_bin NOT NULL,
+  `Mes` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Monto` double(18,2) NOT NULL,
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opNoConformidades`
+--
+
+CREATE TABLE `opNoConformidades` (
+  `idNoConformidad` int(11) NOT NULL,
+  `idFicha` int(11) NOT NULL,
+  `fEmision` date NOT NULL,
+  `Auditor` varchar(250) NOT NULL,
+  `Tipo` varchar(50) NOT NULL,
+  `Observaciones` varchar(1500) NOT NULL,
+  `Recomendaciones` varchar(1500) DEFAULT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Estructura de tabla para la tabla `opPlanesRSGR`
+--
+
+CREATE TABLE `opPlanesRSGR` (
+  `idPlanRSGR` int(11) NOT NULL,
+  `Clave` varchar(250) NOT NULL,
+  `nEdicion` int(11) NOT NULL DEFAULT '0',
+  `FechaCreacion` varchar(50) NOT NULL,
+  `FechaEdicion` varchar(50) DEFAULT NULL,
+  `Nivel` varchar(50) NOT NULL,
+  `Riesgo` varchar(1500) NOT NULL,
+  `Supervisor` varchar(1500) NOT NULL,
+  `Causa` varchar(1500) NOT NULL,
+  `Efecto` varchar(1500) NOT NULL,
+  `Acciones` varchar(1500) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+--
+-- Estructura de tabla para la tabla `opProgAct`
+--
+
+CREATE TABLE `opProgAct` (
+  `idProgAct` int(11) NOT NULL,
+  `idActividad` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opProgEst`
+--
+
+CREATE TABLE `opProgEst` (
+  `idProgEst` int(11) NOT NULL,
+  `idEstOpe` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opProgGas`
+--
+
+CREATE TABLE `opProgGas` (
+  `idProgGas` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opProgOE`
+--
+
+CREATE TABLE `opProgOE` (
+  `idProgOE` int(11) NOT NULL,
+  `idObjEst` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opProgOO`
+--
+
+CREATE TABLE `opProgOO` (
+  `idProgOO` int(11) NOT NULL,
+  `idObjOpe` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opProgPro`
+--
+
+CREATE TABLE `opProgPro` (
+  `idProgPro` int(11) NOT NULL,
+  `idPrograma` int(11) NOT NULL,
+  `Enero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Febrero` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Marzo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Abril` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Mayo` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Junio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Julio` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Agosto` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Septiembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Octubre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Noviembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Diciembre` float(18,4) NOT NULL DEFAULT '0.0000',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opProgramas`
+--
+
+CREATE TABLE `opProgramas` (
+  `idPrograma` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `idObjEst` int(11) NOT NULL,
+  `idObjOpe` int(11) NOT NULL,
+  `idEstOpe` int(11) NOT NULL,
+  `idResponsable` int(11) NOT NULL,
+  `idSubalterno` int(11) NOT NULL,
+  `Nomenclatura` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Programa` varchar(250) COLLATE utf8_bin NOT NULL,
+  `Monto` double NOT NULL DEFAULT '0',
+  `Periodo` varchar(4) COLLATE utf8_bin NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `opRelPerUsr`
+--
+
+CREATE TABLE `opRelPerUsr` (
+  `idRelPerUsr` int(11) NOT NULL,
+  `idModulo` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `opRelPerUsr`
+--
+
+INSERT INTO `opRelPerUsr` (`idRelPerUsr`, `idModulo`, `idUsuario`, `Status`) VALUES
+(1, 1, 1, 0),
+(2, 2, 1, 0),
+(3, 3, 1, 0),
+(4, 4, 1, 0),
+(5, 5, 1, 0),
+(6, 6, 1, 0),
+(7, 7, 1, 0),
+(8, 8, 1, 0),
+(9, 9, 1, 0),
+(10, 10, 1, 0),
+(11, 11, 1, 0),
+(12, 12, 1, 0),
+(13, 13, 1, 0),
+(14, 14, 1, 0),
+(15, 15, 1, 0),
+(16, 16, 1, 0),
+(17, 17, 1, 0),
+(18, 18, 1, 0),
+(19, 19, 1, 0),
+(20, 20, 1, 0),
+(21, 21, 1, 0),
+(22, 22, 1, 0),
+(23, 23, 1, 0),
+(24, 24, 1, 0),
+(25, 25, 1, 0),
+(26, 26, 1, 0),
+(27, 28, 1, 0),
+(28, 29, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `opResParEva`
+--
+
+CREATE TABLE `opResParEva` (
+  `idResParEva` int(11) NOT NULL,
+  `idEvaluacion` int(11) NOT NULL,
+  `idFactor` int(11) NOT NULL,
+  `idEscala` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Estructura de tabla para la tabla `relEntPro`
+--
+
+CREATE TABLE `relEntPro` (
+  `idRelEntPro` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `relEntPuesto`
+--
+
+CREATE TABLE `relEntPuesto` (
+  `idRelEntPst` int(11) NOT NULL,
+  `idPuesto` int(11) NOT NULL,
+  `idEntidad` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `relIndFicha`
+--
+
+CREATE TABLE `relIndFicha` (
+  `idRelIndFicha` int(11) NOT NULL,
+  `idIndicador` int(11) NOT NULL,
+  `idFicha` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `relIndPro`
+--
+
+CREATE TABLE `relIndPro` (
+  `idRelIndPro` int(11) NOT NULL,
+  `idIndicador` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `relProgPro`
+--
+
+CREATE TABLE `relProgPro` (
+  `idRelProgPro` int(11) NOT NULL,
+  `idPrograma` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Estructura de tabla para la tabla `relProRSGR`
+--
+
+CREATE TABLE `relProRSGR` (
+  `idRelProRSGR` int(11) NOT NULL,
+  `idProceso` int(11) NOT NULL,
+  `idPlanRSGR` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Estructura de tabla para la tabla `relUsrEmp`
+--
+
+CREATE TABLE `relUsrEmp` (
+  `idRelUsrEmp` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `catColonias`
+--
+ALTER TABLE `catColonias`
+  ADD PRIMARY KEY (`idColonia`),
+  ADD KEY `IdxColonia` (`idColonia`);
+
+--
+-- Indices de la tabla `catConfiguraciones`
+--
+ALTER TABLE `catConfiguraciones`
+  ADD PRIMARY KEY (`idConfiguracion`),
+  ADD KEY `idxConfiguracion` (`idConfiguracion`);
+
+--
+-- Indices de la tabla `catEntidades`
+--
+ALTER TABLE `catEntidades`
+  ADD PRIMARY KEY (`idEntidad`),
+  ADD KEY `idxEntidad` (`idEntidad`);
+
+--
+-- Indices de la tabla `catEstOpe`
+--
+ALTER TABLE `catEstOpe`
+  ADD PRIMARY KEY (`idEstOpe`),
+  ADD KEY `idxEstOpe` (`idEstOpe`);
+
+--
+-- Indices de la tabla `catIndicadores`
+--
+ALTER TABLE `catIndicadores`
+  ADD PRIMARY KEY (`idIndicador`),
+  ADD KEY `idxIndicador` (`idIndicador`);
+
+--
+-- Indices de la tabla `catModulos`
+--
+ALTER TABLE `catModulos`
+  ADD PRIMARY KEY (`idModulo`),
+  ADD KEY `idxModulo` (`idModulo`);
+
+--
+-- Indices de la tabla `catNiveles`
+--
+ALTER TABLE `catNiveles`
+  ADD PRIMARY KEY (`idNivel`),
+  ADD KEY `idxNivel` (`idNivel`);
+
+--
+-- Indices de la tabla `catObjEst`
+--
+ALTER TABLE `catObjEst`
+  ADD PRIMARY KEY (`idObjEst`),
+  ADD KEY `idxObjEst` (`idObjEst`);
+
+--
+-- Indices de la tabla `catObjOpe`
+--
+ALTER TABLE `catObjOpe`
+  ADD PRIMARY KEY (`idObjOpe`),
+  ADD KEY `idxObjOpe` (`idObjOpe`);
+
+--
+-- Indices de la tabla `catProcesos`
+--
+ALTER TABLE `catProcesos`
+  ADD PRIMARY KEY (`idProceso`),
+  ADD KEY `idxProceso` (`idProceso`);
+
+--
+-- Indices de la tabla `catPuestos`
+--
+ALTER TABLE `catPuestos`
+  ADD PRIMARY KEY (`idPuesto`),
+  ADD KEY `idxPuesto` (`idPuesto`);
+
+--
+-- Indices de la tabla `catTEntidades`
+--
+ALTER TABLE `catTEntidades`
+  ADD PRIMARY KEY (`idTEntidad`),
+  ADD KEY `idxTEntidad` (`idTEntidad`);
+
+--
+-- Indices de la tabla `catUnidades`
+--
+ALTER TABLE `catUnidades`
+  ADD PRIMARY KEY (`idUnidad`),
+  ADD KEY `idxUnidades` (`idUnidad`);
+
+--
+-- Indices de la tabla `catUsuarios`
+--
+ALTER TABLE `catUsuarios`
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD KEY `idxUsuario` (`idUsuario`);
+
+--
+-- Indices de la tabla `catVehiculos`
+--
+ALTER TABLE `catVehiculos`
+  ADD PRIMARY KEY (`idVehiculo`),
+  ADD KEY `idxVehiculo` (`idVehiculo`);
+
+--
+-- Indices de la tabla `opActividades`
+--
+ALTER TABLE `opActividades`
+  ADD PRIMARY KEY (`idActividad`),
+  ADD KEY `idxActividad` (`idActividad`);
+
+--
+-- Indices de la tabla `opCedulas`
+--
+ALTER TABLE `opCedulas`
+  ADD PRIMARY KEY (`idCedula`),
+  ADD KEY `idxCedula` (`idCedula`);
+
+--
+-- Indices de la tabla `opClientes`
+--
+ALTER TABLE `opClientes`
+  ADD PRIMARY KEY (`idCliente`),
+  ADD KEY `idxCliente` (`idCliente`);
+
+--
+-- Indices de la tabla `opEficAct`
+--
+ALTER TABLE `opEficAct`
+  ADD PRIMARY KEY (`idEficAct`),
+  ADD KEY `idxEficAct` (`idEficAct`);
+
+--
+-- Indices de la tabla `opEficEst`
+--
+ALTER TABLE `opEficEst`
+  ADD PRIMARY KEY (`idEficEst`),
+  ADD KEY `idxEficEst` (`idEficEst`);
+
+--
+-- Indices de la tabla `opEficGas`
+--
+ALTER TABLE `opEficGas`
+  ADD PRIMARY KEY (`idEficGas`),
+  ADD KEY `idxEficGas` (`idEficGas`);
+
+--
+-- Indices de la tabla `opEficOE`
+--
+ALTER TABLE `opEficOE`
+  ADD PRIMARY KEY (`idEficOE`),
+  ADD KEY `idxEficOE` (`idEficOE`);
+
+--
+-- Indices de la tabla `opEficOO`
+--
+ALTER TABLE `opEficOO`
+  ADD PRIMARY KEY (`idEficOO`),
+  ADD KEY `idxEficOO` (`idEficOO`);
+
+--
+-- Indices de la tabla `opEficPro`
+--
+ALTER TABLE `opEficPro`
+  ADD PRIMARY KEY (`idEficPro`),
+  ADD KEY `idxEficPro` (`idEficPro`);
+
+--
+-- Indices de la tabla `opEjecAct`
+--
+ALTER TABLE `opEjecAct`
+  ADD PRIMARY KEY (`idEjecAct`),
+  ADD KEY `idxEjecAct` (`idEjecAct`);
+
+--
+-- Indices de la tabla `opEjecEst`
+--
+ALTER TABLE `opEjecEst`
+  ADD PRIMARY KEY (`idEjecEst`),
+  ADD KEY `idxEjecEst` (`idEjecEst`);
+
+--
+-- Indices de la tabla `opEjecGas`
+--
+ALTER TABLE `opEjecGas`
+  ADD PRIMARY KEY (`idEjecGas`),
+  ADD KEY `idxEjecGas` (`idEjecGas`);
+
+--
+-- Indices de la tabla `opEjecOE`
+--
+ALTER TABLE `opEjecOE`
+  ADD PRIMARY KEY (`idEjecOE`),
+  ADD KEY `idxEjecOE` (`idEjecOE`);
+
+--
+-- Indices de la tabla `opEjecOO`
+--
+ALTER TABLE `opEjecOO`
+  ADD PRIMARY KEY (`idEjecOO`),
+  ADD KEY `idxEjecOO` (`idEjecOO`);
+
+--
+-- Indices de la tabla `opEjecPro`
+--
+ALTER TABLE `opEjecPro`
+  ADD PRIMARY KEY (`idEjecPro`),
+  ADD KEY `idxEjecPro` (`idEjecPro`);
+
+--
+-- Indices de la tabla `opEjecuciones`
+--
+ALTER TABLE `opEjecuciones`
+  ADD PRIMARY KEY (`idEjecucion`),
+  ADD KEY `idxEjecucion` (`idEjecucion`);
+
+--
+-- Indices de la tabla `opEmpleados`
+--
+ALTER TABLE `opEmpleados`
+  ADD PRIMARY KEY (`idEmpleado`),
+  ADD KEY `idxEmpleado` (`idEmpleado`);
+
+--
+-- Indices de la tabla `opEscalas`
+--
+ALTER TABLE `opEscalas`
+  ADD PRIMARY KEY (`idEscala`),
+  ADD KEY `idxEscala` (`idEscala`);
+
+--
+-- Indices de la tabla `opEvaluaciones`
+--
+ALTER TABLE `opEvaluaciones`
+  ADD PRIMARY KEY (`idEvaluacion`),
+  ADD KEY `idxEvaluacion` (`idEvaluacion`);
+
+--
+-- Indices de la tabla `opEvidencias`
+--
+ALTER TABLE `opEvidencias`
+  ADD PRIMARY KEY (`idEvidencia`),
+  ADD KEY `idxEvidencia` (`idEvidencia`);
+
+--
+-- Indices de la tabla `opFactores`
+--
+ALTER TABLE `opFactores`
+  ADD PRIMARY KEY (`idFactor`),
+  ADD KEY `idxFactor` (`idFactor`);
+
+--
+-- Indices de la tabla `opFichasProcesos`
+--
+ALTER TABLE `opFichasProcesos`
+  ADD PRIMARY KEY (`idFicha`),
+  ADD KEY `idxFichasProcesos` (`idFicha`);
+
+--
+-- Indices de la tabla `opMovGas`
+--
+ALTER TABLE `opMovGas`
+  ADD PRIMARY KEY (`idMovGas`),
+  ADD KEY `idxMovGas` (`idMovGas`);
+
+--
+-- Indices de la tabla `opNoConformidades`
+--
+ALTER TABLE `opNoConformidades`
+  ADD PRIMARY KEY (`idNoConformidad`),
+  ADD KEY `idxNoConformidad` (`idNoConformidad`);
+
+--
+-- Indices de la tabla `opPlanesRSGR`
+--
+ALTER TABLE `opPlanesRSGR`
+  ADD PRIMARY KEY (`idPlanRSGR`),
+  ADD KEY `idxPlanRSGR` (`idPlanRSGR`);
+
+--
+-- Indices de la tabla `opProgAct`
+--
+ALTER TABLE `opProgAct`
+  ADD PRIMARY KEY (`idProgAct`),
+  ADD KEY `idxProgAct` (`idProgAct`);
+
+--
+-- Indices de la tabla `opProgEst`
+--
+ALTER TABLE `opProgEst`
+  ADD PRIMARY KEY (`idProgEst`),
+  ADD KEY `idxProgEst` (`idProgEst`);
+
+--
+-- Indices de la tabla `opProgGas`
+--
+ALTER TABLE `opProgGas`
+  ADD PRIMARY KEY (`idProgGas`),
+  ADD KEY `idxProgGas` (`idProgGas`);
+
+--
+-- Indices de la tabla `opProgOE`
+--
+ALTER TABLE `opProgOE`
+  ADD PRIMARY KEY (`idProgOE`),
+  ADD KEY `idxProgOE` (`idProgOE`);
+
+--
+-- Indices de la tabla `opProgOO`
+--
+ALTER TABLE `opProgOO`
+  ADD PRIMARY KEY (`idProgOO`),
+  ADD KEY `idxProgOO` (`idProgOO`);
+
+--
+-- Indices de la tabla `opProgPro`
+--
+ALTER TABLE `opProgPro`
+  ADD PRIMARY KEY (`idProgPro`),
+  ADD KEY `idxProgPro` (`idProgPro`);
+
+--
+-- Indices de la tabla `opProgramas`
+--
+ALTER TABLE `opProgramas`
+  ADD PRIMARY KEY (`idPrograma`),
+  ADD KEY `idxPrograma` (`idPrograma`);
+
+--
+-- Indices de la tabla `opRelPerUsr`
+--
+ALTER TABLE `opRelPerUsr`
+  ADD PRIMARY KEY (`idRelPerUsr`),
+  ADD KEY `idxRelPerUsr` (`idRelPerUsr`);
+
+--
+-- Indices de la tabla `opResParEva`
+--
+ALTER TABLE `opResParEva`
+  ADD PRIMARY KEY (`idResParEva`),
+  ADD KEY `idxResParEva` (`idResParEva`) USING BTREE;
+
+--
+-- Indices de la tabla `relEntPro`
+--
+ALTER TABLE `relEntPro`
+  ADD PRIMARY KEY (`idRelEntPro`),
+  ADD KEY `idxRelEntPro` (`idRelEntPro`);
+
+--
+-- Indices de la tabla `relEntPuesto`
+--
+ALTER TABLE `relEntPuesto`
+  ADD PRIMARY KEY (`idRelEntPst`),
+  ADD KEY `idxRelEntPst` (`idRelEntPst`);
+
+--
+-- Indices de la tabla `relIndFicha`
+--
+ALTER TABLE `relIndFicha`
+  ADD PRIMARY KEY (`idRelIndFicha`),
+  ADD KEY `idxRelIndFicha` (`idRelIndFicha`);
+
+--
+-- Indices de la tabla `relIndPro`
+--
+ALTER TABLE `relIndPro`
+  ADD PRIMARY KEY (`idRelIndPro`),
+  ADD KEY `idxRelIndPro` (`idRelIndPro`);
+
+--
+-- Indices de la tabla `relProgPro`
+--
+ALTER TABLE `relProgPro`
+  ADD PRIMARY KEY (`idRelProgPro`),
+  ADD KEY `idxRelProgPro` (`idRelProgPro`);
+
+--
+-- Indices de la tabla `relProRSGR`
+--
+ALTER TABLE `relProRSGR`
+  ADD PRIMARY KEY (`idRelProRSGR`),
+  ADD KEY `idxRelProRSGR` (`idRelProRSGR`);
+
+--
+-- Indices de la tabla `relUsrEmp`
+--
+ALTER TABLE `relUsrEmp`
+  ADD PRIMARY KEY (`idRelUsrEmp`),
+  ADD KEY `idxRelUsrEmp` (`idRelUsrEmp`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
 --
 -- AUTO_INCREMENT de la tabla `catColonias`
 --
 ALTER TABLE `catColonias`
   MODIFY `idColonia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3136;
+
+--
+-- AUTO_INCREMENT de la tabla `catConfiguraciones`
+--
+ALTER TABLE `catConfiguraciones`
+  MODIFY `idConfiguracion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catEntidades`
+--
+ALTER TABLE `catEntidades`
+  MODIFY `idEntidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catEstOpe`
+--
+ALTER TABLE `catEstOpe`
+  MODIFY `idEstOpe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catIndicadores`
+--
+ALTER TABLE `catIndicadores`
+  MODIFY `idIndicador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catModulos`
+--
+ALTER TABLE `catModulos`
+  MODIFY `idModulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `catNiveles`
+--
+ALTER TABLE `catNiveles`
+  MODIFY `idNivel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `catObjEst`
+--
+ALTER TABLE `catObjEst`
+  MODIFY `idObjEst` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catObjOpe`
+--
+ALTER TABLE `catObjOpe`
+  MODIFY `idObjOpe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catProcesos`
+--
+ALTER TABLE `catProcesos`
+  MODIFY `idProceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catPuestos`
+--
+ALTER TABLE `catPuestos`
+  MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `catTEntidades`
+--
+ALTER TABLE `catTEntidades`
+  MODIFY `idTEntidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `catUnidades`
+--
+ALTER TABLE `catUnidades`
+  MODIFY `idUnidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `catUsuarios`
+--
+ALTER TABLE `catUsuarios`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `catVehiculos`
+--
+ALTER TABLE `catVehiculos`
+  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opActividades`
+--
+ALTER TABLE `opActividades`
+  MODIFY `idActividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opCedulas`
+--
+ALTER TABLE `opCedulas`
+  MODIFY `idCedula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opClientes`
+--
+ALTER TABLE `opClientes`
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEficAct`
+--
+ALTER TABLE `opEficAct`
+  MODIFY `idEficAct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEficEst`
+--
+ALTER TABLE `opEficEst`
+  MODIFY `idEficEst` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEficGas`
+--
+ALTER TABLE `opEficGas`
+  MODIFY `idEficGas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEficOE`
+--
+ALTER TABLE `opEficOE`
+  MODIFY `idEficOE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEficOO`
+--
+ALTER TABLE `opEficOO`
+  MODIFY `idEficOO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEficPro`
+--
+ALTER TABLE `opEficPro`
+  MODIFY `idEficPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecAct`
+--
+ALTER TABLE `opEjecAct`
+  MODIFY `idEjecAct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecEst`
+--
+ALTER TABLE `opEjecEst`
+  MODIFY `idEjecEst` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecGas`
+--
+ALTER TABLE `opEjecGas`
+  MODIFY `idEjecGas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecOE`
+--
+ALTER TABLE `opEjecOE`
+  MODIFY `idEjecOE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecOO`
+--
+ALTER TABLE `opEjecOO`
+  MODIFY `idEjecOO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecPro`
+--
+ALTER TABLE `opEjecPro`
+  MODIFY `idEjecPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEjecuciones`
+--
+ALTER TABLE `opEjecuciones`
+  MODIFY `idEjecucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEmpleados`
+--
+ALTER TABLE `opEmpleados`
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEscalas`
+--
+ALTER TABLE `opEscalas`
+  MODIFY `idEscala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEvaluaciones`
+--
+ALTER TABLE `opEvaluaciones`
+  MODIFY `idEvaluacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opEvidencias`
+--
+ALTER TABLE `opEvidencias`
+  MODIFY `idEvidencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opFactores`
+--
+ALTER TABLE `opFactores`
+  MODIFY `idFactor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opFichasProcesos`
+--
+ALTER TABLE `opFichasProcesos`
+  MODIFY `idFicha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opMovGas`
+--
+ALTER TABLE `opMovGas`
+  MODIFY `idMovGas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opNoConformidades`
+--
+ALTER TABLE `opNoConformidades`
+  MODIFY `idNoConformidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opPlanesRSGR`
+--
+ALTER TABLE `opPlanesRSGR`
+  MODIFY `idPlanRSGR` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgAct`
+--
+ALTER TABLE `opProgAct`
+  MODIFY `idProgAct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgEst`
+--
+ALTER TABLE `opProgEst`
+  MODIFY `idProgEst` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgGas`
+--
+ALTER TABLE `opProgGas`
+  MODIFY `idProgGas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgOE`
+--
+ALTER TABLE `opProgOE`
+  MODIFY `idProgOE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgOO`
+--
+ALTER TABLE `opProgOO`
+  MODIFY `idProgOO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgPro`
+--
+ALTER TABLE `opProgPro`
+  MODIFY `idProgPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opProgramas`
+--
+ALTER TABLE `opProgramas`
+  MODIFY `idPrograma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `opRelPerUsr`
+--
+ALTER TABLE `opRelPerUsr`
+  MODIFY `idRelPerUsr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `opResParEva`
+--
+ALTER TABLE `opResParEva`
+  MODIFY `idResParEva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `relEntPro`
+--
+ALTER TABLE `relEntPro`
+  MODIFY `idRelEntPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `relEntPuesto`
+--
+ALTER TABLE `relEntPuesto`
+  MODIFY `idRelEntPst` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `relIndFicha`
+--
+ALTER TABLE `relIndFicha`
+  MODIFY `idRelIndFicha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `relIndPro`
+--
+ALTER TABLE `relIndPro`
+  MODIFY `idRelIndPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `relProgPro`
+--
+ALTER TABLE `relProgPro`
+  MODIFY `idRelProgPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT de la tabla `relProRSGR`
+--
+ALTER TABLE `relProRSGR`
+  MODIFY `idRelProRSGR` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `relUsrEmp`
+--
+ALTER TABLE `relUsrEmp`
+  MODIFY `idRelUsrEmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

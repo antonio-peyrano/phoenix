@@ -9,9 +9,3 @@ script se resume en los siguientes puntos:
 
 CREATOR: Este script crea la base de datos para la puesta en productivo del sistema, conteniendo los datos basicos
          a fin de garantizarle un arranque exitoso.
-
-TEST: Este script crea la base de datos para los cursos o capacitación del o los usuarios en el manejo del sistema.
-      En caso de utilizar esta script en un servidor que se utilizara en productivo, utilice el script REBOOT.
-
-REBOOT: Este script elimina purga la base de datos, dejando su estructura intacta pero con los datos como si se tratara
-        de una instalación desde cero del sistema.
