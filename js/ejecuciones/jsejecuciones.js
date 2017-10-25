@@ -130,7 +130,7 @@ $(document).ready(function() {
     		    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
     		    var top = ((height / 2) - (h / 2)) + dualScreenTop;
     		    
-    			window.open('./php/frontend/main/subirArchivos.php?rutaadjuntos='+document.getElementById('idPrograma').value.toString()+'_'+document.getElementById('idActividad').value.toString()+'_'+document.getElementById('idEjecucion').value.toString()+'_'+document.getElementById('Periodo').value.toString(), "Subir Archivos", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, toolbar=yes, tittlebar=no, width="+width.toString()+", height="+height.toString()+", top="+top.toString()+", left="+left.toString());    			
+    			window.open('./php/frontend/main/subirArchivos.php?rutaadjuntos=ejecuciones_'+document.getElementById('idPrograma').value.toString()+'_'+document.getElementById('idActividad').value.toString()+'_'+document.getElementById('idEjecucion').value.toString()+'_'+document.getElementById('Periodo').value.toString(), "Subir Archivos", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, toolbar=yes, tittlebar=no, width="+width.toString()+", height="+height.toString()+", top="+top.toString()+", left="+left.toString());    			
     			}
     });                 
 });

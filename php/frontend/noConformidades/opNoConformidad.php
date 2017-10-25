@@ -176,7 +176,7 @@
                             $habCampos = '';
                             }                                               
                             
-                    $HTMLBody = '      <div id="cntOperativo">
+                    $HTMLBody = '   <div id="cntOperativo">
                                             <div id="statsCliente" style="display:none">
                                                 <table>
                                                     <tr><td>idCedula: </td><td><input id="idNoConformidad" type="text" value="'.$RegNoConformidad['idNoConformidad'].'"></td></tr>
@@ -196,11 +196,17 @@
                                                         <tr><td colspan= "2" class= "td-panel"><center><textarea name="Observaciones" id="Observaciones" cols="60" rows="7"'.$habCampos.'>'.$this->saltosLineaRev($RegNoConformidad['Observaciones']).'</textarea></center></td></tr>
                                                         <tr><th colspan= "2" class= "td-panel">Recomendaciones</th></tr>
                                                         <tr><td colspan= "2" class= "td-panel"><center><textarea name="Recomendaciones" id="Recomendaciones" cols="60" rows="7"'.$habCampos.'>'.$this->saltosLineaRev($RegNoConformidad['Recomendaciones']).'</textarea></center></td></tr>                                                        
-                                                    </table>                                   
-                                                </div>                                                    
-                                                <div id="pie" class="pie-operativo">'.$objNoConformidad->controlBotones("32", "32", $this->getView()).'</div>                                                                                                                                                                                   
-                                            </div>
-                                        </div>';
+                                                    </table>
+                                                </div><center>
+                                                <div id="adjuntosServidor">
+                                                    <table class="queryTable">
+                                                        <tr><td class= "queryRowsnormTR"><a href="#"id="verArchivosNOC">VER ARCHIVOS ADJUNTOS</a></td></tr>
+                                                    </table>
+                                                </div></center>
+                                            <div id="pie" class="pie-operativo">'.
+                                                $objNoConformidad->controlBotones("32", "32", $this->getView()).
+                                            '</div>
+                                    </div>';
                     return $HTMLBody;                                                
                     }                    
             }

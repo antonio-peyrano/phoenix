@@ -78,6 +78,29 @@
 			document.getElementById('noc_Editar').style.display="none";
 			}
 
+    $(document).ready(function() {
+        $("div").click(function(e){
+        	e.stopPropagation();
+        	if(e.target.id == "verArchivosNOC")
+        		{
+        			//Se confirma la carga de actualizacion sobre archivos adjuntos.
+        			var w = 200;
+        			var h = 100;
+        			
+        			var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+        			var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+        			
+        		    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        		    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+        		    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+        		    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+        		    
+        			window.open('./php/frontend/main/subirArchivos.php?rutaadjuntos=docNOC_'+document.getElementById('idNoConformidad').value.toString()+'_'+document.getElementById('idFicha').value.toString()+'_'+document.getElementById('fEmision').value.toString().replace(/-/g,'_'), "Subir Archivos", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, toolbar=yes, tittlebar=no, width="+width.toString()+", height="+height.toString()+", top="+top.toString()+", left="+left.toString());    			
+        			}
+        });                 
+    });
+    
 //DECLARACION DE FUNCIONES A EJECUTARSE SOBRE FORMULARIO DE CATALOGO.    
 /*
  * El presente segmento de codigo evalua la accion de click sobre cualquier elemento con el id buscar_#
