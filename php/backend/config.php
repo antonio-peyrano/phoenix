@@ -18,12 +18,13 @@
     
     /*
      * Para ejecuci�n en local quite las acotaciones de comentario.
+     *Las cadenas asignadas a las variables de conexion con el servidor deben estar encriptadas.
      */
 
-    $servername="397Y09vK3uXj";
-    $dbname="4NjY5N7V2ObY4g==";
-    $username="5d7k5g==";
-    $password="1OXW3t7Qpqmm";
+    $servername="";
+    $dbname="";
+    $username="";
+    $password="";
     $SitioWeb="http://localhost/phoenix/";
 
 /*   
